@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>CeyenneNxt.Core</id>
+    <version>1.0.12</version>
+    <authors>Diract-IT</authors>
+    <owners>Diract-IT</owners>
+    <licenseUrl>http://diract-it.nl/licence</licenseUrl>
+    <projectUrl>http://diract-it.nl/ceyennenxt</projectUrl>
+    <iconUrl>http://diract-it.nl/ceyyennenxt/icon</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The CeyenneNxt core module</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>Ceyenne Concentrator Diract</tags>
+    <dependencies>
+      <dependency id="SimpleInjector" version="3.2.2" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\*\Newtonsoft.Json.*" target="lib\net461\" />
+  </files>
+</package>

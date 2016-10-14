@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>CeyenneNxt.Modules</id>
+    <version>1.0.19</version>
+    <authors>Diract-IT</authors>
+    <owners>Diract-IT</owners>
+    <licenseUrl>http://diract-it.nl/licence</licenseUrl>
+    <projectUrl>http://diract-it.nl/ceyennenxt</projectUrl>
+    <iconUrl>http://diract-it.nl/ceyyennenxt/icon</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The CeyenneNxt module suite</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>Ceyenne Concentrator Diract</tags>
+    <dependencies>
+      <dependency id="CeyenneNxt.Core" />
+      
+      <dependency id="CeyenneNxt.Logging.SubModule" />
+      <dependency id="CeyenneNxt.Settings.SubModule" />
+
+      <dependency id="CeyenneNxt.Products.Module" />
+    </dependencies>
+  </metadata>
+</package>
