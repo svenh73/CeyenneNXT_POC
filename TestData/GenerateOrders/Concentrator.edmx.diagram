@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="aba642e1089c4e5babbb9eae5d208f6b" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.Order" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.OrderAttributeValueBit" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.OrderAttributeValueDateTime" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.OrderAttributeValueDecimal" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.OrderAttributeValueImage" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.OrderAttributeValueInt" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.OrderAttributeValueVarchar" Width="1.5" PointX="4.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.OrderLine" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.OrderLineAttributeValueBit" Width="1.5" PointX="6.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.OrderLineAttributeValueDateTime" Width="1.5" PointX="8.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.OrderLineAttributeValueDecimal" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.OrderLineAttributeValueInt" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.OrderLineAttributeValueVarchar" Width="1.5" PointX="10.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.Product" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <AssociationConnector Association="ConcentratorSport2000Model.FK_OrderLine_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="ConcentratorSport2000Model.FK_OrderLine_Product" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.Customer" Width="1.5" PointX="1.375" PointY="5.375" />
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.CustomerAddress" Width="1.5" PointX="3" PointY="13.25" />
+        <AssociationConnector Association="ConcentratorSport2000Model.FK_CustomerAddress_Customer" />
+        <AssociationConnector Association="ConcentratorSport2000Model.FK_Order_Customer" />
+        <AssociationConnector Association="ConcentratorSport2000Model.FK_Order_Customer1" />
+        <AssociationConnector Association="ConcentratorSport2000Model.FK_Order_Customer2" />
+        <EntityTypeShape EntityType="ConcentratorSport2000Model.Address" Width="1.5" PointX="0.75" PointY="3.875" />
+        <AssociationConnector Association="ConcentratorSport2000Model.FK_Customer_Adress" />
+        <AssociationConnector Association="ConcentratorSport2000Model.FK_Order_ShipToAddress" />
+        <AssociationConnector Association="ConcentratorSport2000Model.CustomerAddress1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

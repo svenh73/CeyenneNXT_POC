@@ -1,0 +1,1211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ConcentratorSport2000Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HouseNumber" Type="nvarchar" MaxLength="10" />
+          <Property Name="City" Type="nvarchar" MaxLength="100" />
+          <Property Name="Country" Type="nvarchar" MaxLength="100" />
+          <Property Name="PostCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressLine1" Type="nvarchar(max)" />
+          <Property Name="AddressLine2" Type="nvarchar(max)" />
+          <Property Name="AddressLine3" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerTelephone" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerEmail" Type="nvarchar" MaxLength="100" />
+          <Property Name="EANIdentifier" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerName" Type="nvarchar(max)" />
+          <Property Name="CoCNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="TaxID" Type="nvarchar" MaxLength="50" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="150" />
+          <Property Name="PrimaryAddressID" Type="int" />
+          <Property Name="IsBusiness" Type="bit" />
+          <Property Name="VatNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="FaxNumber" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CustomerAddress">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="AddressID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Document" Type="nvarchar(max)" />
+          <Property Name="ConnectorID" Type="int" Nullable="false" />
+          <Property Name="IsDispatched" Type="bit" Nullable="false" />
+          <Property Name="DispatchToVendorDate" Type="datetime" />
+          <Property Name="ReceivedDate" Type="datetime" Nullable="false" />
+          <Property Name="isDropShipment" Type="bit" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="ShipToCustomerID" Type="int" />
+          <Property Name="CustomerOrderReference" Type="nvarchar(max)" />
+          <Property Name="EdiVersion" Type="nvarchar" MaxLength="50" />
+          <Property Name="BSKIdentifier" Type="nvarchar" MaxLength="200" />
+          <Property Name="WebSiteOrderNumber" Type="nvarchar" MaxLength="100" />
+          <Property Name="PaymentTermsCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="BackOrdersAllowed" Type="bit" />
+          <Property Name="RouteCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="HoldCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="SoldToCustomerID" Type="int" />
+          <Property Name="HoldOrder" Type="bit" Nullable="false" />
+          <Property Name="ShipToAddressID" Type="int" />
+          <Property Name="PaymentInstrumentID" Type="int" Nullable="false" />
+          <Property Name="FreightHandlingCode" Type="varchar" MaxLength="50" />
+          <Property Name="Carrier" Type="nvarchar" MaxLength="50" />
+          <Property Name="DocumentType" Type="nvarchar" MaxLength="50" />
+          <Property Name="DeliveryInstructions1" Type="nvarchar" MaxLength="100" />
+          <Property Name="DeliveryInstructions2" Type="nvarchar" MaxLength="100" />
+          <Property Name="PromisedShipDate" Type="datetime" />
+          <Property Name="CustomIdentifier" Type="nvarchar" MaxLength="200" />
+          <Property Name="ConsigneeCustomerID" Type="int" />
+          <Property Name="OrderType" Type="int" Nullable="false" />
+          <Property Name="TakenBy" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="OrderAttributeValueBit">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttributeID" Type="int" Nullable="false" />
+          <Property Name="ObjectID" Type="int" Nullable="false" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="Value" Type="bit" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="LastModificationTime" Type="datetime2" Precision="7" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderAttributeValueDateTime">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttributeID" Type="int" Nullable="false" />
+          <Property Name="ObjectID" Type="int" Nullable="false" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="Value" Type="datetime" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="LastModificationTime" Type="datetime2" Precision="7" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderAttributeValueDecimal">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttributeID" Type="int" Nullable="false" />
+          <Property Name="ObjectID" Type="int" Nullable="false" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="Value" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="LastModificationTime" Type="datetime2" Precision="7" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderAttributeValueImage">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttributeID" Type="int" Nullable="false" />
+          <Property Name="ObjectID" Type="int" Nullable="false" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="Value" Type="image" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="LastModificationTime" Type="datetime2" Precision="7" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderAttributeValueInt">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttributeID" Type="int" Nullable="false" />
+          <Property Name="ObjectID" Type="int" Nullable="false" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="LastModificationTime" Type="datetime2" Precision="7" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderAttributeValueVarchar">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttributeID" Type="int" Nullable="false" />
+          <Property Name="ObjectID" Type="int" Nullable="false" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="LastModificationTime" Type="datetime2" Precision="7" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderLine">
+          <Key>
+            <PropertyRef Name="OrderLineID" />
+          </Key>
+          <Property Name="OrderLineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="CustomerOrderLineNr" Type="nvarchar" MaxLength="100" />
+          <Property Name="CustomerOrderNr" Type="nvarchar" MaxLength="100" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="isDispatched" Type="bit" Nullable="false" />
+          <Property Name="DispatchedToVendorID" Type="int" />
+          <Property Name="VendorOrderNumber" Type="int" />
+          <Property Name="Response" Type="nvarchar(max)" />
+          <Property Name="CentralDelivery" Type="bit" />
+          <Property Name="CustomerItemNumber" Type="nvarchar" MaxLength="100" />
+          <Property Name="WareHouseCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="PriceOverride" Type="bit" Nullable="false" />
+          <Property Name="LotLocation" Type="nvarchar" MaxLength="200" />
+          <Property Name="LotNumber" Type="nvarchar" MaxLength="200" />
+          <Property Name="PromisedShipDate" Type="datetime" />
+          <Property Name="RequestedDate" Type="datetime" />
+          <Property Name="CustomIdentifier" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="OrderLineAttributeValueBit">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttributeID" Type="int" Nullable="false" />
+          <Property Name="ObjectID" Type="int" Nullable="false" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="Value" Type="bit" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="LastModificationTime" Type="datetime2" Precision="7" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderLineAttributeValueDateTime">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttributeID" Type="int" Nullable="false" />
+          <Property Name="ObjectID" Type="int" Nullable="false" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="Value" Type="datetime" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="LastModificationTime" Type="datetime2" Precision="7" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderLineAttributeValueDecimal">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttributeID" Type="int" Nullable="false" />
+          <Property Name="ObjectID" Type="int" Nullable="false" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="Value" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="LastModificationTime" Type="datetime2" Precision="7" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderLineAttributeValueInt">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttributeID" Type="int" Nullable="false" />
+          <Property Name="ObjectID" Type="int" Nullable="false" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="LastModificationTime" Type="datetime2" Precision="7" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderLineAttributeValueVarchar">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttributeID" Type="int" Nullable="false" />
+          <Property Name="ObjectID" Type="int" Nullable="false" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="LastModificationTime" Type="datetime2" Precision="7" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VendorItemNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BrandID" Type="int" Nullable="false" />
+          <Property Name="SourceVendorID" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime" Nullable="false" />
+          <Property Name="LastModificationTime" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="IsBlocked" Type="bit" Nullable="false" />
+          <Property Name="ProductTypeID" Type="int" Nullable="false" />
+          <Property Name="IsConfigurable" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Customer_Adress">
+          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="PrimaryAddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerAddress_Address">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="CustomerAddress" Type="Self.CustomerAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="CustomerAddress">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerAddress_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="CustomerAddress" Type="Self.CustomerAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="CustomerAddress">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ShipToCustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Customer1">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="SoldToCustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Customer2">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ConsigneeCustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_ShipToAddress">
+          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ShipToAddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderLine_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderLine" Type="Self.OrderLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderLine">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderLine_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="OrderLine" Type="Self.OrderLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="OrderLine">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ConcentratorSport2000ModelStoreContainer">
+          <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerAddress" EntityType="Self.CustomerAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderAttributeValueBit" EntityType="Self.OrderAttributeValueBit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderAttributeValueDateTime" EntityType="Self.OrderAttributeValueDateTime" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderAttributeValueDecimal" EntityType="Self.OrderAttributeValueDecimal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderAttributeValueImage" EntityType="Self.OrderAttributeValueImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderAttributeValueInt" EntityType="Self.OrderAttributeValueInt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderAttributeValueVarchar" EntityType="Self.OrderAttributeValueVarchar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderLine" EntityType="Self.OrderLine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderLineAttributeValueBit" EntityType="Self.OrderLineAttributeValueBit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderLineAttributeValueDateTime" EntityType="Self.OrderLineAttributeValueDateTime" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderLineAttributeValueDecimal" EntityType="Self.OrderLineAttributeValueDecimal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderLineAttributeValueInt" EntityType="Self.OrderLineAttributeValueInt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderLineAttributeValueVarchar" EntityType="Self.OrderLineAttributeValueVarchar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Customer_Adress" Association="Self.FK_Customer_Adress">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerAddress_Address" Association="Self.FK_CustomerAddress_Address">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="CustomerAddress" EntitySet="CustomerAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerAddress_Customer" Association="Self.FK_CustomerAddress_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CustomerAddress" EntitySet="CustomerAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Customer" Association="Self.FK_Order_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Customer1" Association="Self.FK_Order_Customer1">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Customer2" Association="Self.FK_Order_Customer2">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_ShipToAddress" Association="Self.FK_Order_ShipToAddress">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderLine_Order" Association="Self.FK_OrderLine_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderLine" EntitySet="OrderLine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderLine_Product" Association="Self.FK_OrderLine_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="OrderLine" EntitySet="OrderLine" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ConcentratorSport2000Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Document" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ConnectorID" Type="Int32" Nullable="false" />
+          <Property Name="IsDispatched" Type="Boolean" Nullable="false" />
+          <Property Name="DispatchToVendorDate" Type="DateTime" Precision="3" />
+          <Property Name="ReceivedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isDropShipment" Type="Boolean" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ShipToCustomerID" Type="Int32" />
+          <Property Name="CustomerOrderReference" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EdiVersion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BSKIdentifier" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="WebSiteOrderNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentTermsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BackOrdersAllowed" Type="Boolean" />
+          <Property Name="RouteCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HoldCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SoldToCustomerID" Type="Int32" />
+          <Property Name="HoldOrder" Type="Boolean" Nullable="false" />
+          <Property Name="ShipToAddressID" Type="Int32" />
+          <Property Name="PaymentInstrumentID" Type="Int32" Nullable="false" />
+          <Property Name="FreightHandlingCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Carrier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryInstructions1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryInstructions2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PromisedShipDate" Type="DateTime" Precision="3" />
+          <Property Name="CustomIdentifier" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ConsigneeCustomerID" Type="Int32" />
+          <Property Name="OrderType" Type="Int32" Nullable="false" />
+          <Property Name="TakenBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="OrderLine" Relationship="Self.FK_OrderLine_Order" FromRole="Order" ToRole="OrderLine" />
+          <NavigationProperty Name="Customer" Relationship="ConcentratorSport2000Model.FK_Order_Customer" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="Customer1" Relationship="ConcentratorSport2000Model.FK_Order_Customer1" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="Customer2" Relationship="ConcentratorSport2000Model.FK_Order_Customer2" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="Address" Relationship="ConcentratorSport2000Model.FK_Order_ShipToAddress" FromRole="Order" ToRole="Address" />
+        </EntityType>
+        <EntityType Name="OrderAttributeValueBit">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttributeID" Type="Int32" Nullable="false" />
+          <Property Name="ObjectID" Type="Int32" Nullable="false" />
+          <Property Name="LanguageID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Boolean" Nullable="false" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="LastModificationTime" Type="DateTime" Precision="7" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="OrderAttributeValueDateTime">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttributeID" Type="Int32" Nullable="false" />
+          <Property Name="ObjectID" Type="Int32" Nullable="false" />
+          <Property Name="LanguageID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="LastModificationTime" Type="DateTime" Precision="7" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="OrderAttributeValueDecimal">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttributeID" Type="Int32" Nullable="false" />
+          <Property Name="ObjectID" Type="Int32" Nullable="false" />
+          <Property Name="LanguageID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="LastModificationTime" Type="DateTime" Precision="7" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="OrderAttributeValueImage">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttributeID" Type="Int32" Nullable="false" />
+          <Property Name="ObjectID" Type="Int32" Nullable="false" />
+          <Property Name="LanguageID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="LastModificationTime" Type="DateTime" Precision="7" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="OrderAttributeValueInt">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttributeID" Type="Int32" Nullable="false" />
+          <Property Name="ObjectID" Type="Int32" Nullable="false" />
+          <Property Name="LanguageID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="LastModificationTime" Type="DateTime" Precision="7" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="OrderAttributeValueVarchar">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttributeID" Type="Int32" Nullable="false" />
+          <Property Name="ObjectID" Type="Int32" Nullable="false" />
+          <Property Name="LanguageID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="LastModificationTime" Type="DateTime" Precision="7" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="OrderLine">
+          <Key>
+            <PropertyRef Name="OrderLineID" />
+          </Key>
+          <Property Name="OrderLineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerOrderLineNr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerOrderNr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="isDispatched" Type="Boolean" Nullable="false" />
+          <Property Name="DispatchedToVendorID" Type="Int32" />
+          <Property Name="VendorOrderNumber" Type="Int32" />
+          <Property Name="Response" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CentralDelivery" Type="Boolean" />
+          <Property Name="CustomerItemNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="WareHouseCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PriceOverride" Type="Boolean" Nullable="false" />
+          <Property Name="LotLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LotNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PromisedShipDate" Type="DateTime" Precision="3" />
+          <Property Name="RequestedDate" Type="DateTime" Precision="3" />
+          <Property Name="CustomIdentifier" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_OrderLine_Order" FromRole="OrderLine" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_OrderLine_Product" FromRole="OrderLine" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="OrderLineAttributeValueBit">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttributeID" Type="Int32" Nullable="false" />
+          <Property Name="ObjectID" Type="Int32" Nullable="false" />
+          <Property Name="LanguageID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Boolean" Nullable="false" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="LastModificationTime" Type="DateTime" Precision="7" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="OrderLineAttributeValueDateTime">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttributeID" Type="Int32" Nullable="false" />
+          <Property Name="ObjectID" Type="Int32" Nullable="false" />
+          <Property Name="LanguageID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="LastModificationTime" Type="DateTime" Precision="7" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="OrderLineAttributeValueDecimal">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttributeID" Type="Int32" Nullable="false" />
+          <Property Name="ObjectID" Type="Int32" Nullable="false" />
+          <Property Name="LanguageID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="LastModificationTime" Type="DateTime" Precision="7" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="OrderLineAttributeValueInt">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttributeID" Type="Int32" Nullable="false" />
+          <Property Name="ObjectID" Type="Int32" Nullable="false" />
+          <Property Name="LanguageID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="LastModificationTime" Type="DateTime" Precision="7" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="OrderLineAttributeValueVarchar">
+          <Key>
+            <PropertyRef Name="AttributeValueID" />
+          </Key>
+          <Property Name="AttributeValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttributeID" Type="Int32" Nullable="false" />
+          <Property Name="ObjectID" Type="Int32" Nullable="false" />
+          <Property Name="LanguageID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="LastModificationTime" Type="DateTime" Precision="7" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VendorItemNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BrandID" Type="Int32" Nullable="false" />
+          <Property Name="SourceVendorID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModificationTime" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+          <Property Name="IsBlocked" Type="Boolean" Nullable="false" />
+          <Property Name="ProductTypeID" Type="Int32" Nullable="false" />
+          <Property Name="IsConfigurable" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="OrderLine" Relationship="Self.FK_OrderLine_Product" FromRole="Product" ToRole="OrderLine" />
+        </EntityType>
+        <Association Name="FK_OrderLine_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderLine" Type="Self.OrderLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderLine">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderLine_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="OrderLine" Type="Self.OrderLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="OrderLine">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ConcentratorSport2000Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Order" EntityType="Self.Order" />
+          <EntitySet Name="OrderAttributeValueBit" EntityType="Self.OrderAttributeValueBit" />
+          <EntitySet Name="OrderAttributeValueDateTime" EntityType="Self.OrderAttributeValueDateTime" />
+          <EntitySet Name="OrderAttributeValueDecimal" EntityType="Self.OrderAttributeValueDecimal" />
+          <EntitySet Name="OrderAttributeValueImage" EntityType="Self.OrderAttributeValueImage" />
+          <EntitySet Name="OrderAttributeValueInt" EntityType="Self.OrderAttributeValueInt" />
+          <EntitySet Name="OrderAttributeValueVarchar" EntityType="Self.OrderAttributeValueVarchar" />
+          <EntitySet Name="OrderLine" EntityType="Self.OrderLine" />
+          <EntitySet Name="OrderLineAttributeValueBit" EntityType="Self.OrderLineAttributeValueBit" />
+          <EntitySet Name="OrderLineAttributeValueDateTime" EntityType="Self.OrderLineAttributeValueDateTime" />
+          <EntitySet Name="OrderLineAttributeValueDecimal" EntityType="Self.OrderLineAttributeValueDecimal" />
+          <EntitySet Name="OrderLineAttributeValueInt" EntityType="Self.OrderLineAttributeValueInt" />
+          <EntitySet Name="OrderLineAttributeValueVarchar" EntityType="Self.OrderLineAttributeValueVarchar" />
+          <EntitySet Name="Product" EntityType="Self.Product" />
+          <AssociationSet Name="FK_OrderLine_Order" Association="Self.FK_OrderLine_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderLine" EntitySet="OrderLine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderLine_Product" Association="Self.FK_OrderLine_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="OrderLine" EntitySet="OrderLine" />
+          </AssociationSet>
+          <EntitySet Name="Customer" EntityType="ConcentratorSport2000Model.Customer" />
+          <EntitySet Name="CustomerAddress" EntityType="ConcentratorSport2000Model.CustomerAddress" />
+          <AssociationSet Name="FK_CustomerAddress_Customer" Association="ConcentratorSport2000Model.FK_CustomerAddress_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CustomerAddress" EntitySet="CustomerAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Customer" Association="ConcentratorSport2000Model.FK_Order_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Customer1" Association="ConcentratorSport2000Model.FK_Order_Customer1">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Customer2" Association="ConcentratorSport2000Model.FK_Order_Customer2">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <EntitySet Name="Address" EntityType="ConcentratorSport2000Model.Address" />
+          <AssociationSet Name="FK_Customer_Adress" Association="ConcentratorSport2000Model.FK_Customer_Adress">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_ShipToAddress" Association="ConcentratorSport2000Model.FK_Order_ShipToAddress">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerAddress1" Association="ConcentratorSport2000Model.CustomerAddress1">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerTelephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EANIdentifier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CoCNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TaxID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="PrimaryAddressID" Type="Int32" />
+          <Property Name="IsBusiness" Type="Boolean" />
+          <Property Name="VatNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FaxNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CustomerAddress" Relationship="ConcentratorSport2000Model.FK_CustomerAddress_Customer" FromRole="Customer" ToRole="CustomerAddress" />
+          <NavigationProperty Name="Order" Relationship="ConcentratorSport2000Model.FK_Order_Customer" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="Order1" Relationship="ConcentratorSport2000Model.FK_Order_Customer1" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="Order2" Relationship="ConcentratorSport2000Model.FK_Order_Customer2" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="Address" Relationship="ConcentratorSport2000Model.FK_Customer_Adress" FromRole="Customer" ToRole="Address" />
+          <NavigationProperty Name="Address1" Relationship="ConcentratorSport2000Model.CustomerAddress1" FromRole="Customer" ToRole="Address" />
+        </EntityType>
+        <EntityType Name="CustomerAddress">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="AddressID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="ConcentratorSport2000Model.FK_CustomerAddress_Customer" FromRole="CustomerAddress" ToRole="Customer" />
+        </EntityType>
+        <Association Name="FK_CustomerAddress_Customer">
+          <End Type="ConcentratorSport2000Model.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="ConcentratorSport2000Model.CustomerAddress" Role="CustomerAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="CustomerAddress">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Customer">
+          <End Type="ConcentratorSport2000Model.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="ConcentratorSport2000Model.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ShipToCustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Customer1">
+          <End Type="ConcentratorSport2000Model.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="ConcentratorSport2000Model.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="SoldToCustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Customer2">
+          <End Type="ConcentratorSport2000Model.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="ConcentratorSport2000Model.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ConsigneeCustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HouseNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PostCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customer" Relationship="ConcentratorSport2000Model.FK_Customer_Adress" FromRole="Address" ToRole="Customer" />
+          <NavigationProperty Name="Order" Relationship="ConcentratorSport2000Model.FK_Order_ShipToAddress" FromRole="Address" ToRole="Order" />
+          <NavigationProperty Name="Customer1" Relationship="ConcentratorSport2000Model.CustomerAddress1" FromRole="Address" ToRole="Customer" />
+        </EntityType>
+        <Association Name="FK_Customer_Adress">
+          <End Type="ConcentratorSport2000Model.Address" Role="Address" Multiplicity="0..1" />
+          <End Type="ConcentratorSport2000Model.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="PrimaryAddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_ShipToAddress">
+          <End Type="ConcentratorSport2000Model.Address" Role="Address" Multiplicity="0..1" />
+          <End Type="ConcentratorSport2000Model.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ShipToAddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CustomerAddress1">
+          <End Type="ConcentratorSport2000Model.Address" Role="Address" Multiplicity="*" />
+          <End Type="ConcentratorSport2000Model.Customer" Role="Customer" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ConcentratorSport2000ModelStoreContainer" CdmEntityContainer="ConcentratorSport2000Entities">
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="Document" ColumnName="Document" />
+                <ScalarProperty Name="ConnectorID" ColumnName="ConnectorID" />
+                <ScalarProperty Name="IsDispatched" ColumnName="IsDispatched" />
+                <ScalarProperty Name="DispatchToVendorDate" ColumnName="DispatchToVendorDate" />
+                <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
+                <ScalarProperty Name="isDropShipment" ColumnName="isDropShipment" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ShipToCustomerID" ColumnName="ShipToCustomerID" />
+                <ScalarProperty Name="CustomerOrderReference" ColumnName="CustomerOrderReference" />
+                <ScalarProperty Name="EdiVersion" ColumnName="EdiVersion" />
+                <ScalarProperty Name="BSKIdentifier" ColumnName="BSKIdentifier" />
+                <ScalarProperty Name="WebSiteOrderNumber" ColumnName="WebSiteOrderNumber" />
+                <ScalarProperty Name="PaymentTermsCode" ColumnName="PaymentTermsCode" />
+                <ScalarProperty Name="BackOrdersAllowed" ColumnName="BackOrdersAllowed" />
+                <ScalarProperty Name="RouteCode" ColumnName="RouteCode" />
+                <ScalarProperty Name="HoldCode" ColumnName="HoldCode" />
+                <ScalarProperty Name="SoldToCustomerID" ColumnName="SoldToCustomerID" />
+                <ScalarProperty Name="HoldOrder" ColumnName="HoldOrder" />
+                <ScalarProperty Name="ShipToAddressID" ColumnName="ShipToAddressID" />
+                <ScalarProperty Name="PaymentInstrumentID" ColumnName="PaymentInstrumentID" />
+                <ScalarProperty Name="FreightHandlingCode" ColumnName="FreightHandlingCode" />
+                <ScalarProperty Name="Carrier" ColumnName="Carrier" />
+                <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+                <ScalarProperty Name="DeliveryInstructions1" ColumnName="DeliveryInstructions1" />
+                <ScalarProperty Name="DeliveryInstructions2" ColumnName="DeliveryInstructions2" />
+                <ScalarProperty Name="PromisedShipDate" ColumnName="PromisedShipDate" />
+                <ScalarProperty Name="CustomIdentifier" ColumnName="CustomIdentifier" />
+                <ScalarProperty Name="ConsigneeCustomerID" ColumnName="ConsigneeCustomerID" />
+                <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+                <ScalarProperty Name="TakenBy" ColumnName="TakenBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderAttributeValueBit">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.OrderAttributeValueBit">
+              <MappingFragment StoreEntitySet="OrderAttributeValueBit">
+                <ScalarProperty Name="AttributeValueID" ColumnName="AttributeValueID" />
+                <ScalarProperty Name="AttributeID" ColumnName="AttributeID" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="LastModificationTime" ColumnName="LastModificationTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderAttributeValueDateTime">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.OrderAttributeValueDateTime">
+              <MappingFragment StoreEntitySet="OrderAttributeValueDateTime">
+                <ScalarProperty Name="AttributeValueID" ColumnName="AttributeValueID" />
+                <ScalarProperty Name="AttributeID" ColumnName="AttributeID" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="LastModificationTime" ColumnName="LastModificationTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderAttributeValueDecimal">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.OrderAttributeValueDecimal">
+              <MappingFragment StoreEntitySet="OrderAttributeValueDecimal">
+                <ScalarProperty Name="AttributeValueID" ColumnName="AttributeValueID" />
+                <ScalarProperty Name="AttributeID" ColumnName="AttributeID" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="LastModificationTime" ColumnName="LastModificationTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderAttributeValueImage">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.OrderAttributeValueImage">
+              <MappingFragment StoreEntitySet="OrderAttributeValueImage">
+                <ScalarProperty Name="AttributeValueID" ColumnName="AttributeValueID" />
+                <ScalarProperty Name="AttributeID" ColumnName="AttributeID" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="LastModificationTime" ColumnName="LastModificationTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderAttributeValueInt">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.OrderAttributeValueInt">
+              <MappingFragment StoreEntitySet="OrderAttributeValueInt">
+                <ScalarProperty Name="AttributeValueID" ColumnName="AttributeValueID" />
+                <ScalarProperty Name="AttributeID" ColumnName="AttributeID" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="LastModificationTime" ColumnName="LastModificationTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderAttributeValueVarchar">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.OrderAttributeValueVarchar">
+              <MappingFragment StoreEntitySet="OrderAttributeValueVarchar">
+                <ScalarProperty Name="AttributeValueID" ColumnName="AttributeValueID" />
+                <ScalarProperty Name="AttributeID" ColumnName="AttributeID" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="LastModificationTime" ColumnName="LastModificationTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderLine">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.OrderLine">
+              <MappingFragment StoreEntitySet="OrderLine">
+                <ScalarProperty Name="OrderLineID" ColumnName="OrderLineID" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="CustomerOrderLineNr" ColumnName="CustomerOrderLineNr" />
+                <ScalarProperty Name="CustomerOrderNr" ColumnName="CustomerOrderNr" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="isDispatched" ColumnName="isDispatched" />
+                <ScalarProperty Name="DispatchedToVendorID" ColumnName="DispatchedToVendorID" />
+                <ScalarProperty Name="VendorOrderNumber" ColumnName="VendorOrderNumber" />
+                <ScalarProperty Name="Response" ColumnName="Response" />
+                <ScalarProperty Name="CentralDelivery" ColumnName="CentralDelivery" />
+                <ScalarProperty Name="CustomerItemNumber" ColumnName="CustomerItemNumber" />
+                <ScalarProperty Name="WareHouseCode" ColumnName="WareHouseCode" />
+                <ScalarProperty Name="PriceOverride" ColumnName="PriceOverride" />
+                <ScalarProperty Name="LotLocation" ColumnName="LotLocation" />
+                <ScalarProperty Name="LotNumber" ColumnName="LotNumber" />
+                <ScalarProperty Name="PromisedShipDate" ColumnName="PromisedShipDate" />
+                <ScalarProperty Name="RequestedDate" ColumnName="RequestedDate" />
+                <ScalarProperty Name="CustomIdentifier" ColumnName="CustomIdentifier" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderLineAttributeValueBit">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.OrderLineAttributeValueBit">
+              <MappingFragment StoreEntitySet="OrderLineAttributeValueBit">
+                <ScalarProperty Name="AttributeValueID" ColumnName="AttributeValueID" />
+                <ScalarProperty Name="AttributeID" ColumnName="AttributeID" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="LastModificationTime" ColumnName="LastModificationTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderLineAttributeValueDateTime">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.OrderLineAttributeValueDateTime">
+              <MappingFragment StoreEntitySet="OrderLineAttributeValueDateTime">
+                <ScalarProperty Name="AttributeValueID" ColumnName="AttributeValueID" />
+                <ScalarProperty Name="AttributeID" ColumnName="AttributeID" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="LastModificationTime" ColumnName="LastModificationTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderLineAttributeValueDecimal">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.OrderLineAttributeValueDecimal">
+              <MappingFragment StoreEntitySet="OrderLineAttributeValueDecimal">
+                <ScalarProperty Name="AttributeValueID" ColumnName="AttributeValueID" />
+                <ScalarProperty Name="AttributeID" ColumnName="AttributeID" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="LastModificationTime" ColumnName="LastModificationTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderLineAttributeValueInt">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.OrderLineAttributeValueInt">
+              <MappingFragment StoreEntitySet="OrderLineAttributeValueInt">
+                <ScalarProperty Name="AttributeValueID" ColumnName="AttributeValueID" />
+                <ScalarProperty Name="AttributeID" ColumnName="AttributeID" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="LastModificationTime" ColumnName="LastModificationTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderLineAttributeValueVarchar">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.OrderLineAttributeValueVarchar">
+              <MappingFragment StoreEntitySet="OrderLineAttributeValueVarchar">
+                <ScalarProperty Name="AttributeValueID" ColumnName="AttributeValueID" />
+                <ScalarProperty Name="AttributeID" ColumnName="AttributeID" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="LastModificationTime" ColumnName="LastModificationTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="VendorItemNumber" ColumnName="VendorItemNumber" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="SourceVendorID" ColumnName="SourceVendorID" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="LastModificationTime" ColumnName="LastModificationTime" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="IsBlocked" ColumnName="IsBlocked" />
+                <ScalarProperty Name="ProductTypeID" ColumnName="ProductTypeID" />
+                <ScalarProperty Name="IsConfigurable" ColumnName="IsConfigurable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customer">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="FaxNumber" ColumnName="FaxNumber" />
+                <ScalarProperty Name="VatNumber" ColumnName="VatNumber" />
+                <ScalarProperty Name="IsBusiness" ColumnName="IsBusiness" />
+                <ScalarProperty Name="PrimaryAddressID" ColumnName="PrimaryAddressID" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="TaxID" ColumnName="TaxID" />
+                <ScalarProperty Name="CoCNumber" ColumnName="CoCNumber" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="EANIdentifier" ColumnName="EANIdentifier" />
+                <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+                <ScalarProperty Name="CustomerTelephone" ColumnName="CustomerTelephone" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerAddress">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.CustomerAddress">
+              <MappingFragment StoreEntitySet="CustomerAddress">
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Address">
+            <EntityTypeMapping TypeName="ConcentratorSport2000Model.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="AddressLine3" ColumnName="AddressLine3" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="CustomerAddress1" TypeName="ConcentratorSport2000Model.CustomerAddress1" StoreEntitySet="CustomerAddress">
+            <EndProperty Name="Customer">
+              <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+            </EndProperty>
+            <EndProperty Name="Address">
+              <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

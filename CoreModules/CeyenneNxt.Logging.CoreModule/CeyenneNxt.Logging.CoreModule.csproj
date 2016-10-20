@@ -7,8 +7,8 @@
     <ProjectGuid>{82FEEC17-453B-4006-A004-E41D4067E630}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CeyenneNxt.Settings.CoreModule</RootNamespace>
-    <AssemblyName>CeyenneNxt.Settings.CoreModule</AssemblyName>
+    <RootNamespace>CeyenneNxt.Logging.CoreModule</RootNamespace>
+    <AssemblyName>CeyenneNxt.Logging.CoreModule</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SimpleInjector, Version=3.2.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SimpleInjector.3.2.3\lib\net45\SimpleInjector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,23 +44,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bindings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LoggingModule.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\CeyenneNxt.Core\CeyenneNxt.Core.csproj">
-      <Project>{FA4FE0CC-457C-4632-9315-6205E13B534A}</Project>
-      <Name>CeyenneNxt.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="CeyenneNxt.Logging.CoreModule.nuspec">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\CeyenneNxt.Core\CeyenneNxt.Core.csproj">
+      <Project>{fa4fe0cc-457c-4632-9315-6205e13b534a}</Project>
+      <Name>CeyenneNxt.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>nuget pack $(ProjectPath) -IncludeReferencedProjects -Prop Platform=AnyCPU -OutputDirectory "$(SolutionDir)\..\NuGetSource" -Symbols</PostBuildEvent>
+    <PostBuildEvent>nuget pack $(ProjectPath) -Prop Platform=AnyCPU -OutputDirectory "$(SolutionDir)\..\NuGetSource"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

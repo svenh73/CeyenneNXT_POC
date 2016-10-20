@@ -8,5 +8,6 @@ namespace CeyenneNxt.Core.Interfaces
 {
   public interface IProcessor
   {
+    void Execute();
   }
 }

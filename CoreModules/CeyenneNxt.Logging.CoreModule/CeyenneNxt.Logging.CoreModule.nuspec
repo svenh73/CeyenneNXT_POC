@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>CeyenneNxt.Logging.SubModule</id>
+    <id>CeyenneNxt.Logging.CoreModule</id>
     <version>1.0.0</version>
     <authors>Diract-IT</authors>
     <owners>Diract-IT</owners>

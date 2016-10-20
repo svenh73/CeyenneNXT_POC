@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>CeyenneNxt.Core</id>
-    <version>1.0.12</version>
+    <version>1.0.15</version>
     <authors>Diract-IT</authors>
     <owners>Diract-IT</owners>
     <licenseUrl>http://diract-it.nl/licence</licenseUrl>
@@ -14,10 +14,12 @@
     <copyright>Copyright 2016</copyright>
     <tags>Ceyenne Concentrator Diract</tags>
     <dependencies>
-      <dependency id="SimpleInjector" version="3.2.2" />
+      <dependency id="SimpleInjector" version="3.2.3"/>
+      <dependency id="SimpleInjector.Extensions.ExecutionContextScoping" version="3.2.3"/>
+      <dependency id="SimpleInjector.Extensions.LifetimeScoping" version="3.2.3" />
+      <dependency id="SimpleInjector.Integration.WebApi" version="3.2.3" />
+      <dependency id="SimpleInjector.Integration.Web" version="3.2.3" />
+      <dependency id="SimpleInjector.Integration.Web.Mvc" version="3.2.3" />
     </dependencies>
   </metadata>
-  <files>
-    <file src="bin\*\Newtonsoft.Json.*" target="lib\net461\" />
-  </files>
 </package>

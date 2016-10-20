@@ -16,8 +16,8 @@
     <dependencies>
       <dependency id="CeyenneNxt.Core" />
       
-      <dependency id="CeyenneNxt.Logging.SubModule" />
-      <dependency id="CeyenneNxt.Settings.SubModule" />
+      <dependency id="CeyenneNxt.Logging.CoreModule" />
+      <dependency id="CeyenneNxt.Settings.CoreModule" />
 
       <dependency id="CeyenneNxt.Products.Module" />
     </dependencies>

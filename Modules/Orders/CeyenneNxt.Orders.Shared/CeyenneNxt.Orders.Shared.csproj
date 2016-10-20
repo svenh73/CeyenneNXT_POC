@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C0E6F59F-8B02-41E0-8FD4-9660D0059B4C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CeyenneNxt.Orders.Shared</RootNamespace>
+    <AssemblyName>CeyenneNxt.Orders.Shared</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants\Constants.cs" />
+    <Compile Include="Dtos\Address.cs" />
+    <Compile Include="Dtos\AddressType.cs" />
+    <Compile Include="Dtos\AttributeValue.cs" />
+    <Compile Include="Dtos\Country.cs" />
+    <Compile Include="Dtos\Customer.cs" />
+    <Compile Include="Dtos\CustomerAddressSelect.cs" />
+    <Compile Include="Dtos\CustomerNote.cs" />
+    <Compile Include="Dtos\CustomerNoteSearchResult.cs" />
+    <Compile Include="Dtos\CustomerPagingFilter.cs" />
+    <Compile Include="Dtos\CustomerSearchResult.cs" />
+    <Compile Include="Dtos\DashboardData.cs" />
+    <Compile Include="Dtos\DayCount.cs" />
+    <Compile Include="Dtos\Order.cs" />
+    <Compile Include="Dtos\OrderLine.cs" />
+    <Compile Include="Dtos\OrderLineQuantityUnit.cs" />
+    <Compile Include="Dtos\OrderLineStatus.cs" />
+    <Compile Include="Dtos\OrderLineStatusHistory.cs" />
+    <Compile Include="Dtos\OrderNote.cs" />
+    <Compile Include="Dtos\OrderNoteSearchResult.cs" />
+    <Compile Include="Dtos\OrderPagingFilter.cs" />
+    <Compile Include="Dtos\OrderSearchResult.cs" />
+    <Compile Include="Dtos\OrderStatus.cs" />
+    <Compile Include="Dtos\OrderStatusHistory.cs" />
+    <Compile Include="Dtos\OrderType.cs" />
+    <Compile Include="Dtos\OrderUpdateMessage.cs" />
+    <Compile Include="Dtos\OrderUpdateMessageLine.cs" />
+    <Compile Include="Dtos\PaymentMethod.cs" />
+    <Compile Include="Dtos\Refund.cs" />
+    <Compile Include="Dtos\RefundPagingFilter.cs" />
+    <Compile Include="Dtos\RefundSearchResult.cs" />
+    <Compile Include="Dtos\RefundStatus.cs" />
+    <Compile Include="Dtos\RefundStatusHistory.cs" />
+    <Compile Include="Dtos\ReturnCode.cs" />
+    <Compile Include="Dtos\SearchResult.cs" />
+    <Compile Include="Entities\CommunicationType.cs" />
+    <Compile Include="Entities\Country.cs" />
+    <Compile Include="Entities\Currency.cs" />
+    <Compile Include="Entities\Customer.cs" />
+    <Compile Include="Entities\CustomerAddress.cs" />
+    <Compile Include="Entities\CustomerAddressType.cs" />
+    <Compile Include="Entities\CustomerCommunication.cs" />
+    <Compile Include="Entities\CustomerNote.cs" />
+    <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\OrderAddress.cs" />
+    <Compile Include="Entities\OrderAttribute.cs" />
+    <Compile Include="Entities\OrderAttributeValue.cs" />
+    <Compile Include="Entities\OrderLine.cs" />
+    <Compile Include="Entities\OrderLineAttribute.cs" />
+    <Compile Include="Entities\OrderLineAttributeValue.cs" />
+    <Compile Include="Entities\OrderLineStatus.cs" />
+    <Compile Include="Entities\OrderLineStatusHistory.cs" />
+    <Compile Include="Entities\OrderNote.cs" />
+    <Compile Include="Entities\OrderNoteAction.cs" />
+    <Compile Include="Entities\OrderQuantityUnit.cs" />
+    <Compile Include="Entities\OrderStatus.cs" />
+    <Compile Include="Entities\OrderStatusHistory.cs" />
+    <Compile Include="Entities\OrderType.cs" />
+    <Compile Include="Entities\OrderUpdateMessage.cs" />
+    <Compile Include="Entities\OrderUpdateMessageLine.cs" />
+    <Compile Include="Entities\PaymentMethod.cs" />
+    <Compile Include="Entities\RefundStatus.cs" />
+    <Compile Include="Entities\RefundStatusHistory.cs" />
+    <Compile Include="Entities\ReturnCode.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Enums\OrderLineStatuses.cs" />
+    <Compile Include="Enums\OrderStatuses.cs" />
+    <Compile Include="Exceptions\OrderStatusDuplicationException.cs" />
+    <Compile Include="Interfaces\ICountryRepository.cs" />
+    <Compile Include="Interfaces\ICustomerAddressesRepository.cs" />
+    <Compile Include="Interfaces\ICustomerAddressTypesRepository.cs" />
+    <Compile Include="Interfaces\ICustomersRepository.cs" />
+    <Compile Include="Interfaces\IOrderAddressesRepository.cs" />
+    <Compile Include="Interfaces\IOrderAttributesRepository.cs" />
+    <Compile Include="Interfaces\IOrderLineAttributesRepository.cs" />
+    <Compile Include="Interfaces\IOrderLineModule.cs" />
+    <Compile Include="Interfaces\IOrderLinesRepository.cs" />
+    <Compile Include="Interfaces\IOrderLineStatusesRepository.cs" />
+    <Compile Include="Interfaces\IOrderLineStatusHistoryRepository.cs" />
+    <Compile Include="Interfaces\IOrderModule.cs" />
+    <Compile Include="Interfaces\IOrderPublishProcessor.cs" />
+    <Compile Include="Interfaces\IOrderQuantityUnitsRepository.cs" />
+    <Compile Include="Interfaces\IOrderRepository.cs" />
+    <Compile Include="Interfaces\IOrderStatuses.cs" />
+    <Compile Include="Interfaces\IOrderStatusHistoryRepository.cs" />
+    <Compile Include="Interfaces\IOrderSubscribeProcessor.cs" />
+    <Compile Include="Interfaces\IOrderTypesRepository.cs" />
+    <Compile Include="Objects\CustomerAddressSelect.cs" />
+    <Compile Include="Objects\CustomerNoteSearchResult.cs" />
+    <Compile Include="Objects\CustomerPagingFilter.cs" />
+    <Compile Include="Objects\CustomerSearchResult.cs" />
+    <Compile Include="Objects\DashboardData.cs" />
+    <Compile Include="Objects\DayCount.cs" />
+    <Compile Include="Objects\OrderNoteSearchResult.cs" />
+    <Compile Include="Objects\OrderPagingFilter.cs" />
+    <Compile Include="Objects\OrderSearchResult.cs" />
+    <Compile Include="Objects\PagingFilter.cs" />
+    <Compile Include="Objects\Refund.cs" />
+    <Compile Include="Objects\RefundPagingFilter.cs" />
+    <Compile Include="Objects\RefundSearchResult.cs" />
+    <Compile Include="Objects\SearchResult.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\CeyenneNxt.Core\CeyenneNxt.Core.csproj">
+      <Project>{FA4FE0CC-457C-4632-9315-6205E13B534A}</Project>
+      <Name>CeyenneNxt.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

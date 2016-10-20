@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3D85D960-FB93-46C6-B9AD-F8F5DF3AB9C7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CeyenneNxt.Orders.Module</RootNamespace>
+    <AssemblyName>CeyenneNxt.Orders.Module</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Portable.CommonServiceLocator.1.2.2\lib\net35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=3.2.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\SimpleInjector.3.2.3\lib\net45\SimpleInjector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector.Extensions.LifetimeScoping, Version=3.2.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\SimpleInjector.Extensions.LifetimeScoping.3.2.3\lib\net40-client\SimpleInjector.Extensions.LifetimeScoping.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bindings.cs" />
+    <Compile Include="Modules\BaseOrderModule.cs" />
+    <Compile Include="Modules\OrderLineModule.cs" />
+    <Compile Include="Modules\OrderModule.cs" />
+    <Compile Include="Processors\OrderPublishProcessor.cs" />
+    <Compile Include="Processors\OrderSubscribeProcessor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CountriesRepository.cs" />
+    <Compile Include="Repositories\CustomerAddressesRepository.cs" />
+    <Compile Include="Repositories\CustomerAddressTypesRepository.cs" />
+    <Compile Include="Repositories\CustomersRepository.cs" />
+    <Compile Include="Repositories\OrderAddressesRepository.cs" />
+    <Compile Include="Repositories\OrderAttributesRepository.cs" />
+    <Compile Include="Repositories\OrderLineAttributes.cs" />
+    <Compile Include="Repositories\OrderLinesRepository.cs" />
+    <Compile Include="Repositories\OrderLineStatuses.cs" />
+    <Compile Include="Repositories\OrderLineStatusHistoryRepository.cs" />
+    <Compile Include="Repositories\OrderQuantityUnitsRepository.cs" />
+    <Compile Include="Repositories\OrderRepository.cs" />
+    <Compile Include="Repositories\OrderStatusesRepository.cs" />
+    <Compile Include="Repositories\OrderStatusHistoryRepository.cs" />
+    <Compile Include="Repositories\OrderTypesRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ApiControllers\" />
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <Content Include="CeyenneNxt.Orders.Module.nuspec" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\CeyenneNxt.Core\CeyenneNxt.Core.csproj">
+      <Project>{FA4FE0CC-457C-4632-9315-6205E13B534A}</Project>
+      <Name>CeyenneNxt.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Products\CeyenneNxt.Products.Module\CeyenneNxt.Products.Module.csproj">
+      <Project>{E078E7FE-1CFC-47FD-9F9D-D630AAEA87C9}</Project>
+      <Name>CeyenneNxt.Products.Module</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Products\CeyenneNxt.Products.Shared\CeyenneNxt.Products.Shared.csproj">
+      <Project>{5B014AFB-288B-4566-9376-6FDB42DECC7E}</Project>
+      <Name>CeyenneNxt.Products.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CeyenneNxt.Orders.Shared\CeyenneNxt.Orders.Shared.csproj">
+      <Project>{C0E6F59F-8B02-41E0-8FD4-9660D0059B4C}</Project>
+      <Name>CeyenneNxt.Orders.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>nuget pack ..\..\CeyenneNxt.Orders.Module.nuspec -IncludeReferencedProjects -Prop Platform=AnyCPU -OutputDirectory "$(SolutionDir)..\NuGetSource"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
