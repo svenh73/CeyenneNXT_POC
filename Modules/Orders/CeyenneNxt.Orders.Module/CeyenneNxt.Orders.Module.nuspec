@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>CeyenneNxt.Orders.Module</id>
-    <version>1.0.11</version>
+    <version>1.0.13</version>
     <authors>Diract-IT</authors>
     <owners>Diract-IT</owners>
     <licenseUrl>http://diract-it.nl/licence</licenseUrl>
@@ -13,8 +13,8 @@
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>Ceyenne Concentrator Diract</tags>
+    <dependencies>
+      <dependency id="CeyenneNxt.Core"/>
+    </dependencies>
   </metadata>
-  <files>
-    <file src="\bin\**.dll" target="\lib\net461\"/>
-  </files>
 </package>

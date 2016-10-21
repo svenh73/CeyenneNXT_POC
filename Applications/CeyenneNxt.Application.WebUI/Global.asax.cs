@@ -1,32 +1,35 @@
-﻿using System.Web.Mvc;
-using System.Web.Optimization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Http;
+using System.Web.Http.Dispatcher;
 using System.Web.Routing;
 using CeyenneNxt.Core.Configuration;
 using CeyenneNxt.Core.Enums;
+using CeyenneNxt.Core.Factories;
 using CeyenneNxt.Core.Ioc;
-using CeyenneNxt.Core.Mvc;
 using SimpleInjector;
-using SimpleInjector.Extensions.ExecutionContextScoping;
-using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.WebApi;
 
-namespace CeyenneNxt.Web.WebUI
+namespace WebApplication1
 {
-  public class MvcApplication : System.Web.HttpApplication
+  public class WebApiApplication : System.Web.HttpApplication
   {
     protected void Application_Start()
     {
-      AreaRegistration.RegisterAllAreas();
-      FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-      RouteConfig.RegisterRoutes(RouteTable.Routes);
-      BundleConfig.RegisterBundles(BundleTable.Bundles);
+      GlobalConfiguration.Configure(WebApiConfig.Register);
 
-      ViewEngines.Engines.Clear();
-      ViewEngines.Engines.Add(new CeyenneNxtViewEngine());
+      var container = IocBootstrapper.Start(ApplicationType.WebApi);
 
-      var container = IocBootstrapper.Start(ApplicationType.WebUI);
+      container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
+      GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
 
-      ControllerBuilder.Current.SetControllerFactory(new IocControllerFactory(container));
+      var assemblyResolver = new CustomAssembliesResolver();
+      assemblyResolver.CustomerName = CNXTEnvironments.Current.CustomerName;
+      GlobalConfiguration.Configuration.Services.Replace(typeof(IAssembliesResolver), assemblyResolver);
+
+      GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerSelector), new NamespaceHttpControllerSelector(GlobalConfiguration.Configuration));
     }
   }
 }

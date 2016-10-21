@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Runtime.Remoting.Channels;
+using System.Web;
 using CeyenneNxt.Core.Configuration;
 using CeyenneNxt.Core.Enums;
 using CommonServiceLocator.SimpleInjectorAdapter;
@@ -23,17 +25,24 @@ namespace CeyenneNxt.Core.Ioc
       if (applicationType == ApplicationType.WebApi)
         {
           kernelLifestyle = new WebApiRequestLifestyle();
-          lifestyle = new WebApiRequestLifestyle();
       }
       else if (applicationType == ApplicationType.WebUI)
       {
         kernelLifestyle = new WebRequestLifestyle();
-        lifestyle = new WebRequestLifestyle();
       }
 
       var container = SimpleInjectorHelper.CreateKernel(kernelLifestyle);
 
-      var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+      string path = null;
+
+      if (applicationType == ApplicationType.Process)
+      {
+        path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+      }
+      else
+      {
+        path = HttpContext.Current.Server.MapPath("bin");
+      }
 
       SimpleInjectorHelper.LoadFromDirectory(container, applicationType, path, "CeyenneNxt.*dll");
       SimpleInjectorHelper.LoadFromDirectory(container, applicationType, path, CNXTEnvironments.Current.CustomerName + ".*dll");

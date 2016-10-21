@@ -69,7 +69,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CeyenneNxt.Application.Proc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CeyenneNxt.Application.WebApi", "Applications\CeyenneNxt.Application.WebApi\CeyenneNxt.Application.WebApi.csproj", "{D0DCD189-A6AA-42AB-B58E-08A81DBC636A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CeyenneNxt.Application.WebUI", "Applications\CeyenneNxt.Application.WebUI\CeyenneNxt.Application.WebUI.csproj", "{26C07B9E-403C-40FE-9326-F51601A5DE5F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1A373E0D-B946-4315-9F4C-E76FD87468E7}"
+	ProjectSection(SolutionItems) = preProject
+		WebEssentials2015-Settings.json = WebEssentials2015-Settings.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CeyenneNxt.Application.WebUI", "Applications\CeyenneNxt.Application.WebUI\CeyenneNxt.Application.WebUI.csproj", "{F50BD57D-9AEB-4BA6-8FA0-91CDB680CD54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -137,10 +142,10 @@ Global
 		{D0DCD189-A6AA-42AB-B58E-08A81DBC636A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0DCD189-A6AA-42AB-B58E-08A81DBC636A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0DCD189-A6AA-42AB-B58E-08A81DBC636A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26C07B9E-403C-40FE-9326-F51601A5DE5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26C07B9E-403C-40FE-9326-F51601A5DE5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26C07B9E-403C-40FE-9326-F51601A5DE5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26C07B9E-403C-40FE-9326-F51601A5DE5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F50BD57D-9AEB-4BA6-8FA0-91CDB680CD54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F50BD57D-9AEB-4BA6-8FA0-91CDB680CD54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F50BD57D-9AEB-4BA6-8FA0-91CDB680CD54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F50BD57D-9AEB-4BA6-8FA0-91CDB680CD54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -164,6 +169,6 @@ Global
 		{FE26762C-1C8E-4019-85C9-7907059FF6CA} = {F04C6376-44A7-478E-AB05-2377888C2F1A}
 		{7AB3752A-0780-41BF-8D08-E47E0C5EAC91} = {425FE244-820E-4829-BDB3-456D949C8384}
 		{D0DCD189-A6AA-42AB-B58E-08A81DBC636A} = {425FE244-820E-4829-BDB3-456D949C8384}
-		{26C07B9E-403C-40FE-9326-F51601A5DE5F} = {425FE244-820E-4829-BDB3-456D949C8384}
+		{F50BD57D-9AEB-4BA6-8FA0-91CDB680CD54} = {425FE244-820E-4829-BDB3-456D949C8384}
 	EndGlobalSection
 EndGlobal

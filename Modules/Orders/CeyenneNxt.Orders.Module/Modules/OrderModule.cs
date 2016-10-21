@@ -235,25 +235,25 @@ namespace CeyenneNxt.Orders.Module.Modules
     }
 
 
-    public SearchResult<OrderSearchResult> Search(OrderPagingFilter filter)
+    public SearchResultDto<OrderSearchResultDto> Search(OrderPagingFilterDto filterDto)
     {
       using (var sqlConnection = GetNewConnection())
       {
+        var filter = Mapper.Map<OrderPagingFilterDto, OrderPagingFilter>(filterDto);
         var orders = ServiceLocator.Current.GetInstance<IOrderRepository>();
         var result = orders.Search(filter, sqlConnection);
-
-        return result;
+        return Mapper.Map<SearchResult<OrderSearchResult>, SearchResultDto<OrderSearchResultDto>>(result);
       }
     }
 
-    public DashboardData GetDashboardData()
+    public DashboardDataDto GetDashboardData()
     {
       using (var sqlConnection = GetNewConnection())
       {
         var orders = ServiceLocator.Current.GetInstance<IOrderRepository>();
         var result = orders.GetDashboardData(sqlConnection);
+        return Mapper.Map<DashboardData, DashboardDataDto>(result);
 
-        return result;
       }
     }
 
@@ -315,11 +315,12 @@ namespace CeyenneNxt.Orders.Module.Modules
       }
     }
 
-    public IEnumerable<OrderType> GetAllTypes()
+    public IEnumerable<OrderTypeDto> GetAllTypes()
     {
       using (var connection = GetNewConnection())
       {
-        return OrderTypesRepository.GetAll(connection);
+        var types = OrderTypesRepository.GetAll(connection);
+        return types.Select(t => Mapper.Map<OrderType, OrderTypeDto>(t)); 
       }
     }
 

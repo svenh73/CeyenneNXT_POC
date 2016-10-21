@@ -112,7 +112,6 @@
   <ItemGroup>
     <Compile Include="ApiControllers\ProductController.cs" />
     <Compile Include="Bindings.cs" />
-    <Compile Include="Communication\ProductCommunicator.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Modules\ProductModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -134,11 +133,11 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <Content Include="Content\Base\SiteProduct.css" />
-    <None Include="Views\Base\Product\About.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Scripts\Base\" />
+    <Folder Include="UI\base\app\" />
+    <Folder Include="UI\base\scripts\" />
+    <Folder Include="UI\base\theme\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

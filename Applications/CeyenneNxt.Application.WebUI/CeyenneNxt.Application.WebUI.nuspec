@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>CeyenneNxt.Web.WebUI</id>
-    <version>1.0.5</version>
+    <id>CeyenneNxt.Application.WebUI</id>
+    <version>1.0.3</version>
     <authors>Diract-IT</authors>
     <owners>Diract-IT</owners>
     <licenseUrl>http://diract-it.nl/licence</licenseUrl>
@@ -13,20 +13,18 @@
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>Ceyenne Concentrator Diract</tags>
-    <!--<dependencies>
-      <dependency id="CeyenneNxt.Core" />
-
-      <dependency id="CeyenneNxt.Logging.CoreModule" />
-      <dependency id="CeyenneNxt.Settings.CoreModule" />
-
-      <dependency id="CeyenneNxt.Products.Module" />
-    </dependencies>-->
+    <dependencies>
+      <dependency id="CeyenneNxt.Core"/>
+    </dependencies>
   </metadata>
   <files>
-    <file src="Global.asax" target="\"/>
-    <file src="bin\CeyenneNxt.*.dll" target="\lib\net461\"/>
-    <file src="..\..\Modules\*\content\Base\*.*" target="content\Content\Base\" />
-    <file src="..\..\Modules\*\scripts\Base\*.*" target="content\Scripts\Base\" />
-    <file src="..\..\Modules\*\CeyenneNxt.Products.Module\views\Base\Product\*.*" target="content\Views\Base\Product" exclude="**\_ViewStart.cshtml" />
+    <file src="\bin\*.dll" target="\lib\net461\"/>
+    <file src="\app\**.html" target="content\app\" />
+    <file src="\app\**.ts" target="content\app\" />
+    <file src="\content\**.*" target="content\content\" />
+    <file src="\scripts\**.*" target="content\scripts\" />
+    <file src="\theme\**.*" target="content\theme\" />
+    <file src="index.html" target="content\" />
+    <file src="global.asax" target="content\" />
   </files>
 </package>

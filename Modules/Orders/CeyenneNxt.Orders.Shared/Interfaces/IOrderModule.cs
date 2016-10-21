@@ -14,8 +14,8 @@ namespace CeyenneNxt.Orders.Shared.Interfaces
     int AddStatus(int orderID, string statusCode, DateTime timestamp);
     Order CreateOrder(OrderDto order);
     IEnumerable<OrderStatus> GetAllStatuses();
-    IEnumerable<OrderType> GetAllTypes();
-    DashboardData GetDashboardData();
+    IEnumerable<OrderTypeDto> GetAllTypes();
+    DashboardDataDto GetDashboardData();
     Order GetFullByExternalID(string identifier);
     Order GetFullByID(int id);
     List<Order> GetNotDispatchedOrders();
@@ -24,7 +24,7 @@ namespace CeyenneNxt.Orders.Shared.Interfaces
     IEnumerable<int> GetOrderIDsByLatestStatus(string statusCode, string orderTypeCode);
     IEnumerable<OrderStatusHistory> GetStatusHistoryByOrderID(int orderID);
     void Hold(int orderID, bool holdStatus);
-    SearchResult<OrderSearchResult> Search(OrderPagingFilter filter);
+    SearchResultDto<OrderSearchResultDto> Search(OrderPagingFilterDto filter);
     void SetDispatched(int orderID, DateTime dispatchedAt);
     Order UpdateOrder(Order order);
   }

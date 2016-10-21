@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CeyenneNxt.Core.Enums;
 using CeyenneNxt.Core.Interfaces;
+using CeyenneNxt.Orders.Module.Controllers;
 using CeyenneNxt.Orders.Module.Modules;
 using CeyenneNxt.Orders.Module.Processors;
 using CeyenneNxt.Orders.Module.Repositories;
@@ -12,6 +13,7 @@ using CeyenneNxt.Orders.Shared.Interfaces;
 using CeyenneNxt.Products.Module.Modules;
 using CeyenneNxt.Products.Shared.Interfaces;
 using CeyenneNXT.Orders.DataAccess.Repositories;
+using CeyenneNXT.Orders.WebApi.Controllers;
 using SimpleInjector;
 using SimpleInjector.Advanced;
 
@@ -37,6 +39,8 @@ namespace CeyenneNxt.Orders.Module
           }
         case ApplicationType.WebUI:
           {
+            container.Register<IOrdersController, OrdersController>(lifeStyle);
+            container.Register<IOrderStatusController, OrderStatusController>(lifeStyle);
             break;
           }
       }

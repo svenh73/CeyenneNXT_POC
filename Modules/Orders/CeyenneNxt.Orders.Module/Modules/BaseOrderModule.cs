@@ -53,8 +53,11 @@ namespace CeyenneNxt.Orders.Module.Modules
             cfg.CreateMap<Country, CountryDto>();
 
             cfg.CreateMap(typeof(SearchResultDto<>), typeof(SearchResult<>));
+            cfg.CreateMap(typeof(SearchResult<>), typeof(SearchResultDto<>));
+            //cfg.CreateMap(typeof(SearchResult<OrderSearchResult>), typeof(SearchResultDto<OrderSearchResultDto>));
             cfg.CreateMap<OrderPagingFilterDto, OrderPagingFilter>();
             cfg.CreateMap<OrderSearchResultDto, OrderSearchResult>();
+            cfg.CreateMap<OrderSearchResult, OrderSearchResultDto>();
             cfg.CreateMap<OrderLineDto, OrderLine>()
               .ForMember(c => c.QuantityUnit, opt => opt.MapFrom(c => c.OrderLineQuantityUnit));
 
@@ -72,7 +75,7 @@ namespace CeyenneNxt.Orders.Module.Modules
 
             cfg.CreateMap<OrderLineQuantityUnitDto, OrderLineQuantityUnit>();
 
-            cfg.CreateMap<DashboardDataDto, DashboardData>();
+            cfg.CreateMap<DashboardData, DashboardDataDto>();
             cfg.CreateMap<DayCount, DayCountDto>();
             cfg.CreateMap<OrderStatusHistory, OrderStatusHistoryDto>();
             cfg.CreateMap<OrderStatus, OrderStatusDto>();
