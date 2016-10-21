@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace CeyenneNxt.Products.Shared.Interfaces
 {
-  public interface IProductUIController
+  public interface IProductController
   {
     
   }

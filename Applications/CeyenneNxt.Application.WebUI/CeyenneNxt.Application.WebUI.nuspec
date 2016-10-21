@@ -15,6 +15,12 @@
     <tags>Ceyenne Concentrator Diract</tags>
     <dependencies>
       <dependency id="CeyenneNxt.Core"/>
+      <dependency id="SimpleInjector" version="3.2.3"/>
+      <dependency id="SimpleInjector.Extensions.ExecutionContextScoping" version="3.2.3"/>
+      <dependency id="SimpleInjector.Extensions.LifetimeScoping" version="3.2.3" />
+      <dependency id="SimpleInjector.Integration.WebApi" version="3.2.3" />
+      <dependency id="SimpleInjector.Integration.Web" version="3.2.3" />
+      <dependency id="SimpleInjector.Integration.Web.Mvc" version="3.2.3" />
     </dependencies>
   </metadata>
   <files>
