@@ -19,12 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CeyenneNxt.Modules.Deployme
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CeyenneNxt.Core", "Core\CeyenneNxt.Core\CeyenneNxt.Core.csproj", "{FA4FE0CC-457C-4632-9315-6205E13B534A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{E8A1FA06-8BEF-4A06-94E1-1F6B627275C5}"
-	ProjectSection(SolutionItems) = preProject
-		ReadMe.txt = ReadMe.txt
-		UpdateNuGetPackages.ps1 = UpdateNuGetPackages.ps1
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{7464AEA4-AAC6-484F-9250-6E49F2815F59}"
 	ProjectSection(SolutionItems) = preProject
 		Config\environment.generic.config = Config\environment.generic.config
