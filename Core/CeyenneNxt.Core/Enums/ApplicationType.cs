@@ -9,7 +9,6 @@ namespace CeyenneNxt.Core.Enums
   public enum ApplicationType
   {
     Process,
-    WebApi,
-    WebUI
+    WebApi
   }
 }

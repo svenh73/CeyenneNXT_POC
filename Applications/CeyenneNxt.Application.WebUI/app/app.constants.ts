@@ -1,8 +1,8 @@
 ﻿module app {
     export class Constants {
-        static OrderApiBase: string = 'http://localhost';
+      static OrderApiBase: string = 'http://localhost:27428';
         static AuthServerBase: string = 'http://localhost/CeyenneNXT.Authentication.IdentityServer';
-        static ProductsApiBase: string = 'http://localhost';
+        static ProductsApiBase: string = 'http://localhost:27428';
         static StockApiBase: string = 'http://localhost/CeyenneNXT.Stock.WebApi';
         static ClientId: string = '8954da0689f2a744480aac172bcdffdbf1d91499262b9534144129caa170e9ab';
         static ResponseType: string = 'id_token token';

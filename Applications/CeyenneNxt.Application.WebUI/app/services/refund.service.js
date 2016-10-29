@@ -10,7 +10,7 @@ var app;
             }
             RefundService.prototype.search = function (filter) {
                 var _this = this;
-                return this.$http.get('/api/refunds/search', { params: filter })
+                return this.$http.get(app.Constants.OrderApiBase + '/api/refunds/search', { params: filter })
                     .then(function (result) {
                     return result.data;
                 }, function (response) {
@@ -20,7 +20,7 @@ var app;
             };
             RefundService.prototype.getByOrderID = function (id) {
                 var _this = this;
-                return this.$http.get('/api/refunds/getByOrderID/' + id)
+                return this.$http.get(app.Constants.OrderApiBase + '/api/refunds/getByOrderID/' + id)
                     .then(function (result) {
                     return result.data;
                 }, function (response) {
@@ -30,7 +30,7 @@ var app;
             };
             RefundService.prototype.getRefundStatuses = function () {
                 var _this = this;
-                return this.$http.get('/api/refunds/GetRefundStatuses')
+                return this.$http.get(app.Constants.OrderApiBase + '/api/refunds/GetRefundStatuses')
                     .then(function (result) {
                     return result.data;
                 }, function (response) {
@@ -40,7 +40,7 @@ var app;
             };
             RefundService.prototype.getReturnCodes = function () {
                 var _this = this;
-                return this.$http.get('/api/refunds/GetReturnCodes')
+                return this.$http.get(app.Constants.OrderApiBase + '/api/refunds/GetReturnCodes')
                     .then(function (result) {
                     return result.data;
                 }, function (response) {
@@ -50,7 +50,7 @@ var app;
             };
             RefundService.prototype.getPaymentMethods = function () {
                 var _this = this;
-                return this.$http.get('/api/refunds/getPaymentMethods')
+                return this.$http.get(app.Constants.OrderApiBase + '/api/refunds/getPaymentMethods')
                     .then(function (result) {
                     return result.data;
                 }, function (response) {
@@ -60,7 +60,7 @@ var app;
             };
             RefundService.prototype.create = function (refund) {
                 var _this = this;
-                return this.$http.post('/api/refunds', refund)
+                return this.$http.post(app.Constants.OrderApiBase + '/api/refunds', refund)
                     .then(function (result) {
                 }, function (response) {
                     _this.responseErrorHandlerService.handleResponseError(response);
@@ -69,7 +69,7 @@ var app;
             };
             RefundService.prototype.update = function (refund) {
                 var _this = this;
-                return this.$http.put('/api/refunds/update', refund)
+                return this.$http.put(app.Constants.OrderApiBase + '/api/refunds/update', refund)
                     .then(function (result) {
                 }, function (response) {
                     _this.responseErrorHandlerService.handleResponseError(response);

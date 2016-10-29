@@ -14,7 +14,7 @@
         ) { }
 
         create(orderRemark: OrderRemark): ng.IPromise<void> {
-            return this.$http.post('/api/orderRemarks', orderRemark)
+          return this.$http.post(app.Constants.OrderApiBase + '/api/orderRemarks', orderRemark)
                 .then((result: ng.IHttpPromiseCallbackArg<any>): void => {
                 }, (response: any) => {
                     this.responseErrorHandlerService.handleResponseError(response);
@@ -23,7 +23,7 @@
         }
 
         getByOrderId(orderId: number): ng.IPromise<OrderRemark[]> {
-            return this.$http.get('/api/orderRemarks/getByOrderId',
+          return this.$http.get(app.Constants.OrderApiBase + '/api/orderRemarks/getByOrderId',
                     { params: { orderId: orderId } })
                 .then((result: ng.IHttpPromiseCallbackArg<OrderRemark[]>): OrderRemark[] => {
                     return result.data;

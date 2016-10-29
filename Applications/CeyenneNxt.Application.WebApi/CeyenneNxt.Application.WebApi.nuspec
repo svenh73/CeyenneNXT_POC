@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>CeyenneNxt.Web.WebApi</id>
-    <version>1.0.10</version>
+    <version>1.0.12</version>
     <authors>Diract-IT</authors>
     <owners>Diract-IT</owners>
     <licenseUrl>http://diract-it.nl/licence</licenseUrl>
@@ -20,6 +20,7 @@
       <dependency id="SimpleInjector.Integration.WebApi" version="3.2.3" />
       <dependency id="SimpleInjector.Integration.Web" version="3.2.3" />
       <dependency id="SimpleInjector.Integration.Web.Mvc" version="3.2.3" />
+      <dependency id="CeyenneNxt.Core" version="1.0.16" />
     </dependencies>
   </metadata>
   <files>

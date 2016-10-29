@@ -16,7 +16,7 @@
         ) { }
 
         search(filter: CustomerPagingFilter): ng.IPromise<SearchResult<CustomerSearchResult>> {
-            return this.$http.get('/api/customers/search', { params: filter })
+          return this.$http.get(app.Constants.OrderApiBase + '/api/customers/search', { params: filter })
                 .then((result: ng.IHttpPromiseCallbackArg<SearchResult<CustomerSearchResult>>):
                     SearchResult<CustomerSearchResult> => {
                         return result.data;
@@ -27,7 +27,7 @@
         }
 
         getCustomerById(customerId: number): ng.IPromise<CustomerSearchResult> {
-            return this.$http.get('/api/customers/' + customerId)
+          return this.$http.get(app.Constants.OrderApiBase + '/api/customers/' + customerId)
                 .then((result: ng.IHttpPromiseCallbackArg<CustomerSearchResult>): CustomerSearchResult => {
                     return result.data;
                 }, (response: any) => {

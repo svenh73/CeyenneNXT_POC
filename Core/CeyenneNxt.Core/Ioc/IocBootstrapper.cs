@@ -18,18 +18,7 @@ namespace CeyenneNxt.Core.Ioc
   {
     public static Container Start(ApplicationType applicationType)
     {
-      // Default for processingt application
-      ScopedLifestyle kernelLifestyle = new ExecutionContextScopeLifestyle(); ;
-      Lifestyle lifestyle = Lifestyle.Transient;
-
-      if (applicationType == ApplicationType.WebApi)
-        {
-          kernelLifestyle = new WebApiRequestLifestyle();
-      }
-      else if (applicationType == ApplicationType.WebUI)
-      {
-        kernelLifestyle = new WebRequestLifestyle();
-      }
+      ScopedLifestyle kernelLifestyle = applicationType == ApplicationType.WebApi ? new WebApiRequestLifestyle() : new ExecutionContextScopeLifestyle();
 
       var container = SimpleInjectorHelper.CreateKernel(kernelLifestyle);
 

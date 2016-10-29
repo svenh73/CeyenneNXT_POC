@@ -16,18 +16,7 @@ namespace CeyenneNxt.Core.Interfaces
 
     public Lifestyle ApplicationTypeToLifeStyle(ApplicationType applicationType)
     {
-      if(applicationType == ApplicationType.WebApi)
-      {
-        return new WebApiRequestLifestyle();
-      }
-      else if (applicationType == ApplicationType.WebUI)
-      {
-        return new WebRequestLifestyle();
-      }
-      else
-      {
-        return Lifestyle.Transient;
-      }
+      return applicationType == ApplicationType.WebApi ? new WebApiRequestLifestyle() : Lifestyle.Transient;
     }
   }
 }

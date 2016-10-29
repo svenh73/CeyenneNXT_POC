@@ -1,4 +1,6 @@
-﻿module app.services {
+﻿
+
+module app.services {
     import OrderLine = CeyenneNXT.Orders.ApiContracts.Models.OrderLine;
     import Status = CeyenneNXT.Orders.ApiContracts.Models.OrderLineStatus;
     import StatusHistory = CeyenneNXT.Orders.ApiContracts.Models.OrderLineStatusHistory;
@@ -20,7 +22,7 @@
         ) { }
 
         getOrderLineById(orderLineId: number): ng.IPromise<OrderLine> {
-            return this.$http.get('/api/orderlines/' + orderLineId)
+          return this.$http.get(app.Constants.OrderApiBase + '/api/orderlines/' + orderLineId)
                 .then((result: ng.IHttpPromiseCallbackArg<OrderLine>): OrderLine => {
                     return result.data;
                 }, (response: any) => {
@@ -30,7 +32,7 @@
         }
 
         getAllStatuses(): ng.IPromise<Status[]> {
-            return this.$http.get('/api/orderlines/getAllStatuses')
+          return this.$http.get(app.Constants.OrderApiBase + '/api/orderlines/getAllStatuses')
                 .then((result: ng.IHttpPromiseCallbackArg<Status[]>): Status[] => {
                     return result.data;
                 }, (response: any) => {
@@ -40,7 +42,7 @@
         }
 
         createStatusHistory(model: OrderLineHistoryUpdate): ng.IPromise<void> {
-            return this.$http.post('/api/orderlines/createStatusHistory/?generateTimestamp=true', JSON.stringify(model))
+          return this.$http.post(app.Constants.OrderApiBase + '/api/orderlines/createStatusHistory/?generateTimestamp=true', JSON.stringify(model))
                 .then((result: ng.IHttpPromiseCallbackArg<any>): void => {
                 }, (response: any) => {
                     this.responseErrorHandlerService.handleResponseError(response);
@@ -49,7 +51,7 @@
         }
 
         getStatusHistory(orderLineId: number): ng.IPromise<StatusHistory[]> {
-            return this.$http.get('/api/orderlines/getStatusHistory/' + orderLineId)
+          return this.$http.get(app.Constants.OrderApiBase + '/api/orderlines/getStatusHistory/' + orderLineId)
                 .then((result: ng.IHttpPromiseCallbackArg<StatusHistory[]>): StatusHistory[] => {
                     return result.data;
                 }, (response: any) => {

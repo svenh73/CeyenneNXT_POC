@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 
-namespace CeyenneNXT.Orders.DataAccess.Repositories
+namespace CeyenneNxt.Core.Types
 {
   public abstract class BaseRepository
   {

@@ -38,6 +38,10 @@
       <HintPath>..\..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="IdentityModel, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\IdentityModel.2.0.0\lib\net45\IdentityModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Portable.CommonServiceLocator.1.2.2\lib\net35\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -46,9 +50,9 @@
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SimpleInjector, Version=3.2.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SimpleInjector.3.2.3\lib\net45\SimpleInjector.dll</HintPath>
@@ -118,11 +122,21 @@
     <Compile Include="Constants\QueueNames.cs" />
     <Compile Include="Constants\SchemaConstants.cs" />
     <Compile Include="Constants\TopicNames.cs" />
+    <Compile Include="Diagnostics\ConsoleTraceListener.cs" />
+    <Compile Include="Diagnostics\RollingFileTraceListener.cs" />
+    <Compile Include="Diagnostics\TraceListenerBase.cs" />
+    <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Entities\Setting.cs" />
+    <Compile Include="Entities\SettingValue.cs" />
     <Compile Include="Enums\ApplicationType.cs" />
     <Compile Include="Enums\EnviromentType.cs" />
     <Compile Include="Enums\MessageTypeAction.cs" />
+    <Compile Include="Enums\SettingDataType.cs" />
+    <Compile Include="Enums\SettingType.cs" />
     <Compile Include="Exceptions\EnvironmentException.cs" />
+    <Compile Include="Helpers\APITokenManager.cs" />
     <Compile Include="Helpers\Hashing.cs" />
+    <Compile Include="Interfaces\CoreModules\ISettingsRepository.cs" />
     <Compile Include="Ioc\IocBootstrapper.cs" />
     <Compile Include="Interfaces\BindingContainer.cs" />
     <Compile Include="Interfaces\Controllers\IAccountController.cs" />
@@ -137,7 +151,16 @@
     <Compile Include="Types\AuditEntity.cs" />
     <Compile Include="Types\BaseModule.cs" />
     <Compile Include="Types\BaseRepository.cs" />
+    <Compile Include="Types\EntityTraceModel.cs" />
     <Compile Include="Types\PagingFilter.cs" />
+    <Compile Include="Dtos\Settings\BaseSettingDto.cs" />
+    <Compile Include="Dtos\Settings\ChannelSettingDto.cs" />
+    <Compile Include="Dtos\Settings\GeneralSettingDto.cs" />
+    <Compile Include="Dtos\Settings\GlobalSettingDto.cs" />
+    <Compile Include="Dtos\Settings\SettingsCollection.cs" />
+    <Compile Include="Dtos\Settings\SettingValueDto.cs" />
+    <Compile Include="Dtos\Settings\VendorSettingDto.cs" />
+    <Compile Include="Types\TraceModel.cs" />
     <Compile Include="WebApi\CustomAssemblyResolver.cs" />
     <Compile Include="WebApi\NamespaceHttpControllerSelector.cs" />
     <Compile Include="Interfaces\ICommunicator.cs" />

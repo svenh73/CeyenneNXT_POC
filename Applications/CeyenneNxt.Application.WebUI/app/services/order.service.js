@@ -13,7 +13,7 @@ var app;
             //}
             OrderService.prototype.search = function (filter) {
                 var _this = this;
-                return this.$http.get('/api/orders/search', { params: filter })
+                return this.$http.get(app.Constants.OrderApiBase + '/api/orders/search', { params: filter })
                     .then(function (result) {
                     return result.data;
                 }, function (response) {
@@ -23,7 +23,7 @@ var app;
             };
             OrderService.prototype.getOrderById = function (orderId) {
                 var _this = this;
-                return this.$http.get('/api/orders/' + orderId)
+                return this.$http.get(app.Constants.OrderApiBase + '/api/orders/' + orderId)
                     .then(function (result) {
                     return result.data;
                 }, function (response) {
@@ -33,7 +33,7 @@ var app;
             };
             OrderService.prototype.getDashboardData = function () {
                 var _this = this;
-                return this.$http.get('/api/orders/getDashboardData')
+                return this.$http.get(app.Constants.OrderApiBase + '/api/orders/getDashboardData')
                     .then(function (result) {
                     return result.data;
                 }, function (response) {
@@ -43,7 +43,7 @@ var app;
             };
             OrderService.prototype.changeHoldOrder = function (model) {
                 var _this = this;
-                return this.$http.put('/api/orders/hold', JSON.stringify(model))
+                return this.$http.put(app.Constants.OrderApiBase + '/api/orders/hold', JSON.stringify(model))
                     .then(function (result) {
                 }, function (response) {
                     _this.responseErrorHandlerService.handleResponseError(response);
@@ -52,7 +52,7 @@ var app;
             };
             OrderService.prototype.getAllTypes = function () {
                 var _this = this;
-                return this.$http.get('/api/orders/getAllTypes', { cache: true })
+                return this.$http.get(app.Constants.OrderApiBase + '/api/orders/getAllTypes', { cache: true })
                     .then(function (result) {
                     return result.data;
                 }, function (response) {

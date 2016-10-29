@@ -26,7 +26,7 @@
         ) { }
 
         search(filter: RefundPagingFilter): ng.IPromise<SearchResult<RefundSearchResult>> {
-            return this.$http.get('/api/refunds/search', { params: filter })
+          return this.$http.get(app.Constants.OrderApiBase + '/api/refunds/search', { params: filter })
                 .then((result: ng.IHttpPromiseCallbackArg<SearchResult<RefundSearchResult>>):
                     SearchResult<RefundSearchResult> => {
                     return result.data;
@@ -37,7 +37,7 @@
         }
 
         getByOrderID(id: number): ng.IPromise<Refund[]> {
-            return this.$http.get('/api/refunds/getByOrderID/' + id)
+          return this.$http.get(app.Constants.OrderApiBase + '/api/refunds/getByOrderID/' + id)
                 .then((result: ng.IHttpPromiseCallbackArg<Refund[]>): Refund[] => {
                     return result.data;
                 }, (response: any) => {
@@ -47,7 +47,7 @@
         }
 
         getRefundStatuses(): ng.IPromise<RefundStatus[]> {
-            return this.$http.get('/api/refunds/GetRefundStatuses')
+          return this.$http.get(app.Constants.OrderApiBase + '/api/refunds/GetRefundStatuses')
                 .then((result: ng.IHttpPromiseCallbackArg<RefundStatus[]>): RefundStatus[] => {
                     return result.data;
                 }, (response: ng.IHttpPromiseCallbackArg<any>) => {
@@ -57,7 +57,7 @@
         }
 
         getReturnCodes(): ng.IPromise<ReturnCode[]> {
-            return this.$http.get('/api/refunds/GetReturnCodes')
+          return this.$http.get(app.Constants.OrderApiBase + '/api/refunds/GetReturnCodes')
                 .then((result: ng.IHttpPromiseCallbackArg<ReturnCode[]>): ReturnCode[] => {
                     return result.data;
                 }, (response: ng.IHttpPromiseCallbackArg<any>) => {
@@ -67,7 +67,7 @@
         }
 
         getPaymentMethods(): ng.IPromise<PaymentMethod[]> {
-            return this.$http.get('/api/refunds/getPaymentMethods')
+          return this.$http.get(app.Constants.OrderApiBase + '/api/refunds/getPaymentMethods')
                 .then((result: ng.IHttpPromiseCallbackArg<PaymentMethod[]>): PaymentMethod[] => {
                     return result.data;
                 }, (response: ng.IHttpPromiseCallbackArg<any>) => {
@@ -77,7 +77,7 @@
         }
 
         create(refund: Refund): ng.IPromise<void> {
-            return this.$http.post('/api/refunds', refund)
+          return this.$http.post(app.Constants.OrderApiBase + '/api/refunds', refund)
                 .then((result: ng.IHttpPromiseCallbackArg<any>): void => {
                 }, (response: any) => {
                     this.responseErrorHandlerService.handleResponseError(response);
@@ -86,7 +86,7 @@
         }
 
         update(refund: Refund): ng.IPromise<void> {
-            return this.$http.put('/api/refunds/update', refund)
+          return this.$http.put(app.Constants.OrderApiBase + '/api/refunds/update', refund)
                 .then((result: ng.IHttpPromiseCallbackArg<any>): void => {
                 }, (response: any) => {
                     this.responseErrorHandlerService.handleResponseError(response);

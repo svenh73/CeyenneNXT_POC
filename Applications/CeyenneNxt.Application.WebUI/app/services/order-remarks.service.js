@@ -10,7 +10,7 @@ var app;
             }
             OrderRemarkService.prototype.create = function (orderRemark) {
                 var _this = this;
-                return this.$http.post('/api/orderRemarks', orderRemark)
+                return this.$http.post(app.Constants.OrderApiBase + '/api/orderRemarks', orderRemark)
                     .then(function (result) {
                 }, function (response) {
                     _this.responseErrorHandlerService.handleResponseError(response);
@@ -19,7 +19,7 @@ var app;
             };
             OrderRemarkService.prototype.getByOrderId = function (orderId) {
                 var _this = this;
-                return this.$http.get('/api/orderRemarks/getByOrderId', { params: { orderId: orderId } })
+                return this.$http.get(app.Constants.OrderApiBase + '/api/orderRemarks/getByOrderId', { params: { orderId: orderId } })
                     .then(function (result) {
                     return result.data;
                 }, function (response) {

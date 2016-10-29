@@ -3,9 +3,9 @@ var app;
     var Constants = (function () {
         function Constants() {
         }
-        Constants.OrderApiBase = 'http://localhost';
+        Constants.OrderApiBase = 'http://localhost:27428';
         Constants.AuthServerBase = 'http://localhost/CeyenneNXT.Authentication.IdentityServer';
-        Constants.ProductsApiBase = 'http://localhost';
+        Constants.ProductsApiBase = 'http://localhost:27428';
         Constants.StockApiBase = 'http://localhost/CeyenneNXT.Stock.WebApi';
         Constants.ClientId = '8954da0689f2a744480aac172bcdffdbf1d91499262b9534144129caa170e9ab';
         Constants.ResponseType = 'id_token token';

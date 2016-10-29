@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using AutoMapper;
-using CeyenneNxt.Orders.Module.Modules;
 using CeyenneNxt.Orders.Shared.Dtos;
 using CeyenneNxt.Orders.Shared.Dtos.Messages;
 using CeyenneNxt.Orders.Shared.Entities;
 using CeyenneNxt.Orders.Shared.Exceptions;
 using CeyenneNxt.Orders.Shared.Interfaces;
+using CeyenneNXT.Orders.WebApi.Controllers;
 
-namespace CeyenneNXT.Orders.WebApi.Controllers
+namespace CeyenneNxt.Orders.Module.Controllers
 {
   public class OrderStatusController : ApiController, IOrderStatusController
   {

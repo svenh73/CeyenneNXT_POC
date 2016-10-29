@@ -10,8 +10,6 @@ using CeyenneNxt.Orders.Module.Modules;
 using CeyenneNxt.Orders.Module.Processors;
 using CeyenneNxt.Orders.Module.Repositories;
 using CeyenneNxt.Orders.Shared.Interfaces;
-using CeyenneNxt.Products.Module.Modules;
-using CeyenneNxt.Products.Shared.Interfaces;
 using CeyenneNXT.Orders.DataAccess.Repositories;
 using CeyenneNXT.Orders.WebApi.Controllers;
 using SimpleInjector;
@@ -35,12 +33,6 @@ namespace CeyenneNxt.Orders.Module
           }
         case ApplicationType.WebApi:
           {
-            break;
-          }
-        case ApplicationType.WebUI:
-          {
-            container.Register<IOrdersController, OrdersController>(lifeStyle);
-            container.Register<IOrderStatusController, OrderStatusController>(lifeStyle);
             break;
           }
       }

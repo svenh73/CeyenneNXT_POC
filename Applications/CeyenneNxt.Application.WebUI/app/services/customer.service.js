@@ -10,7 +10,7 @@ var app;
             }
             CustomerService.prototype.search = function (filter) {
                 var _this = this;
-                return this.$http.get('/api/customers/search', { params: filter })
+                return this.$http.get(app.Constants.OrderApiBase + '/api/customers/search', { params: filter })
                     .then(function (result) {
                     return result.data;
                 }, function (response) {
@@ -20,7 +20,7 @@ var app;
             };
             CustomerService.prototype.getCustomerById = function (customerId) {
                 var _this = this;
-                return this.$http.get('/api/customers/' + customerId)
+                return this.$http.get(app.Constants.OrderApiBase + '/api/customers/' + customerId)
                     .then(function (result) {
                     return result.data;
                 }, function (response) {

@@ -34,7 +34,7 @@
         }
 
         displayOrderDetails(id: number): void {
-            this.$location.path('/orders-details/' + id);
+            this.$location.path( '/orders-details/' + id);
         }
 
         createNote(): void {

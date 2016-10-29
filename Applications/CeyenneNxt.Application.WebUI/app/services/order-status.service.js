@@ -10,7 +10,7 @@ var app;
             }
             OrderStatusService.prototype.getAllStatuses = function () {
                 var _this = this;
-                return this.$http.get('/api/orderstatus', { cache: true })
+                return this.$http.get(app.Constants.OrderApiBase + '/api/orderstatus', { cache: true })
                     .then(function (result) {
                     return result.data;
                 }, function (response) {
@@ -21,7 +21,7 @@ var app;
             ;
             OrderStatusService.prototype.changeStatus = function (model) {
                 var _this = this;
-                return this.$http.post('/api/orderstatus/?generateTimestamp=true', JSON.stringify(model))
+                return this.$http.post(app.Constants.OrderApiBase + '/api/orderstatus/?generateTimestamp=true', JSON.stringify(model))
                     .then(function (result) {
                 }, function (response) {
                     _this.responseErrorHandlerService.handleResponseError(response);
@@ -31,7 +31,7 @@ var app;
             ;
             OrderStatusService.prototype.getStatusHistory = function (orderId) {
                 var _this = this;
-                return this.$http.get('/api/orderstatus/getStatusHistory/' + orderId)
+                return this.$http.get(app.Constants.OrderApiBase + '/api/orderstatus/getStatusHistory/' + orderId)
                     .then(function (result) {
                     return result.data;
                 }, function (response) {

@@ -23,10 +23,6 @@ namespace CeyenneNxt.Logging.CoreModule
           {
             break;
           }
-        case ApplicationType.WebUI:
-          {
-            break;
-          }
       }
 
       container.Register<ILoggingModule, LoggingModule>(lifeStyle);

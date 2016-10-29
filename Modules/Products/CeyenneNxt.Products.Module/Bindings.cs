@@ -1,5 +1,6 @@
 ﻿using CeyenneNxt.Core.Enums;
 using CeyenneNxt.Core.Interfaces;
+using CeyenneNxt.Products.Module.Controllers;
 using CeyenneNxt.Products.Module.Modules;
 using CeyenneNxt.Products.Module.Repositories;
 using CeyenneNxt.Products.Shared.Interfaces;
@@ -22,12 +23,7 @@ namespace CeyenneNxt.Products.Module
           }
         case ApplicationType.WebApi:
           {
-            container.Register<IProductApiController, CeyenneNxt.Products.Module.ApiControllers.ProductController>(lifeStyle);
-            break;
-          }
-        case ApplicationType.WebUI:
-          {
-            container.Register<IProductController, CeyenneNxt.Products.Module.Controllers.ProductController>(lifeStyle);
+            container.Register<IProductApiController, ProductController>(lifeStyle);
             break;
           }
       }

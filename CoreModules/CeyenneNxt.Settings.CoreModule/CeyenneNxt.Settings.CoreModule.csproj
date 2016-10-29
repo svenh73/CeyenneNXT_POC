@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bindings.cs" />
+    <Compile Include="Repositories\SettingsRepository.cs" />
     <Compile Include="SettingModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -61,6 +62,7 @@
       <Name>CeyenneNxt.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>nuget pack $(ProjectPath) -Prop Platform=AnyCPU -OutputDirectory "$(SolutionDir)\..\NuGetSource"</PostBuildEvent>

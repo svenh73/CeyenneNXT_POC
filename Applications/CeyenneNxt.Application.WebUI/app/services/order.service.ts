@@ -29,7 +29,7 @@
         //}
 
         search(filter: OrderPagingFilter): ng.IPromise<SearchResult<OrderSearchResultVM>> {
-            return this.$http.get('/api/orders/search', { params: filter })
+          return this.$http.get(app.Constants.OrderApiBase + '/api/orders/search', { params: filter })
                 .then((result: ng.IHttpPromiseCallbackArg<SearchResult<OrderSearchResultVM>>):
                     SearchResult<OrderSearchResultVM> => {
                         return result.data;
@@ -40,7 +40,7 @@
         }
 
         getOrderById(orderId: number): ng.IPromise<Order> {
-            return this.$http.get('/api/orders/' + orderId)
+          return this.$http.get(app.Constants.OrderApiBase + '/api/orders/' + orderId)
                 .then((result: ng.IHttpPromiseCallbackArg<Order>): Order => {
                     return result.data;
                 }, (response: any) => {
@@ -50,7 +50,7 @@
         }
 
         getDashboardData(): ng.IPromise<DashboardData> {
-            return this.$http.get('/api/orders/getDashboardData')
+          return this.$http.get(app.Constants.OrderApiBase + '/api/orders/getDashboardData')
                 .then((result: ng.IHttpPromiseCallbackArg<DashboardData>): DashboardData => {
                     return result.data;
                 }, (response: any) => {
@@ -60,7 +60,7 @@
         }
 
         changeHoldOrder(model: OrderHoldUpdate): ng.IPromise<void> {
-            return this.$http.put('/api/orders/hold', JSON.stringify(model))
+          return this.$http.put(app.Constants.OrderApiBase + '/api/orders/hold', JSON.stringify(model))
                 .then((result: ng.IHttpPromiseCallbackArg<any>): void => {
                 }, (response: any) => {
                     this.responseErrorHandlerService.handleResponseError(response);
@@ -69,7 +69,7 @@
         }
 
         getAllTypes(): ng.IPromise<OrderType[]> {
-            return this.$http.get('/api/orders/getAllTypes', { cache: true })
+          return this.$http.get(app.Constants.OrderApiBase + '/api/orders/getAllTypes', { cache: true })
                 .then((result: ng.IHttpPromiseCallbackArg<OrderType[]>): OrderType[] => {
                     return result.data;
                 }, (response: any) => {

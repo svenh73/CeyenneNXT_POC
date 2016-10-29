@@ -24,8 +24,6 @@ namespace CeyenneNxt.Core.Factories
 
     public override HttpControllerDescriptor SelectController(HttpRequestMessage request)
     {
-
-
       var routeData = request.GetRouteData();
 
       object controllerName;

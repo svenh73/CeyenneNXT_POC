@@ -8,6 +8,7 @@ namespace CeyenneNxt.Core.Constants
 {
   public static class SchemaConstants
   {
+    public const string Default = "DEF";
     public const string Orders = "ORD";
     public const string Products = "PRD";
   }

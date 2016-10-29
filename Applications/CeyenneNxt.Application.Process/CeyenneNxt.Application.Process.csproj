@@ -111,6 +111,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Config\diagnostics.generic.config">
+      <Link>diagnostics.generic.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\..\Config\environment.generic.config">
       <Link>environment.generic.config</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -16,10 +16,9 @@ namespace CeyenneNxt.Web.WebApi
       GlobalConfiguration.Configure(WebApiConfig.Register);
 
       var container = IocBootstrapper.Start(ApplicationType.WebApi);
+
       container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
       GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
-
-      
 
       var assemblyResolver = new CustomAssembliesResolver();
       assemblyResolver.CustomerName = CNXTEnvironments.Current.CustomerName;

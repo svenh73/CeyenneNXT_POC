@@ -19,7 +19,7 @@
         ) { }
 
         getAllStatuses(): ng.IPromise<OrderStatus[]> {
-            return this.$http.get('/api/orderstatus', { cache: true })
+          return this.$http.get(app.Constants.OrderApiBase + '/api/orderstatus', { cache: true })
                 .then((result: ng.IHttpPromiseCallbackArg<OrderStatus[]>): OrderStatus[] => {
                     return result.data;
                 }, (response: any) => {
@@ -29,7 +29,7 @@
         };
 
         changeStatus(model: OrderHistoryUpdate): ng.IPromise<void> {
-            return this.$http.post('/api/orderstatus/?generateTimestamp=true', JSON.stringify(model))
+          return this.$http.post(app.Constants.OrderApiBase + '/api/orderstatus/?generateTimestamp=true', JSON.stringify(model))
                 .then((result: ng.IHttpPromiseCallbackArg<any>): any => {
                 }, (response: any) => {
                     this.responseErrorHandlerService.handleResponseError(response);
@@ -38,7 +38,7 @@
         };
 
         getStatusHistory(orderId: number): ng.IPromise<OrderStatusHistory[]> {
-            return this.$http.get('/api/orderstatus/getStatusHistory/' + orderId)
+          return this.$http.get(app.Constants.OrderApiBase + '/api/orderstatus/getStatusHistory/' + orderId)
                 .then((result: ng.IHttpPromiseCallbackArg<OrderStatusHistory[]>): OrderStatusHistory[] => {
                     return result.data;
                 }, (response: any) => {

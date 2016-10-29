@@ -15,7 +15,7 @@
         ) { }
 
         search(customerID: number): ng.IPromise<CustomerNoteSearchResult[]> {
-            return this.$http.get('/api/customerNotes/search/' + customerID)
+          return this.$http.get(app.Constants.OrderApiBase + '/api/customerNotes/search/' + customerID)
                 .then((result: ng.IHttpPromiseCallbackArg<CustomerNoteSearchResult[]>): CustomerNoteSearchResult[] => {
                     return result.data;
                 }, (response: any) => {
@@ -25,7 +25,7 @@
         }
 
         create(note: CustomerNote): ng.IPromise<void> {
-            return this.$http.post('/api/customerNotes', note)
+          return this.$http.post(app.Constants.OrderApiBase + '/api/customerNotes', note)
                 .then((result: ng.IHttpPromiseCallbackArg<any>): void => {
                 }, (response: any) => {
                     this.responseErrorHandlerService.handleResponseError(response);

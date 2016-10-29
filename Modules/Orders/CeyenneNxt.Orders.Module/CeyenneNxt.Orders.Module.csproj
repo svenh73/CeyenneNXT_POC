@@ -77,7 +77,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bindings.cs" />
-    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="CommunicationModule\OrderCommunicationModule.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\OrderStatusController.cs" />
     <Compile Include="Modules\BaseOrderModule.cs" />
     <Compile Include="Modules\OrderLineModule.cs" />
@@ -101,9 +102,7 @@
     <Compile Include="Repositories\OrderStatusHistoryRepository.cs" />
     <Compile Include="Repositories\OrderTypesRepository.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ApiControllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <Content Include="CeyenneNxt.Orders.Module.nuspec" />
@@ -113,14 +112,6 @@
     <ProjectReference Include="..\..\..\Core\CeyenneNxt.Core\CeyenneNxt.Core.csproj">
       <Project>{FA4FE0CC-457C-4632-9315-6205E13B534A}</Project>
       <Name>CeyenneNxt.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Products\CeyenneNxt.Products.Module\CeyenneNxt.Products.Module.csproj">
-      <Project>{E078E7FE-1CFC-47FD-9F9D-D630AAEA87C9}</Project>
-      <Name>CeyenneNxt.Products.Module</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Products\CeyenneNxt.Products.Shared\CeyenneNxt.Products.Shared.csproj">
-      <Project>{5B014AFB-288B-4566-9376-6FDB42DECC7E}</Project>
-      <Name>CeyenneNxt.Products.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\CeyenneNxt.Orders.Shared\CeyenneNxt.Orders.Shared.csproj">
       <Project>{C0E6F59F-8B02-41E0-8FD4-9660D0059B4C}</Project>

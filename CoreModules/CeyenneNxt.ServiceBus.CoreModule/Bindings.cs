@@ -19,10 +19,6 @@ namespace CeyenneNxt.ServiceBus.CoreModule
         {
           break;
         }
-        case ApplicationType.WebUI:
-        {
-          break;
-        }
       }
 
       container.Register<IServiceBusModule, ServiceBusModule>(ApplicationTypeToLifeStyle(applicationType));

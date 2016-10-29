@@ -22,10 +22,6 @@ namespace CeyenneNxt.FileManagement.CoreModule
           {
             break;
           }
-        case ApplicationType.WebUI:
-          {
-            break;
-          }
       }
 
       container.Register<IFileManagingModule, FileManagingModule>(lifeStyle);

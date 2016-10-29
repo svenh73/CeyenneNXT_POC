@@ -1,28 +1,47 @@
-﻿using System.Web.Mvc;
-using CeyenneNxt.Core.Types;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Http;
+using CeyenneNxt.Products.Shared.Dtos;
 using CeyenneNxt.Products.Shared.Interfaces;
 
 namespace CeyenneNxt.Products.Module.Controllers
 {
-  public class ProductController : Controller, IProductController
+  //[Authorize]
+  public class ProductController : ApiController, IProductApiController
   {
-    public ActionResult Index()
+    public IProductModule ProductModule { get; private set; }
+
+    public ProductController(IProductModule productModule)
     {
-      return View();
+      ProductModule = productModule;
     }
 
-    public ActionResult About()
+    [HttpGet]
+    [Route("api/product")]
+    public List<ProductDto> Get()
     {
-      ViewBag.Message = "About CeyenneNxt";
-
-      return View();
+      return ProductModule.GetProducts();
+    }
+    [HttpGet]
+    [Route("api/product/{id}")]
+    public ProductDto Get(int id)
+    {
+      return ProductModule.GetProducts().FirstOrDefault(p => p.ID == id);
     }
 
-    public ActionResult Contact()
+    // POST api/values
+    public void Post([FromBody]string value)
     {
-      ViewBag.Message = "Your contact page.";
+    }
 
-      return View();
+    // PUT api/values/5
+    public void Put(int id, [FromBody]string value)
+    {
+    }
+
+    // DELETE api/values/5
+    public void Delete(int id)
+    {
     }
   }
 }

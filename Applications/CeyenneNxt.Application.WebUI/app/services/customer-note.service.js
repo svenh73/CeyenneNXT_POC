@@ -10,7 +10,7 @@ var app;
             }
             CustomerNoteService.prototype.search = function (customerID) {
                 var _this = this;
-                return this.$http.get('/api/customerNotes/search/' + customerID)
+                return this.$http.get(app.Constants.OrderApiBase + '/api/customerNotes/search/' + customerID)
                     .then(function (result) {
                     return result.data;
                 }, function (response) {
@@ -20,7 +20,7 @@ var app;
             };
             CustomerNoteService.prototype.create = function (note) {
                 var _this = this;
-                return this.$http.post('/api/customerNotes', note)
+                return this.$http.post(app.Constants.OrderApiBase + '/api/customerNotes', note)
                     .then(function (result) {
                 }, function (response) {
                     _this.responseErrorHandlerService.handleResponseError(response);

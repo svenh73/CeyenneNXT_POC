@@ -19,20 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CeyenneNxt.Modules.Deployme
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CeyenneNxt.Core", "Core\CeyenneNxt.Core\CeyenneNxt.Core.csproj", "{FA4FE0CC-457C-4632-9315-6205E13B534A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{E8A1FA06-8BEF-4A06-94E1-1F6B627275C5}"
-	ProjectSection(SolutionItems) = preProject
-		ReadMe.txt = ReadMe.txt
-		UpdateNuGetPackages.ps1 = UpdateNuGetPackages.ps1
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{7464AEA4-AAC6-484F-9250-6E49F2815F59}"
 	ProjectSection(SolutionItems) = preProject
+		Config\diagnostics.generic.config = Config\diagnostics.generic.config
 		Config\environment.generic.config = Config\environment.generic.config
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CeyenneNxt.ModulesUI.Deployment", "Deployment\CeyenneNxt.DeploymentUI\CeyenneNxt.ModulesUI.Deployment.csproj", "{EDC24B40-52F2-4EE1-9D5E-3D3827D4D464}"
-	ProjectSection(ProjectDependencies) = postProject
-		{00109C21-C2C7-471E-84D4-9D28AAAE948D} = {00109C21-C2C7-471E-84D4-9D28AAAE948D}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreModule", "CoreModule", "{42CEBE21-3D2C-40B8-82FA-4B7B8208436D}"
@@ -69,12 +59,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CeyenneNxt.Application.Proc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CeyenneNxt.Application.WebApi", "Applications\CeyenneNxt.Application.WebApi\CeyenneNxt.Application.WebApi.csproj", "{D0DCD189-A6AA-42AB-B58E-08A81DBC636A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1A373E0D-B946-4315-9F4C-E76FD87468E7}"
-	ProjectSection(SolutionItems) = preProject
-		WebEssentials2015-Settings.json = WebEssentials2015-Settings.json
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CeyenneNxt.Application.WebUI", "Applications\CeyenneNxt.Application.WebUI\CeyenneNxt.Application.WebUI.csproj", "{F50BD57D-9AEB-4BA6-8FA0-91CDB680CD54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CeyenneNxt.Orders.Tests", "Modules\Orders\CeyenneNxt.Orders.Shared\CeyenneNxt.Orders.Tests\CeyenneNxt.Orders.Tests.csproj", "{32A1CC9F-4B4E-4CE3-BC68-9C4CF7372E6D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stock", "Stock", "{EC8D8785-EC16-40B4-B754-BC26A27A0726}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vendor", "Vendor", "{873CD3BE-775F-4B91-AD91-A4E793A5D206}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Companies", "Companies", "{29EAD080-3E6A-46E3-97DE-91E127690ADB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,10 +83,6 @@ Global
 		{FA4FE0CC-457C-4632-9315-6205E13B534A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA4FE0CC-457C-4632-9315-6205E13B534A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA4FE0CC-457C-4632-9315-6205E13B534A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EDC24B40-52F2-4EE1-9D5E-3D3827D4D464}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EDC24B40-52F2-4EE1-9D5E-3D3827D4D464}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EDC24B40-52F2-4EE1-9D5E-3D3827D4D464}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EDC24B40-52F2-4EE1-9D5E-3D3827D4D464}.Release|Any CPU.Build.0 = Release|Any CPU
 		{82FEEC17-453B-4006-A004-E41D4067E630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{82FEEC17-453B-4006-A004-E41D4067E630}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82FEEC17-453B-4006-A004-E41D4067E630}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -146,6 +135,10 @@ Global
 		{F50BD57D-9AEB-4BA6-8FA0-91CDB680CD54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F50BD57D-9AEB-4BA6-8FA0-91CDB680CD54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F50BD57D-9AEB-4BA6-8FA0-91CDB680CD54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32A1CC9F-4B4E-4CE3-BC68-9C4CF7372E6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32A1CC9F-4B4E-4CE3-BC68-9C4CF7372E6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32A1CC9F-4B4E-4CE3-BC68-9C4CF7372E6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32A1CC9F-4B4E-4CE3-BC68-9C4CF7372E6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -153,7 +146,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{00109C21-C2C7-471E-84D4-9D28AAAE948D} = {AFCB1D08-54F2-44C8-A246-418BE1E21748}
 		{FA4FE0CC-457C-4632-9315-6205E13B534A} = {FDAB8BC2-DFED-4582-AD6E-8EB4D981A148}
-		{EDC24B40-52F2-4EE1-9D5E-3D3827D4D464} = {AFCB1D08-54F2-44C8-A246-418BE1E21748}
 		{44C30D64-3F22-48BF-BEB5-090D915C02E3} = {AFCB1D08-54F2-44C8-A246-418BE1E21748}
 		{82FEEC17-453B-4006-A004-E41D4067E630} = {42CEBE21-3D2C-40B8-82FA-4B7B8208436D}
 		{B87CA911-13E6-4FD3-B300-E7FAA04E7D85} = {42CEBE21-3D2C-40B8-82FA-4B7B8208436D}
@@ -170,5 +162,9 @@ Global
 		{7AB3752A-0780-41BF-8D08-E47E0C5EAC91} = {425FE244-820E-4829-BDB3-456D949C8384}
 		{D0DCD189-A6AA-42AB-B58E-08A81DBC636A} = {425FE244-820E-4829-BDB3-456D949C8384}
 		{F50BD57D-9AEB-4BA6-8FA0-91CDB680CD54} = {425FE244-820E-4829-BDB3-456D949C8384}
+		{32A1CC9F-4B4E-4CE3-BC68-9C4CF7372E6D} = {4B6832C8-CD7D-4691-9DE0-ABBB5BD1793D}
+		{EC8D8785-EC16-40B4-B754-BC26A27A0726} = {4EB1261D-3D5F-4030-AACB-7F756125FE46}
+		{873CD3BE-775F-4B91-AD91-A4E793A5D206} = {4EB1261D-3D5F-4030-AACB-7F756125FE46}
+		{29EAD080-3E6A-46E3-97DE-91E127690ADB} = {4EB1261D-3D5F-4030-AACB-7F756125FE46}
 	EndGlobalSection
 EndGlobal

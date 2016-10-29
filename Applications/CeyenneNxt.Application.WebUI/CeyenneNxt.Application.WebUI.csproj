@@ -53,14 +53,6 @@
       <HintPath>..\..\packages\CeyenneNxt.Orders.Module.1.0.13\lib\net461\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CommonServiceLocator.SimpleInjectorAdapter, Version=2.8.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\CeyenneNxt.Orders.Module.1.0.13\lib\net461\CommonServiceLocator.SimpleInjectorAdapter.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\CeyenneNxt.Orders.Module.1.0.13\lib\net461\Dapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -104,30 +96,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CeyenneNxt.Orders.Module.1.0.13\lib\net461\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SimpleInjector, Version=3.2.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\CeyenneNxt.Orders.Module.1.0.13\lib\net461\SimpleInjector.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SimpleInjector.Extensions.ExecutionContextScoping, Version=3.2.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\CeyenneNxt.Orders.Module.1.0.13\lib\net461\SimpleInjector.Extensions.ExecutionContextScoping.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SimpleInjector.Extensions.LifetimeScoping, Version=3.2.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\CeyenneNxt.Orders.Module.1.0.13\lib\net461\SimpleInjector.Extensions.LifetimeScoping.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SimpleInjector.Integration.Web, Version=3.2.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\CeyenneNxt.Orders.Module.1.0.13\lib\net461\SimpleInjector.Integration.Web.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SimpleInjector.Integration.Web.Mvc, Version=3.2.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SimpleInjector.Integration.Web.Mvc.3.2.3\lib\net40\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SimpleInjector.Integration.WebApi, Version=3.2.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\CeyenneNxt.Orders.Module.1.0.13\lib\net461\SimpleInjector.Integration.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http" />
@@ -480,36 +448,6 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\CoreModules\CeyenneNxt.FileManagement.CoreModule\CeyenneNxt.FileManagement.CoreModule.csproj">
-      <Project>{9f21c689-fa07-4399-b303-702e93f1ab8e}</Project>
-      <Name>CeyenneNxt.FileManagement.CoreModule</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CoreModules\CeyenneNxt.Logging.CoreModule\CeyenneNxt.Logging.CoreModule.csproj">
-      <Project>{82feec17-453b-4006-a004-e41d4067e630}</Project>
-      <Name>CeyenneNxt.Logging.CoreModule</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CoreModules\CeyenneNxt.ServiceBus.CoreModule\CeyenneNxt.ServiceBus.CoreModule.csproj">
-      <Project>{8439ce36-ad65-4f4d-bc22-3629d2b68ec6}</Project>
-      <Name>CeyenneNxt.ServiceBus.CoreModule</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CoreModules\CeyenneNxt.Settings.CoreModule\CeyenneNxt.Settings.CoreModule.csproj">
-      <Project>{b87ca911-13e6-4fd3-b300-e7faa04e7d85}</Project>
-      <Name>CeyenneNxt.Settings.CoreModule</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\CeyenneNxt.Core\CeyenneNxt.Core.csproj">
-      <Project>{fa4fe0cc-457c-4632-9315-6205e13b534a}</Project>
-      <Name>CeyenneNxt.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Modules\Orders\CeyenneNxt.Orders.Module\CeyenneNxt.Orders.Module.csproj">
-      <Project>{3d85d960-fb93-46c6-b9ad-f8f5df3ab9c7}</Project>
-      <Name>CeyenneNxt.Orders.Module</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Modules\Products\CeyenneNxt.Products.Module\CeyenneNxt.Products.Module.csproj">
-      <Project>{e078e7fe-1cfc-47fd-9f9d-d630aaea87c9}</Project>
-      <Name>CeyenneNxt.Products.Module</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -544,7 +482,7 @@
     <Error Condition="!Exists('..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>nuget pack ..\CeyenneNxt.Application.WebUI.nuspec -IncludeReferencedProjects -Prop Platform=AnyCPU -OutputDirectory "$(SolutionDir)..\NuGetSource"</PostBuildEvent>
+    <PostBuildEvent>nuget pack ..\CeyenneNxt.Application.WebUI.nuspec -IncludeReferencedProjects -Prop Platform=AnyCPU -OutputDirectory "$(SolutionDir)..\NuGetSource" -Symbols</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -31,6 +31,12 @@ namespace CeyenneNxt.Core.Configuration
       private set;
     }
 
+    public string WebApiBaseUrl
+    {
+      get;
+      private set;
+    }
+
     public string Connection
     {
       get;
@@ -116,6 +122,7 @@ namespace CeyenneNxt.Core.Configuration
               _allEnvironments.Add(new CNXTEnvironments
               {
                 Name = el.Name,
+                WebApiBaseUrl = el.WebApiBaseUrl,
                 Connection = el.Connection,
                 LoggingDatabaseConnection = el.LoggingDatabaseConnection,
                 ProcessDatabaseConnection = el.ProcessDatabaseConnection,

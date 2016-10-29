@@ -10,7 +10,7 @@ var app;
             }
             RefundStatusesService.prototype.getByRefundID = function (refundID) {
                 var _this = this;
-                return this.$http.get('/api/refundStatuses/getByRefundID/' + refundID)
+                return this.$http.get(app.Constants.OrderApiBase + '/api/refundStatuses/getByRefundID/' + refundID)
                     .then(function (result) {
                     return result.data;
                 }, function (response) {
@@ -20,7 +20,7 @@ var app;
             };
             RefundStatusesService.prototype.create = function (refundStatusHistory) {
                 var _this = this;
-                return this.$http.post('/api/refundStatuses', refundStatusHistory)
+                return this.$http.post(app.Constants.OrderApiBase + '/api/refundStatuses', refundStatusHistory)
                     .then(function (result) {
                 }, function (response) {
                     _this.responseErrorHandlerService.handleResponseError(response);

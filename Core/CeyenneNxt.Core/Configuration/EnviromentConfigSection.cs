@@ -44,6 +44,20 @@ namespace CeyenneNxt.Core.Configuration
       }
     }
 
+    [ConfigurationProperty("WebApiBaseUrl", IsRequired = true)]
+    [StringValidator(MinLength = 0, MaxLength = 35)]
+    public string WebApiBaseUrl
+    {
+      get
+      {
+        return (string)this["WebApiBaseUrl"];
+      }
+      set
+      {
+        this["WebApiBaseUrl"] = value;
+      }
+    }
+
     [ConfigurationProperty("CustomerName", IsRequired = true)]
     [StringValidator(InvalidCharacters = "~!@#$%^&*()[]{}/;'\"|\\", MinLength = 0, MaxLength = 20)]
     public string CustomerName

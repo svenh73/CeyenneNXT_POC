@@ -10,7 +10,7 @@ var app;
             }
             OrderLineService.prototype.getOrderLineById = function (orderLineId) {
                 var _this = this;
-                return this.$http.get('/api/orderlines/' + orderLineId)
+                return this.$http.get(app.Constants.OrderApiBase + '/api/orderlines/' + orderLineId)
                     .then(function (result) {
                     return result.data;
                 }, function (response) {
@@ -20,7 +20,7 @@ var app;
             };
             OrderLineService.prototype.getAllStatuses = function () {
                 var _this = this;
-                return this.$http.get('/api/orderlines/getAllStatuses')
+                return this.$http.get(app.Constants.OrderApiBase + '/api/orderlines/getAllStatuses')
                     .then(function (result) {
                     return result.data;
                 }, function (response) {
@@ -30,7 +30,7 @@ var app;
             };
             OrderLineService.prototype.createStatusHistory = function (model) {
                 var _this = this;
-                return this.$http.post('/api/orderlines/createStatusHistory/?generateTimestamp=true', JSON.stringify(model))
+                return this.$http.post(app.Constants.OrderApiBase + '/api/orderlines/createStatusHistory/?generateTimestamp=true', JSON.stringify(model))
                     .then(function (result) {
                 }, function (response) {
                     _this.responseErrorHandlerService.handleResponseError(response);
@@ -39,7 +39,7 @@ var app;
             };
             OrderLineService.prototype.getStatusHistory = function (orderLineId) {
                 var _this = this;
-                return this.$http.get('/api/orderlines/getStatusHistory/' + orderLineId)
+                return this.$http.get(app.Constants.OrderApiBase + '/api/orderlines/getStatusHistory/' + orderLineId)
                     .then(function (result) {
                     return result.data;
                 }, function (response) {

@@ -11,8 +11,6 @@ using CeyenneNxt.Core.Interfaces.CoreModules;
 using CeyenneNxt.Core.ServiceBus;
 using CeyenneNxt.Orders.Shared.Dtos;
 using CeyenneNxt.Orders.Shared.Interfaces;
-using CeyenneNxt.Products.Shared.Interfaces;
-using Microsoft.Practices.ServiceLocation;
 
 namespace CeyenneNxt.Orders.Module.Processors
 {
@@ -21,8 +19,6 @@ namespace CeyenneNxt.Orders.Module.Processors
     public ISettingModule SettingModule { get; private set; }
 
     public ILoggingModule LoggingModule { get; private set; }
-
-    public IProductModule ProductModule { get; private set; }
 
     public IServiceBusModule ServiceBusModule { get; private set; }
 
@@ -38,10 +34,14 @@ namespace CeyenneNxt.Orders.Module.Processors
 
     public virtual void Execute()
     {
+      LoggingModule.LogInfo(GetType().ToString(), "Start publishing orders");
+
       var files = LoadFiles();
 
       foreach (var file in files)
       {
+        LoggingModule.LogInfo(GetType().ToString(), $"Start processing file {file.FileName}");
+
         try
         {
           var orderDto = LoadAndMapToOrderDto(file.FilePath);
@@ -59,9 +59,13 @@ namespace CeyenneNxt.Orders.Module.Processors
         }
         catch (Exception ex)
         {
+          LoggingModule.LogError(GetType().ToString(), $"Error processing file {file.FileName} with message {ex.Message}", ex.StackTrace);
+
           file.MoveToErrorFolder(ex.Message);
         }
       }
+
+      LoggingModule.LogInfo(GetType().ToString(), "End publishing orders");
     }
 
     public virtual List<IFileHandler> LoadFiles()

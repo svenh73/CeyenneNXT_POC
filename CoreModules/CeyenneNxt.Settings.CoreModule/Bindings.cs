@@ -23,10 +23,6 @@ namespace CeyenneNXT.ServiceBus
           {
             break;
           }
-        case ApplicationType.WebUI:
-          {
-            break;
-          }
       }
 
       container.Register<ISettingModule, SettingModule>(lifeStyle);

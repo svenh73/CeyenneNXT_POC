@@ -16,7 +16,7 @@
         ) { }
 
         getByRefundID(refundID: number): ng.IPromise<RefundStatusHistory[]> {
-            return this.$http.get('/api/refundStatuses/getByRefundID/' + refundID)
+          return this.$http.get(app.Constants.OrderApiBase + '/api/refundStatuses/getByRefundID/' + refundID)
                 .then((result: ng.IHttpPromiseCallbackArg<RefundStatusHistory[]>): RefundStatusHistory[] => {
                     return result.data;
                 }, (response: any) => {
@@ -26,7 +26,7 @@
         }
 
         create(refundStatusHistory: RefundStatusHistory): ng.IPromise<void> {
-            return this.$http.post('/api/refundStatuses', refundStatusHistory)
+          return this.$http.post(app.Constants.OrderApiBase + '/api/refundStatuses', refundStatusHistory)
                 .then((result: ng.IHttpPromiseCallbackArg<any>): void => {
                 }, (response: any) => {
                     this.responseErrorHandlerService.handleResponseError(response);
