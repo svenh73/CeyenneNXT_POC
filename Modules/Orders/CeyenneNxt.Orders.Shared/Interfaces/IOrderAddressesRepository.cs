@@ -4,6 +4,6 @@ namespace CeyenneNxt.Orders.Shared.Interfaces
 {
   public interface IOrderAddressesRepository
   {
-    void Create(int orderID, int customerAddressID, int addressTypeID, SqlConnection connection, SqlTransaction transaction);
+    void Create(IOrderModuleSession session,int orderID, int customerAddressID, int addressTypeID);
   }
 }

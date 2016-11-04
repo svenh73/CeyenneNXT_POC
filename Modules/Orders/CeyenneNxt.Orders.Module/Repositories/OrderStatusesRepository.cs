@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using CeyenneNxt.Core.Constants;
 using CeyenneNxt.Core.Types;
 using CeyenneNxt.Orders.Shared.Constants;
 using CeyenneNxt.Orders.Shared.Entities;
@@ -11,23 +9,23 @@ using Dapper;
 
 namespace CeyenneNxt.Orders.Module.Repositories
 {
-  public class OrderStatusesRepository : BaseRepository, IOrderStatusesRepository
+  public class OrderStatusesRepository : BaseRepository<OrderStatus>, IOrderStatusesRepository
   {
-    public OrderStatusesRepository() : base(SchemaConstants.Orders)
+    public OrderStatusesRepository() : base(CeyenneNxt.Core.Constants.SchemaConstants.Orders)
     {
     }
-    public IEnumerable<OrderStatus> GetAll(SqlConnection connection)
+    public IEnumerable<OrderStatus> GetAll(IOrderModuleSession session)
     {
-      return connection.Query<OrderStatus>(GetStoredProcedureName(Constants.StoredProcedures.OrderStatus.SelectAll),
+      return session.Connection.Query<OrderStatus>(GetStoredProcedureName(Constants.StoredProcedures.OrderStatus.SelectAll),
         commandType: CommandType.StoredProcedure);
     }
 
-    public int GetStatusIDByCode(string code, SqlConnection connection, SqlTransaction transaction)
+    public int GetStatusIDByCode(IOrderModuleSession session,string code)
     {
       var p = new DynamicParameters();
       p.Add("@Code", code, DbType.String);
 
-      return GetItem<int>(p, Constants.StoredProcedures.OrderStatus.GetIDByCode, connection, transaction);
+      return GetItem<int>(session,p, Constants.StoredProcedures.OrderStatus.GetIDByCode);
     }
   }
 }

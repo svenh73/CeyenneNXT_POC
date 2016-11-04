@@ -31,20 +31,47 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\AttributeDto.cs" />
+    <Compile Include="Dtos\AttributeGroupDto.cs" />
+    <Compile Include="Dtos\AttributeOptionDto.cs" />
+    <Compile Include="Dtos\BarcodeTypeDto.cs" />
+    <Compile Include="Dtos\BaseProductDto.cs" />
+    <Compile Include="Dtos\BrandDto.cs" />
+    <Compile Include="Dtos\CultureDto.cs" />
+    <Compile Include="Dtos\CurrencyTypeDto.cs" />
+    <Compile Include="Dtos\DescriptionDto.cs" />
+    <Compile Include="Dtos\MediaDto.cs" />
+    <Compile Include="Dtos\MediaTypeDto.cs" />
+    <Compile Include="Dtos\OrganizationDto.cs" />
+    <Compile Include="Dtos\PriceTypeDto.cs" />
+    <Compile Include="Dtos\ProductAttributeValueDto.cs" />
+    <Compile Include="Dtos\ProductBarcodeDto.cs" />
     <Compile Include="Dtos\ProductDto.cs" />
+    <Compile Include="Dtos\RelatedProductTypeDto.cs" />
+    <Compile Include="Dtos\VATTypeDto.cs" />
+    <Compile Include="Dtos\VendorProductDto.cs" />
+    <Compile Include="Dtos\ProductPriceDto.cs" />
+    <Compile Include="Dtos\ProductTypeDto.cs" />
+    <Compile Include="Dtos\RelatedProductDto.cs" />
+    <Compile Include="Dtos\StockDto.cs" />
+    <Compile Include="Dtos\TranslationDto.cs" />
+    <Compile Include="Dtos\VendorDto.cs" />
     <Compile Include="Entitites\Product.cs" />
     <Compile Include="Interfaces\IProductApiController.cs" />
     <Compile Include="Interfaces\IProductCommunicator.cs" />
     <Compile Include="Interfaces\IProductController.cs" />
     <Compile Include="Interfaces\IProductModule.cs" />
+    <Compile Include="Interfaces\IProductModuleSession.cs" />
     <Compile Include="Interfaces\IProductPublishProcessor.cs" />
     <Compile Include="Interfaces\IProductSubscriberProcessor.cs" />
     <Compile Include="Interfaces\IProductRepository.cs" />

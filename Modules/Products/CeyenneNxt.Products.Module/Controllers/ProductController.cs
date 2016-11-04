@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using CeyenneNxt.Orders.Module;
 using CeyenneNxt.Products.Shared.Dtos;
 using CeyenneNxt.Products.Shared.Interfaces;
 
@@ -20,13 +21,20 @@ namespace CeyenneNxt.Products.Module.Controllers
     [Route("api/product")]
     public List<ProductDto> Get()
     {
-      return ProductModule.GetProducts();
+      using (var session = new ProductModuleSession())
+      {
+        return ProductModule.GetProducts(session);
+      }
+      
     }
     [HttpGet]
     [Route("api/product/{id}")]
     public ProductDto Get(int id)
     {
-      return ProductModule.GetProducts().FirstOrDefault(p => p.ID == id);
+      using (var session = new ProductModuleSession())
+      {
+        return ProductModule.GetProducts(session).FirstOrDefault(p => p.ID == id);
+      }
     }
 
     // POST api/values

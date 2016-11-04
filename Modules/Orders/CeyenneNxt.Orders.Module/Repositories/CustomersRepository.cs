@@ -1,7 +1,5 @@
 ﻿using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using CeyenneNxt.Core.Constants;
 using CeyenneNxt.Core.Types;
 using CeyenneNxt.Orders.Shared.Constants;
 using CeyenneNxt.Orders.Shared.Entities;
@@ -12,21 +10,21 @@ using Dapper;
 
 namespace CeyenneNxt.Orders.Module.Repositories
 {
-  public class CustomersRepository : BaseRepository, ICustomersRepository
+  public class CustomersRepository : BaseRepository<Customer>, ICustomersRepository
   {
-    public CustomersRepository() : base(SchemaConstants.Orders)
+    public CustomersRepository() : base(CeyenneNxt.Core.Constants.SchemaConstants.Orders)
     {
     }
 
-    public Customer GetByID(int id, SqlConnection connection, SqlTransaction transaction)
+    public Customer GetByID(IOrderModuleSession session,int id)
     {
       var param = new DynamicParameters();
       param.Add("@ID", dbType: DbType.Int32, value: id);
 
-      return GetItem<Customer>(param, Constants.StoredProcedures.Customers.GetByID, connection, transaction);
+      return GetItem<Customer>(session, param, Constants.StoredProcedures.Customers.GetByID);
     }
 
-    public SearchResult<CustomerSearchResult> Search(CustomerPagingFilter filter, SqlConnection connection)
+    public SearchResult<CustomerSearchResult> Search(IOrderModuleSession session,CustomerPagingFilter filter)
     {
       if (!filter.PageSize.HasValue)
       {
@@ -59,7 +57,7 @@ namespace CeyenneNxt.Orders.Module.Repositories
       }
 
       var customers =
-        connection.Query<CustomerSearchResult>(
+        session.Connection.Query<CustomerSearchResult>(
           GetStoredProcedureName(Constants.StoredProcedures.Customers.CustomerSearch),
           parameters, commandType: CommandType.StoredProcedure).ToList();
 
@@ -75,13 +73,13 @@ namespace CeyenneNxt.Orders.Module.Repositories
       return result;
     }
 
-    public CustomerSearchResult GetCustomerWithAddressesAndOrders(int customerID, SqlConnection connection)
+    public CustomerSearchResult GetCustomerWithAddressesAndOrders(IOrderModuleSession session,int customerID)
     {
       CustomerSearchResult customer;
 
       using (
         var customerMultiple =
-          connection.QueryMultiple(
+          session.Connection.QueryMultiple(
             GetStoredProcedureName(Constants.StoredProcedures.Customers.SelectWithAddressesAndOrders),
             new {CustomerId = customerID}, commandType: CommandType.StoredProcedure))
       {
@@ -98,16 +96,16 @@ namespace CeyenneNxt.Orders.Module.Repositories
       return customer;
     }
 
-    public Customer GetByBackendID(string backendID, SqlConnection connection, SqlTransaction transaction)
+    public Customer GetByBackendID(IOrderModuleSession session,string backendID)
     {
       var param = new DynamicParameters();
       param.Add("@BackendID", backendID);
 
-      return GetItem<Customer>(param, Constants.StoredProcedures.Customers.GetByBackendID, connection, transaction);
+      return GetItem<Customer>(session,param, Constants.StoredProcedures.Customers.GetByBackendID);
     }
 
 
-    public Customer Create(Customer customer, SqlConnection connection, SqlTransaction transaction)
+    public Customer Create(IOrderModuleSession session,Customer customer)
     {
       var param = new DynamicParameters();
       param.Add("@FullName", dbType: DbType.String, value: customer.FullName);
@@ -116,9 +114,9 @@ namespace CeyenneNxt.Orders.Module.Repositories
       param.Add("@BackendID", dbType: DbType.String, value: customer.BackendID);
       param.Add("@ID", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-      var id = Execute(param, Constants.StoredProcedures.Customers.Create, connection, transaction).Get<int>("ID");
+      var id = Execute(session,param, Constants.StoredProcedures.Customers.Create).Get<int>("ID");
 
-      return GetByID(id, connection, transaction);
+      return GetByID(session,id);
     }
   }
 }

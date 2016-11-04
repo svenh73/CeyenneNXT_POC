@@ -4,17 +4,21 @@ using System.Configuration;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
+using CeyenneNxt.Core.Configuration;
 using CeyenneNxt.Core.Constants;
+using CeyenneNxt.Core.Dtos.Settings;
 using CeyenneNxt.Core.Enums;
 using CeyenneNxt.Core.Interfaces;
 using CeyenneNxt.Core.Interfaces.CoreModules;
 using CeyenneNxt.Core.ServiceBus;
+using CeyenneNxt.Core.Types;
 using CeyenneNxt.Orders.Shared.Dtos;
 using CeyenneNxt.Orders.Shared.Interfaces;
+using CeyenneNxt.Settings.CoreModule;
 
 namespace CeyenneNxt.Orders.Module.Processors
 {
-  public class OrderPublishProcessor : IOrderPublishProcessor
+  public class OrderPublishProcessor : BaseProcessor, IOrderPublishProcessor
   {
     public ISettingModule SettingModule { get; private set; }
 
@@ -24,6 +28,8 @@ namespace CeyenneNxt.Orders.Module.Processors
 
     public IFileManagingModule FileManagingModule { get; private set; }
 
+    public SettingCollection SettingCollection { get; private set; }
+
     public OrderPublishProcessor(ISettingModule settingModule, ILoggingModule loggingModule, IServiceBusModule serviceBusModule, IFileManagingModule fileManagingModule)
     {
       SettingModule = settingModule;
@@ -32,46 +38,70 @@ namespace CeyenneNxt.Orders.Module.Processors
       FileManagingModule = fileManagingModule;
     }
 
+    private void Init()
+    {
+      using (var session = new SettingModuleSession())
+      {
+        var collection = new SettingCollection(Domain, CNXTEnvironments.Current.EnvironmentType)
+           .Add(new GeneralSettingDto() { Name = Constants.SettingNames.SourceDirectory, DataType = SettingDataType.String, Required = true })
+           .Add(new GeneralSettingDto() { Name = Constants.SettingNames.SearchPattern, DataType = SettingDataType.Int, Required = true, DefaultValue = @"Order*.xml" });
+
+        SettingCollection = SettingModule.LoadSettings(session, collection);
+      }
+    }
+
     public virtual void Execute()
     {
-      LoggingModule.LogInfo(GetType().ToString(), "Start publishing orders");
-
-      var files = LoadFiles();
-
-      foreach (var file in files)
+      try
       {
-        LoggingModule.LogInfo(GetType().ToString(), $"Start processing file {file.FileName}");
+        Init();
 
-        try
+        LoggingModule.LogInfo(GetType().ToString(), "Start publishing orders");
+
+        var files = LoadFiles();
+
+        foreach (var file in files)
         {
-          var orderDto = LoadAndMapToOrderDto(file.FilePath);
+          LoggingModule.LogInfo(GetType().ToString(), $"Start processing file {file.FileName}");
 
-          if (orderDto != null && ValidateOrder(orderDto))
+          try
           {
-            var message = ServiceBusModule.CreateEnvelope<OrderDto>();
-            message.Item = orderDto;
-            message.MessageTypeAction = MessageTypeAction.Insert;
+            var orderDto = LoadAndMapToOrderDto(file.FilePath);
 
-            ServiceBusModule.PublishToQueue(message, QueueNames.OrderImportQueue);
-            file.MoveToSuccessFolder();
+            if (orderDto != null && ValidateOrder(orderDto))
+            {
+              var message = ServiceBusModule.CreateEnvelope<OrderDto>();
+              message.Item = orderDto;
+              message.MessageTypeAction = MessageTypeAction.Insert;
 
+              ServiceBusModule.PublishToQueue(message, QueueNames.OrderImportQueue);
+              file.MoveToSuccessFolder();
+
+            }
+          }
+          catch (Exception ex)
+          {
+            LoggingModule.LogError(GetType().ToString(), $"Error processing file {file.FileName} with message {ex.Message}", ex.StackTrace);
+
+            file.MoveToErrorFolder(ex.Message);
           }
         }
-        catch (Exception ex)
-        {
-          LoggingModule.LogError(GetType().ToString(), $"Error processing file {file.FileName} with message {ex.Message}", ex.StackTrace);
 
-          file.MoveToErrorFolder(ex.Message);
-        }
+        LoggingModule.LogInfo(GetType().ToString(), "End publishing orders");
       }
-
-      LoggingModule.LogInfo(GetType().ToString(), "End publishing orders");
+      catch (Exception)
+      {
+        
+        throw;
+      }
     }
 
     public virtual List<IFileHandler> LoadFiles()
     {
-      FileManagingModule.SourceDirectory = ConfigurationManager.AppSettings["SourcePath"];
-      var files = FileManagingModule.GetFiles(null, @"Order*.xml");
+      FileManagingModule.SourceDirectory = SettingCollection[Constants.SettingNames.SourceDirectory].ToString(); //ConfigurationManager.AppSettings["SourcePath"];
+      var searchpattern = SettingCollection[Constants.SettingNames.SearchPattern].ToString();
+
+      var files = FileManagingModule.GetFiles(null, searchpattern);
 
       return files;
     }

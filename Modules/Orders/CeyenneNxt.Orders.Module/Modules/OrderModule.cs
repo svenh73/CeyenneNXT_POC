@@ -18,124 +18,224 @@ namespace CeyenneNxt.Orders.Module.Modules
   public class OrderModule : BaseOrderModule, IOrderModule
   {
    
-    public Order CreateOrder(OrderDto orderDto)
+    public OrderDto CreateOrder(IOrderModuleSession session,OrderDto orderDto)
     {
       var order = InitOrder(orderDto);
 
-      using (var connection = GetNewConnection())
+      session.BeginTransaction();
+
+      try
       {
-        connection.Open();
-        var transaction = connection.BeginTransaction();
-        try
+        //customer
+        var customer = CustomersRepository.GetByBackendID(session,order.Customer.BackendID) ??
+          CustomersRepository.Create(session,order.Customer);
+
+        order.Customer.ID = customer.ID;
+
+        foreach (var address in order.OrderAddresses)
         {
-          //customer
-          var customer = CustomersRepository.GetByBackendID(order.Customer.BackendID, connection, transaction) ??
-            CustomersRepository.Create(order.Customer, connection, transaction);
-
-          order.Customer.ID = customer.ID;
-
-          foreach (var address in order.OrderAddresses)
+          //type 
+          address.Type.ID = CustomerAddressTypesRepository.GetIDByCode(session,address.Type.Code);
+          if (address.Type.ID <= 0)
           {
-            //type 
-            address.Type.ID = CustomerAddressTypesRepository.GetIDByCode(address.Type.Code, connection, transaction);
-            if (address.Type.ID <= 0)
-            {
-              address.Type.ID = CustomerAddressTypesRepository.Create(address.Type, connection, transaction);
-            }
-
-            //country
-            address.Address.Country.ID = CountryRepository.GetByCode(address.Address.Country.Code, connection, transaction);
-            if (address.Address.Country.ID <= 0)
-            {
-              address.Address.Country.ID = CountryRepository.Create(address.Address.Country, connection, transaction);
-            }
-
-
-            //customer address
-            address.Address.ID = CustomerAddressesRepository.GetByCustomerAndBackendID(customer.ID, address.Address.BackendID,
-              connection, transaction);
-            if (address.Address.ID <= 0)
-            {
-              address.Address.ID = CustomerAddressesRepository.Create(address.Address, customer.ID, connection, transaction);
-            }
+            address.Type.ID = CustomerAddressTypesRepository.Create(session,address.Type);
           }
 
-          //order type
-          order.OrderType.ID = OrderTypesRepository.GetByName(order.OrderType.Name, connection, transaction);
-          if (order.OrderType.ID <= 0)
+          //country
+          address.Address.Country.ID = CountryRepository.GetByCode(session,address.Address.Country.Code);
+          if (address.Address.Country.ID <= 0)
           {
-            order.OrderType.ID = OrderTypesRepository.Create(order.OrderType.Name, connection, transaction);
+            address.Address.Country.ID = CountryRepository.Create(session,address.Address.Country);
           }
 
-          var orderID = OrderRepository.GetIDByBackendID(order.BackendID, connection, transaction);
-          if (orderID == 0)
+
+          //customer address
+          address.Address.ID = CustomerAddressesRepository.GetByCustomerAndBackendID(session,customer.ID, address.Address.BackendID);
+          if (address.Address.ID <= 0)
           {
-            orderID = OrderRepository.Create(order, connection, transaction);
-
-            //order state
-            var orderStatus = order.History.FirstOrDefault();
-            if (orderStatus != null)
-            {
-              AddHistoryStatus(orderStatus.Status.Code, orderStatus.Timestamp, connection, transaction, orderID);
-            }
-
-
-            //order addresses
-            foreach (var customerAddress in order.OrderAddresses)
-            {
-              OrderAddressesRepository.Create(orderID, customerAddress.Address.ID, customerAddress.Type.ID, connection, transaction);
-            }
-
-            //order quantity unit
-            foreach (var orderLine in order.OrderLines)
-            {
-              orderLine.QuantityUnit.ID = OrderQuantityUnitsRepository.GetIDByCode(orderLine.QuantityUnit.Code, connection,
-                transaction);
-              if (orderLine.QuantityUnit.ID <= 0)
-              {
-                orderLine.QuantityUnit.ID = OrderQuantityUnitsRepository.Create(orderLine.QuantityUnit, connection,
-                  transaction);
-              }
-
-              orderLine.ID = OrderLinesRepository.Create(orderLine, orderID, connection, transaction);
-
-              //attributes
-              foreach (var orderLineAttribute in (orderLine.Attributes ?? new List<OrderLineAttributeValue>()).Where(c => !string.IsNullOrEmpty(c.Value)))
-              {
-                OrderLineModule.AddAttribute(orderLine.ID, orderLineAttribute.Attribute.Code, orderLineAttribute.Attribute.Name, orderLineAttribute.Value, connection, transaction);
-              }
-            }
-
-            foreach (var orderAttributesAttribute in (order.Attributes ?? new List<OrderAttributeValue>()).Where(c => !string.IsNullOrEmpty(c.Value)))
-            {
-              orderAttributesAttribute.Attribute.ID =
-                OrderAttributesRepository.GetIDByCode(orderAttributesAttribute.Attribute.Code, connection, transaction);
-
-              if (orderAttributesAttribute.Attribute.ID <= 0)
-              {
-                orderAttributesAttribute.Attribute.ID = OrderAttributesRepository.Create(
-                  orderAttributesAttribute.Attribute, connection, transaction);
-              }
-
-              OrderAttributesRepository.CreateValue(orderID, orderAttributesAttribute.Attribute.ID, orderAttributesAttribute.Value,
-                connection, transaction);
-            }
-
-
-            transaction.Commit();
+            address.Address.ID = CustomerAddressesRepository.Create(session,address.Address, customer.ID);
           }
-          else
-          {
-            transaction.Rollback();
-          }
-
-          return OrderRepository.GetFullByID(orderID, connection);
         }
-        catch (Exception ex)
+
+        //order type
+        order.OrderType.ID = OrderTypesRepository.GetByName(session,order.OrderType.Name);
+        if (order.OrderType.ID <= 0)
         {
-          transaction.Rollback();
-          throw;
+          order.OrderType.ID = OrderTypesRepository.Create(session,order.OrderType.Name);
         }
+
+        var orderID = OrderRepository.GetIDByBackendID(session,order.BackendID);
+        if (orderID == 0)
+        {
+          orderID = OrderRepository.Create(session,order);
+
+          //order state
+          var orderStatus = order.History.FirstOrDefault();
+          if (orderStatus != null)
+          {
+            AddHistoryStatus(session,orderStatus.Status.Code, orderStatus.Timestamp, orderID);
+          }
+
+
+          //order addresses
+          foreach (var customerAddress in order.OrderAddresses)
+          {
+            OrderAddressesRepository.Create(session,orderID, customerAddress.Address.ID, customerAddress.Type.ID);
+          }
+
+          //order quantity unit
+          foreach (var orderLine in order.OrderLines)
+          {
+            orderLine.QuantityUnit.ID = OrderQuantityUnitsRepository.GetIDByCode(session,orderLine.QuantityUnit.Code);
+            if (orderLine.QuantityUnit.ID <= 0)
+            {
+              orderLine.QuantityUnit.ID = OrderQuantityUnitsRepository.Create(session,orderLine.QuantityUnit);
+            }
+
+            orderLine.ID = OrderLinesRepository.Create(session,orderLine, orderID);
+
+            //attributes
+            foreach (var orderLineAttribute in (orderLine.Attributes ?? new List<OrderLineAttributeValue>()).Where(c => !string.IsNullOrEmpty(c.Value)))
+            {
+              OrderLineModule.AddAttribute(session,orderLine.ID, orderLineAttribute.Attribute.Code, orderLineAttribute.Attribute.Name, orderLineAttribute.Value);
+            }
+          }
+
+          foreach (var orderAttributesAttribute in (order.Attributes ?? new List<OrderAttributeValue>()).Where(c => !string.IsNullOrEmpty(c.Value)))
+          {
+            orderAttributesAttribute.Attribute.ID =
+              OrderAttributesRepository.GetIDByCode(session,orderAttributesAttribute.Attribute.Code);
+
+            if (orderAttributesAttribute.Attribute.ID <= 0)
+            {
+              orderAttributesAttribute.Attribute.ID = OrderAttributesRepository.Create(session,orderAttributesAttribute.Attribute);
+            }
+
+            OrderAttributesRepository.CreateValue(session,orderID, orderAttributesAttribute.Attribute.ID, orderAttributesAttribute.Value);
+          }
+
+
+          session.Commit();
+        }
+        else
+        {
+          session.Rollback();
+        }
+
+        var neworder = OrderRepository.GetFullByID(session,orderID);
+        return Mapper.Map<Order, OrderDto>(neworder);
+      }
+      catch (Exception ex)
+      {
+        session.Rollback();
+        throw;
+      }
+      session.BeginTransaction();
+      try
+      {
+        //customer
+        var customer = CustomersRepository.GetByBackendID(session,order.Customer.BackendID) ??
+          CustomersRepository.Create(session,order.Customer);
+
+        order.Customer.ID = customer.ID;
+
+        foreach (var address in order.OrderAddresses)
+        {
+          //type 
+          address.Type.ID = CustomerAddressTypesRepository.GetIDByCode(session,address.Type.Code);
+          if (address.Type.ID <= 0)
+          {
+            address.Type.ID = CustomerAddressTypesRepository.Create(session,address.Type);
+          }
+
+          //country
+          address.Address.Country.ID = CountryRepository.GetByCode(session,address.Address.Country.Code);
+          if (address.Address.Country.ID <= 0)
+          {
+            address.Address.Country.ID = CountryRepository.Create(session,address.Address.Country);
+          }
+
+
+          //customer address
+          address.Address.ID = CustomerAddressesRepository.GetByCustomerAndBackendID(session,customer.ID, address.Address.BackendID);
+          if (address.Address.ID <= 0)
+          {
+            address.Address.ID = CustomerAddressesRepository.Create(session,address.Address, customer.ID);
+          }
+        }
+
+        //order type
+        order.OrderType.ID = OrderTypesRepository.GetByName(session,order.OrderType.Name);
+        if (order.OrderType.ID <= 0)
+        {
+          order.OrderType.ID = OrderTypesRepository.Create(session,order.OrderType.Name);
+        }
+
+        var orderID = OrderRepository.GetIDByBackendID(session,order.BackendID);
+        if (orderID == 0)
+        {
+          orderID = OrderRepository.Create(session,order);
+
+          //order state
+          var orderStatus = order.History.FirstOrDefault();
+          if (orderStatus != null)
+          {
+            AddHistoryStatus(session,orderStatus.Status.Code, orderStatus.Timestamp, orderID);
+          }
+
+
+          //order addresses
+          foreach (var customerAddress in order.OrderAddresses)
+          {
+            OrderAddressesRepository.Create(session,orderID, customerAddress.Address.ID, customerAddress.Type.ID);
+          }
+
+          //order quantity unit
+          foreach (var orderLine in order.OrderLines)
+          {
+            orderLine.QuantityUnit.ID = OrderQuantityUnitsRepository.GetIDByCode(session,orderLine.QuantityUnit.Code);
+            if (orderLine.QuantityUnit.ID <= 0)
+            {
+              orderLine.QuantityUnit.ID = OrderQuantityUnitsRepository.Create(session,orderLine.QuantityUnit);
+            }
+
+            orderLine.ID = OrderLinesRepository.Create(session,orderLine, orderID);
+
+            //attributes
+            foreach (var orderLineAttribute in (orderLine.Attributes ?? new List<OrderLineAttributeValue>()).Where(c => !string.IsNullOrEmpty(c.Value)))
+            {
+              OrderLineModule.AddAttribute(session,orderLine.ID, orderLineAttribute.Attribute.Code, orderLineAttribute.Attribute.Name, orderLineAttribute.Value);
+            }
+          }
+
+          foreach (var orderAttributesAttribute in (order.Attributes ?? new List<OrderAttributeValue>()).Where(c => !string.IsNullOrEmpty(c.Value)))
+          {
+            orderAttributesAttribute.Attribute.ID =
+              OrderAttributesRepository.GetIDByCode(session,orderAttributesAttribute.Attribute.Code);
+
+            if (orderAttributesAttribute.Attribute.ID <= 0)
+            {
+              orderAttributesAttribute.Attribute.ID = OrderAttributesRepository.Create(session,orderAttributesAttribute.Attribute);
+            }
+
+            OrderAttributesRepository.CreateValue(session,orderID, orderAttributesAttribute.Attribute.ID, orderAttributesAttribute.Value);
+          }
+
+
+          session.Commit();
+        }
+        else
+        {
+          session.Rollback();
+        }
+
+        var neworder = OrderRepository.GetFullByID(session, orderID);
+        return Mapper.Map<Order, OrderDto>(neworder);
+      }
+      catch (Exception ex)
+      {
+        session.Rollback();
+        throw;
       }
     }
 
@@ -205,144 +305,102 @@ namespace CeyenneNxt.Orders.Module.Modules
       return order;
     }
 
-    private int AddHistoryStatus(string statusCode, DateTime timestamp, SqlConnection connection,
-      SqlTransaction transaction, int orderID)
+    private int AddHistoryStatus(IOrderModuleSession session, string statusCode, DateTime timestamp, int orderID)
     {
-      var orderStatusID = OrderStatusesRepository.GetStatusIDByCode(statusCode, connection, transaction);
+      var orderStatusID = OrderStatusesRepository.GetStatusIDByCode(session,statusCode);
       if (orderStatusID > 0)
       {
-        return OrderStatusHistoryRepository.Create(orderID, orderStatusID, timestamp, connection, transaction);
+        return OrderStatusHistoryRepository.Create(session,orderID, orderStatusID, timestamp);
       }
       return 0;
     }
 
-    public Order GetFullByID(int id)
+    public OrderDto GetFullByID(IOrderModuleSession session,int id)
     {
-      using (var sqlConnection = GetNewConnection())
-      {
-        var orders = ServiceLocator.Current.GetInstance<IOrderRepository>();
-        return orders.GetFullByID(id, sqlConnection);
-      }
+      var order = OrderRepository.GetFullByID(session,id);
+      return Mapper.Map<Order, OrderDto>(order);
     }
 
-    public Order GetFullByExternalID(string identifier)
+    public OrderDto GetFullByExternalID(IOrderModuleSession session,string identifier)
     {
-      using (var sqlConnection = GetNewConnection())
-      {
-        var orders = ServiceLocator.Current.GetInstance<IOrderRepository>();
-        return orders.GetFullByExternalID(identifier, sqlConnection);
-      }
+      var order = OrderRepository.GetFullByExternalID(session,identifier);
+      return Mapper.Map<Order, OrderDto>(order);
     }
 
 
-    public SearchResultDto<OrderSearchResultDto> Search(OrderPagingFilterDto filterDto)
+    public SearchResultDto<OrderSearchResultDto> Search(IOrderModuleSession session, OrderPagingFilterDto filterDto)
     {
-      using (var sqlConnection = GetNewConnection())
-      {
-        var filter = Mapper.Map<OrderPagingFilterDto, OrderPagingFilter>(filterDto);
-        var orders = ServiceLocator.Current.GetInstance<IOrderRepository>();
-        var result = orders.Search(filter, sqlConnection);
-        return Mapper.Map<SearchResult<OrderSearchResult>, SearchResultDto<OrderSearchResultDto>>(result);
-      }
+      var filter = Mapper.Map<OrderPagingFilterDto, OrderPagingFilter>(filterDto);
+      var result = OrderRepository.Search(session, filter);
+      return Mapper.Map<SearchResult<OrderSearchResult>, SearchResultDto<OrderSearchResultDto>>(result);
     }
 
-    public DashboardDataDto GetDashboardData()
+    public DashboardDataDto GetDashboardData(IOrderModuleSession session)
     {
-      using (var sqlConnection = GetNewConnection())
-      {
-        var orders = ServiceLocator.Current.GetInstance<IOrderRepository>();
-        var result = orders.GetDashboardData(sqlConnection);
-        return Mapper.Map<DashboardData, DashboardDataDto>(result);
-
-      }
+      var result = OrderRepository.GetDashboardData(session);
+      return Mapper.Map<DashboardData, DashboardDataDto>(result);
     }
 
-    public List<Order> GetNotDispatchedOrders()
+    public List<OrderDto> GetNotDispatchedOrders(IOrderModuleSession session)
     {
-      using (var connection = GetNewConnection())
-      {
-        var orders = ServiceLocator.Current.GetInstance<IOrderRepository>();
-        return orders.GetNotDispatched(connection).ToList();
-      }
+      var orders = ServiceLocator.Current.GetInstance<IOrderRepository>();
+      return orders.GetNotDispatched(session).Select(p => Mapper.Map<Order,OrderDto>(p)).ToList();
     }
 
-    public void Hold(int orderID, bool holdStatus)
+    public void Hold(IOrderModuleSession session,int orderID, bool holdStatus)
     {
-      using (var connection = GetNewConnection())
-      {
-        var orders = ServiceLocator.Current.GetInstance<IOrderRepository>();
-        orders.UpdateHold(orderID, holdStatus, connection);
-      }
+      var orders = ServiceLocator.Current.GetInstance<IOrderRepository>();
+      orders.UpdateHold(session,orderID, holdStatus);
     }
 
-    public void SetDispatched(int orderID, DateTime dispatchedAt)
+    public void SetDispatched(IOrderModuleSession session,int orderID, DateTime dispatchedAt)
     {
-      using (var connection = GetNewConnection())
-      {
-        var orders = ServiceLocator.Current.GetInstance<IOrderRepository>();
-        orders.SetOrderDispatched(orderID, dispatchedAt, connection);
-      }
+      var orders = ServiceLocator.Current.GetInstance<IOrderRepository>();
+      orders.SetOrderDispatched(session,orderID, dispatchedAt);
     }
 
-    public int AddStatus(int orderID, string statusCode, DateTime timestamp)
+    public int AddStatus(IOrderModuleSession session,int orderID, string statusCode, DateTime timestamp)
     {
-      using (var connection = GetNewConnection())
-      {
-        var order = OrderRepository.GetByID(orderID, connection);
+      var order = OrderRepository.GetByID(session,orderID);
 
-        if (order == null)
-          throw new NotSupportedException($"Order with id {orderID} doesn't exist");
+      if (order == null)
+        throw new NotSupportedException($"Order with id {orderID} doesn't exist");
 
-        return AddHistoryStatus(statusCode, timestamp, connection, null, orderID);
-      }
+      return AddHistoryStatus(session, statusCode, timestamp, orderID);
     }
 
-    public IEnumerable<OrderStatusHistory> GetStatusHistoryByOrderID(int orderID)
+    public IEnumerable<OrderStatusHistoryDto> GetStatusHistoryByOrderID(IOrderModuleSession session,int orderID)
     {
-      using (var connection = GetNewConnection())
-      {
-        var histories = OrderStatusHistoryRepository.GetStatusHistoryByOrderID(orderID, connection);
-
-        return histories;
-      }
+      var histories = OrderStatusHistoryRepository.GetStatusHistoryByOrderID(session, orderID);
+      return histories.Select(p => Mapper.Map<OrderStatusHistory, OrderStatusHistoryDto>(p));
     }
 
-    public IEnumerable<OrderStatus> GetAllStatuses()
+    public IEnumerable<OrderStatusDto> GetAllStatuses(IOrderModuleSession session)
     {
-      using (var connection = GetNewConnection())
-      {
-        return OrderStatusesRepository.GetAll(connection);
-      }
+      return OrderStatusesRepository.GetAll(session).Select(p => Mapper.Map<OrderStatus,OrderStatusDto>(p)).ToList();
     }
 
-    public IEnumerable<OrderTypeDto> GetAllTypes()
+    public IEnumerable<OrderTypeDto> GetAllTypes(IOrderModuleSession session)
     {
-      using (var connection = GetNewConnection())
-      {
-        var types = OrderTypesRepository.GetAll(connection);
-        return types.Select(t => Mapper.Map<OrderType, OrderTypeDto>(t)); 
-      }
+      var types = OrderTypesRepository.GetAll(session);
+      return types.Select(t => Mapper.Map<OrderType, OrderTypeDto>(t));
     }
 
-    public IEnumerable<int> GetOrderIDsByLatestStatus(string statusCode, string orderTypeCode)
+    public IEnumerable<int> GetOrderIDsByLatestStatus(IOrderModuleSession session,string statusCode, string orderTypeCode)
     {
-      using (var connection = GetNewConnection())
+      var statusID = OrderStatusesRepository.GetStatusIDByCode(session,statusCode);
+
+      if (statusID == 0)
+        throw new NotSupportedException($"Status with code {statusCode} not found");
+
+      int orderTypeID = 0;
+      if (!string.IsNullOrEmpty(orderTypeCode))
       {
-
-        var statusID = OrderStatusesRepository.GetStatusIDByCode(statusCode, connection, null);
-
-        if (statusID == 0)
-          throw new NotSupportedException($"Status with code {statusCode} not found");
-
-        int orderTypeID = 0;
-        if (!string.IsNullOrEmpty(orderTypeCode))
-        {
-          var orderTypeRepo = ServiceLocator.Current.GetInstance<IOrderTypesRepository>();
-          orderTypeID = orderTypeRepo.GetByName(orderTypeCode, connection, null);
-        }
-
-        return OrderRepository.GetByLatestStatus(connection, statusID, orderTypeID);
+        var orderTypeRepo = ServiceLocator.Current.GetInstance<IOrderTypesRepository>();
+        orderTypeID = orderTypeRepo.GetByName(session,orderTypeCode);
       }
+
+      return OrderRepository.GetByLatestStatus(session, statusID, orderTypeID);
     }
 
     /// <summary>
@@ -350,9 +408,9 @@ namespace CeyenneNxt.Orders.Module.Modules
     /// </summary>
     /// <param name="statusCode"></param>
     /// <returns></returns>
-    public IEnumerable<int> GetOrderIDsByLatestStatus(string statusCode)
+    public IEnumerable<int> GetOrderIDsByLatestStatus(IOrderModuleSession session,string statusCode)
     {
-      return GetOrderIDsByLatestStatus(statusCode, string.Empty);
+      return GetOrderIDsByLatestStatus(session,statusCode, string.Empty);
     }
 
     /// <summary>
@@ -362,38 +420,26 @@ namespace CeyenneNxt.Orders.Module.Modules
     /// <param name="statusCodeWith">Status code inclusive with</param>
     /// <param name="statusCodeWithout">Status code exclusive without</param>
     /// <returns></returns>
-    public IEnumerable<int> GetOrderIDsBetweenStatuses(string statusCodeWith, string statusCodeWithout)
+    public IEnumerable<int> GetOrderIDsBetweenStatuses(IOrderModuleSession session,string statusCodeWith, string statusCodeWithout)
     {
-      using (var connection = GetNewConnection())
-      {
-        var statusIDWith = OrderStatusesRepository.GetStatusIDByCode(statusCodeWith, connection, null);
-        var statusIDWithout = OrderStatusesRepository.GetStatusIDByCode(statusCodeWithout, connection, null);
+      var statusIDWith = OrderStatusesRepository.GetStatusIDByCode(session,statusCodeWith);
+      var statusIDWithout = OrderStatusesRepository.GetStatusIDByCode(session,statusCodeWithout);
 
-        if (statusIDWith == 0)
-          throw new NotSupportedException($"Status with code {statusCodeWith} not found");
+      if (statusIDWith == 0)
+        throw new NotSupportedException($"Status with code {statusCodeWith} not found");
 
-        if (statusIDWithout == 0)
-          throw new NotSupportedException($"Status with code {statusCodeWithout} not found");
+      if (statusIDWithout == 0)
+        throw new NotSupportedException($"Status with code {statusCodeWithout} not found");
 
-        return OrderRepository.GetBetweenStatuses(connection, statusIDWith, statusIDWithout);
-
-      }
+      return OrderRepository.GetBetweenStatuses(session, statusIDWith, statusIDWithout);
     }
 
-    public Order UpdateOrder(Order order)
+    public OrderDto UpdateOrder(IOrderModuleSession session,Order order)
     {
-      return GetFullByID(order.ID);
+      return GetFullByID(session,order.ID);
     }
 
-    public void AddAttribute(int orderID, string attributeCode, string attributeName, string attributeValue)
-    {
-      using (var connection = GetNewConnection())
-      {
-        AddAttribute(orderID, attributeCode, attributeName, attributeValue, connection, null);
-      }
-    }
-
-    public void AddAttribute(int orderID, string attributeCode, string attributeName, string attributeValue, SqlConnection connection, SqlTransaction transaction)
+    public void AddAttribute(IOrderModuleSession session,int orderID, string attributeCode, string attributeName, string attributeValue)
     {
       if (string.IsNullOrEmpty(attributeCode))
         throw new ArgumentNullException(nameof(attributeCode));
@@ -401,14 +447,14 @@ namespace CeyenneNxt.Orders.Module.Modules
       if (string.IsNullOrEmpty(attributeName))
         throw new ArgumentNullException(nameof(attributeName));
 
-      var attributeID = OrderAttributesRepository.GetIDByCode(attributeCode, connection, transaction);
+      var attributeID = OrderAttributesRepository.GetIDByCode(session,attributeCode);
 
       if (attributeID <= 0)
       {
-        attributeID = OrderAttributesRepository.Create(new OrderAttribute { Name = attributeName, Code = attributeCode }, connection, transaction);
+        attributeID = OrderAttributesRepository.Create(session,new OrderAttribute { Name = attributeName, Code = attributeCode });
       }
 
-      OrderAttributesRepository.CreateValue(orderID, attributeID, attributeValue, connection, transaction);
+      OrderAttributesRepository.CreateValue(session,orderID, attributeID, attributeValue);
     }
   }
 }

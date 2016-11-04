@@ -6,7 +6,7 @@ namespace CeyenneNxt.Products.Shared.Interfaces
 {
   public interface IProductRepository
   {
-    List<Product> GetProducts();
+    List<Product> GetProducts(IProductModuleSession session);
 
   }
 }

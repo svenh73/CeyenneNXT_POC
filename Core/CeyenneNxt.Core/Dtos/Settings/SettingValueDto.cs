@@ -4,6 +4,7 @@
 
 #endregion
 
+using System;
 using CeyenneNxt.Core.Enums;
 
 namespace CeyenneNxt.Core.Dtos.Settings
@@ -18,5 +19,23 @@ namespace CeyenneNxt.Core.Dtos.Settings
     public int? VendorID { get; set; }
 
     public string Value { get; set; }
+
+    public int ToInt()
+    {
+      return int.Parse(Value);
+    }
+
+    public string ToString()
+    {
+      return Value;
+    }
+
+    public bool ToBoolean()
+    {
+      return Value == "1" || (Value != null && Value.ToLower() == "true") ? true : false;
+    }
+
+
+
   }
 }

@@ -6,7 +6,7 @@ namespace CeyenneNxt.Orders.Shared.Interfaces
 {
   public interface IOrderStatusesRepository
   {
-    IEnumerable<OrderStatus> GetAll(SqlConnection connection);
-    int GetStatusIDByCode(string code, SqlConnection connection, SqlTransaction transaction);
+    IEnumerable<OrderStatus> GetAll(IOrderModuleSession session);
+    int GetStatusIDByCode(IOrderModuleSession session,string code);
   }
 }

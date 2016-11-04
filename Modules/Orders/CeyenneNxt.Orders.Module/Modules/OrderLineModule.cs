@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using CeyenneNxt.Core.Types;
 using CeyenneNxt.Orders.Module.Repositories;
 using CeyenneNxt.Orders.Shared.Constants;
+using CeyenneNxt.Orders.Shared.Dtos;
 using CeyenneNxt.Orders.Shared.Entities;
 using CeyenneNxt.Orders.Shared.Enums;
 using CeyenneNxt.Orders.Shared.Interfaces;
@@ -17,73 +19,50 @@ namespace CeyenneNxt.Orders.Module.Modules
     {
     }
 
-    public OrderLine GetFullByID(int id)
+    public OrderLineDto GetFullByID(IOrderModuleSession session,int id)
     {
-      using (var sqlConnection = GetNewConnection())
-      {
-        return OrderLinesRepository.GetFullByID(id, sqlConnection);
-      }
+      var orderline = OrderLinesRepository.GetFullByID(session,id);
+      return Mapper.Map<OrderLine, OrderLineDto>(orderline);
     }
 
-    public IEnumerable<OrderLineStatus> GetAllStatuses()
+    public IEnumerable<OrderLineStatusDto> GetAllStatuses(IOrderModuleSession session)
     {
-      using (var sqlConnection = GetNewConnection())
-      {
-        return OrderLineStatusesRepository.GetAllStatuses(sqlConnection);
-      }
+      return OrderLineStatusesRepository.GetAllStatuses(session).Select(p => Mapper.Map<OrderLineStatus,OrderLineStatusDto>(p));
     }
 
-    public int AddStatusHistory(int orderLineID, string statusCode, int? quantityChanged, DateTime timestamp, string message)
+    public int AddStatusHistory(IOrderModuleSession session,int orderLineID, string statusCode, int? quantityChanged, DateTime timestamp, string message)
     {
-      using (var connection = GetNewConnection())
+      session.BeginTransaction();
+      try
       {
-        connection.Open();
-        var transaction = connection.BeginTransaction();
-        try
+        var orderLine = OrderLinesRepository.GetByID(session,orderLineID);
+
+        if (orderLine == null)
+          throw new NotSupportedException($"Order with id {orderLineID} doesn't exist");
+
+        var orderStatusID = OrderLineStatusHistoryRepository.GetStatusIDByCode(session,statusCode);
+        int orderStatusHistoryID = 0;
+        if (orderStatusID > 0)
         {
-          var orderLine = OrderLinesRepository.GetByID(orderLineID, connection, transaction);
-
-          if (orderLine == null)
-            throw new NotSupportedException($"Order with id {orderLineID} doesn't exist");
-
-          var orderStatusID = OrderLineStatusHistoryRepository.GetStatusIDByCode(statusCode, connection, transaction);
-          int orderStatusHistoryID = 0;
-          if (orderStatusID > 0)
-          {
-            orderStatusHistoryID = OrderLineStatusHistoryRepository.Create(orderLineID, orderStatusID, quantityChanged, timestamp, message, connection, transaction);
-          }
-
-          transaction.Commit();
-          return orderStatusHistoryID;
+          orderStatusHistoryID = OrderLineStatusHistoryRepository.Create(session,orderLineID, orderStatusID, quantityChanged, timestamp, message);
         }
-        catch (Exception)
-        {
-          transaction.Rollback();
-          throw;
-        }
-      }
-    }
 
-    public IEnumerable<OrderLineStatusHistory> GetStatusHistoryByOrderLineID(int orderLineID)
-    {
-      using (var connection = GetNewConnection())
+        session.Commit();
+        return orderStatusHistoryID;
+      }
+      catch (Exception)
       {
-        var histories = OrderLineStatusHistoryRepository.GetStatusHistoryByOrderLineID(orderLineID, connection);
-
-        return histories;
+        session.Rollback();
+        throw;
       }
     }
 
-
-    public void AddAttribute(int orderLineID, string attributeCode, string attributeName, string attributeValue)
+    public IEnumerable<OrderLineStatusHistoryDto> GetStatusHistoryByOrderLineID(IOrderModuleSession session, int orderLineID)
     {
-      using (var connection = GetNewConnection())
-      {
-        AddAttribute(orderLineID, attributeCode, attributeName, attributeValue, connection, null);
-      }
+      return OrderLineStatusHistoryRepository.GetStatusHistoryByOrderLineID(session,orderLineID).Select(p => Mapper.Map<OrderLineStatusHistory, OrderLineStatusHistoryDto>(p));
     }
 
-    public void AddAttribute(int orderLineID, string attributeCode, string attributeName, string attributeValue, SqlConnection connection, SqlTransaction transaction)
+    public void AddAttribute(IOrderModuleSession session,int orderLineID, string attributeCode, string attributeName, string attributeValue)
     {
       if (string.IsNullOrEmpty(attributeCode))
         throw new ArgumentNullException(nameof(attributeCode));
@@ -91,14 +70,14 @@ namespace CeyenneNxt.Orders.Module.Modules
       if (string.IsNullOrEmpty(attributeName))
         throw new ArgumentNullException(nameof(attributeName));
 
-      var attributeID = OrderLineAttributesRepository.GetIDByCode(attributeCode, connection, transaction);
+      var attributeID = OrderLineAttributesRepository.GetIDByCode(session,attributeCode);
 
       if (attributeID <= 0)
       {
-        attributeID = OrderLineAttributesRepository.Create(attributeCode, attributeName, connection, transaction);
+        attributeID = OrderLineAttributesRepository.Create(session,attributeCode, attributeName);
       }
 
-      OrderLineAttributesRepository.CreateValue(orderLineID, attributeID, attributeValue, connection, transaction);
+      OrderLineAttributesRepository.CreateValue(session,orderLineID, attributeID, attributeValue);
     }
   }
 }

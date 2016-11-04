@@ -35,16 +35,19 @@ namespace CeyenneNxt.Orders.Module.Controllers
     [HttpPost]
     public IHttpActionResult Post([FromBody] OrderHistoryUpdateDto model)
     {
-      try
+      using (var session = new OrderModuleSession())
       {
-        var statusID = _orderModule.AddStatus(model.OrderID, model.StatusCode, model.Timestamp);
+        try
+        {
+          var statusID = _orderModule.AddStatus(session, model.OrderID, model.StatusCode, model.Timestamp);
 
-        return Ok(statusID);
+          return Ok(statusID);
+        }
+        catch (OrderStatusDuplicationException ex)
+        {
+          return BadRequest(ex.Message);
+        }
       }
-      catch (OrderStatusDuplicationException ex)
-      {
-        return BadRequest(ex.Message);
-      }      
     }
 
     /// <summary>
@@ -73,11 +76,14 @@ namespace CeyenneNxt.Orders.Module.Controllers
     [Route("api/orderStatus/getStatusHistory/{orderID}")]
     public IEnumerable<OrderStatusHistory> GetStatusHistory([FromUri] int orderID)
     {
-      var mapper = _config.CreateMapper();
-      var history = _orderModule.GetStatusHistoryByOrderID(orderID)
-        .Select(h => mapper.Map<OrderStatusHistory>(h));
+      using (var session = new OrderModuleSession())
+      {
+        var mapper = _config.CreateMapper();
+        var history = _orderModule.GetStatusHistoryByOrderID(session,orderID)
+          .Select(h => mapper.Map<OrderStatusHistory>(h));
 
-      return history;
+        return history;
+      }
     }
 
     /// <summary>
@@ -86,15 +92,12 @@ namespace CeyenneNxt.Orders.Module.Controllers
     /// <returns></returns>
     /// //GET: api/orderstatus
     [HttpGet]
-    public IEnumerable<OrderStatus> Get()
+    public IEnumerable<OrderStatusDto> Get()
     {
-      var mapper = _config.CreateMapper();
-      var statuses = _orderModule.GetAllStatuses()
-        .Select(s => mapper.Map<OrderStatus>(s));
-      
-
-
-      return statuses;
+      using (var session = new OrderModuleSession())
+      {
+        return _orderModule.GetAllStatuses(session);
+      }
     }
   }
 }

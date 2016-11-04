@@ -5,7 +5,7 @@ namespace CeyenneNxt.Orders.Shared.Interfaces
 {
   public interface IOrderQuantityUnitsRepository
   {
-    int GetIDByCode(string code, SqlConnection connection, SqlTransaction transaction);
-    int Create(OrderLineQuantityUnit quantityUnit, SqlConnection connection, SqlTransaction transaction);
+    int GetIDByCode(IOrderModuleSession session,string code);
+    int Create(IOrderModuleSession session, OrderLineQuantityUnit quantityUnit);
   }
 }

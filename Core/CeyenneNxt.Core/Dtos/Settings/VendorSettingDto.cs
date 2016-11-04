@@ -11,23 +11,35 @@ namespace CeyenneNxt.Core.Dtos.Settings
   /// </summary>
   public class VendorSettingDto : BaseSettingDto
   {
-    public override string this[int? vendorID]
+    public override SettingValueDto this[int? id]
     {
       get
       {
-        var value = this.FirstOrDefault(p => p.EnvironmentType != null && p.VendorID == vendorID);
-        if (value == null)
+        SettingValueDto settingValue = null; 
+
+        if (id.HasValue)
         {
-          value = this.FirstOrDefault(p => p.EnvironmentType == null && p.VendorID == vendorID);
+          settingValue = this.FirstOrDefault(p => p.EnvironmentType != null && p.VendorID == id);
+          if (settingValue == null)
+          {
+            settingValue = this.FirstOrDefault(p => p.EnvironmentType == null && p.VendorID == id);
+          }
+          if (settingValue == null)
+          {
+            settingValue = this.FirstOrDefault(p => p.EnvironmentType == null && p.VendorID == null);
+          }
         }
-        if (value == null)
+        else
         {
-          value = this.FirstOrDefault(p => p.EnvironmentType == null && p.VendorID == null);
+          settingValue = this.FirstOrDefault(p => p.EnvironmentType != null && p.VendorID == null);
+          if (settingValue == null)
+          {
+            settingValue = this.FirstOrDefault(p => p.EnvironmentType == null && p.VendorID == null);
+          }
         }
-        return value?.Value;
+        return settingValue;
       }
     }
-
-    public override string Value => this[null];
+    public override SettingValueDto Value => this[null];
   }
 }

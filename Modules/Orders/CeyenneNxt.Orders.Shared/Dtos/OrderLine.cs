@@ -25,7 +25,7 @@ namespace CeyenneNxt.Orders.Shared.Dtos
 
     public decimal PriceTaxAmount { get; set; }
 
-    public OrderLineQuantityUnitDto OrderLineQuantityUnit { get; set; }
+    public OrderLineQuantityUnitDto QuantityUnit { get; set; }
 
     public List<AttributeValueDto> AttributeValues { get; set; }
 

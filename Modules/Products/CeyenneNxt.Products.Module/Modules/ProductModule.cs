@@ -20,14 +20,14 @@ namespace CeyenneNxt.Products.Module.Modules
         LoggingModule = loggingModule;
     }
 
-      public virtual List<ProductDto> GetProducts()
+      public virtual List<ProductDto> GetProducts(IProductModuleSession session)
       {
-        var products = ProductRepository.GetProducts();
+        var products = ProductRepository.GetProducts(session);
         var productDtos = new List<ProductDto>();
         products.ForEach(p => productDtos.Add(new ProductDto()
         {
-          ID = p.ID,
-          Name = p.Name
+          ID = p.ID
+          //Name = p.Name
         }));
         return productDtos;
       }

@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using CeyenneNxt.Core.Constants;
 using CeyenneNxt.Core.Types;
 using CeyenneNxt.Orders.Shared.Constants;
 using CeyenneNxt.Orders.Shared.Entities;
@@ -11,32 +9,32 @@ using Dapper;
 
 namespace CeyenneNxt.Orders.Module.Repositories
 {
-  public class OrderTypesRepository : BaseRepository, IOrderTypesRepository
+  public class OrderTypesRepository : BaseRepository<OrderType>, IOrderTypesRepository
   {
-    public OrderTypesRepository() : base(SchemaConstants.Orders)
+    public OrderTypesRepository() : base(CeyenneNxt.Core.Constants.SchemaConstants.Orders)
     {
     }
 
-    public int GetByName(string name, SqlConnection connection, SqlTransaction transaction)
+    public int GetByName(IOrderModuleSession session,string name)
     {
       var p = new DynamicParameters();
       p.Add("@Name", name, DbType.String);
 
-      return GetItem<int>(p, Constants.StoredProcedures.OrderType.GetByName, connection, transaction);
+      return GetItem<int>(session, p, Constants.StoredProcedures.OrderType.GetByName);
     }
 
-    public int Create(string orderTypeName, SqlConnection connection, SqlTransaction transaction)
+    public int Create(IOrderModuleSession session,string orderTypeName)
     {
       var p = new DynamicParameters();
       p.Add("@Name", orderTypeName, DbType.String);
       p.Add("@ID", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-      return Execute(p, Constants.StoredProcedures.OrderType.Create, connection, transaction).Get<int>("ID");
+      return Execute(session, p, Constants.StoredProcedures.OrderType.Create).Get<int>("ID");
     }
 
-    public IEnumerable<OrderType> GetAll(SqlConnection connection)
+    public IEnumerable<OrderType> GetAll(IOrderModuleSession session)
     {
-      return connection.Query<OrderType>(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetAllOrderTypes),
+      return session.Connection.Query<OrderType>(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetAllOrderTypes),
         commandType: CommandType.StoredProcedure);
     }
 

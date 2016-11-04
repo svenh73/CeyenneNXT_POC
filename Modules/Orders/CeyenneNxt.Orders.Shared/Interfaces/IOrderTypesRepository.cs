@@ -6,8 +6,8 @@ namespace CeyenneNxt.Orders.Shared.Interfaces
 {
   public interface IOrderTypesRepository
   {
-    int Create(string orderTypeName, SqlConnection connection, SqlTransaction transaction);
-    IEnumerable<OrderType> GetAll(SqlConnection connection);
-    int GetByName(string name, SqlConnection connection, SqlTransaction transaction);
+    int Create(IOrderModuleSession session,string orderTypeName);
+    IEnumerable<OrderType> GetAll(IOrderModuleSession session);
+    int GetByName(IOrderModuleSession session,string name);
   }
 }

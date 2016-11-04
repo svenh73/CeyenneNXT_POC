@@ -7,7 +7,7 @@ namespace CeyenneNxt.Orders.Shared.Interfaces
 {
   public interface IOrderStatusHistoryRepository
   {
-    int Create(int orderID, int statusID, DateTime timestamp, SqlConnection connection, SqlTransaction transaction);
-    IEnumerable<OrderStatusHistory> GetStatusHistoryByOrderID(int orderID, SqlConnection connection);
+    int Create(IOrderModuleSession session,int orderID, int statusID, DateTime timestamp);
+    IEnumerable<OrderStatusHistory> GetStatusHistoryByOrderID(IOrderModuleSession session,int orderID);
   }
 }

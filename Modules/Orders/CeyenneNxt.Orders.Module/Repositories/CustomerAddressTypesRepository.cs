@@ -1,5 +1,4 @@
-﻿using System.Data.SqlClient;
-using CeyenneNxt.Core.Constants;
+﻿
 using CeyenneNxt.Core.Types;
 using CeyenneNxt.Orders.Shared.Constants;
 using CeyenneNxt.Orders.Shared.Entities;
@@ -9,36 +8,36 @@ using Dapper;
 
 namespace CeyenneNxt.Orders.Module.Repositories
 {
-  public class CustomerAddressTypesRepository : BaseRepository, ICustomerAddressTypesRepository
+  public class CustomerAddressTypesRepository : BaseRepository<CustomerAddressType>, ICustomerAddressTypesRepository
   {
-    public CustomerAddressTypesRepository() : base(SchemaConstants.Orders)
+    public CustomerAddressTypesRepository() : base(CeyenneNxt.Core.Constants.SchemaConstants.Orders)
     {
     }
 
-    public int GetIDByCode(string code, SqlConnection connection, SqlTransaction transaction)
+    public int GetIDByCode(IOrderModuleSession session,string code)
     {
       var param = new DynamicParameters();
       param.Add("@Code", code);
 
-      return GetItem<int>(param, Constants.StoredProcedures.AddressType.GetByCode, connection, transaction);
+      return GetItem<int>(session,param, Constants.StoredProcedures.AddressType.GetByCode);
     }
 
-    public CustomerAddressType GetByID(int id, SqlConnection connection, SqlTransaction transaction)
+    public CustomerAddressType GetByID(IOrderModuleSession session,int id)
     {
       var param = new DynamicParameters();
       param.Add("@ID", id);
 
-      return GetItem<CustomerAddressType>(param, Constants.StoredProcedures.AddressType.GetByID, connection, transaction);
+      return GetItem<CustomerAddressType>(session,param, Constants.StoredProcedures.AddressType.GetByID);
     }
 
-    public int Create(CustomerAddressType customerAddressType, SqlConnection connection, SqlTransaction transaction)
+    public int Create(IOrderModuleSession session,CustomerAddressType customerAddressType)
     {
       var param = new DynamicParameters();
       param.Add("@Code", customerAddressType.Code, dbType: System.Data.DbType.String);
       param.Add("@Name", customerAddressType.Name, dbType: System.Data.DbType.String);
       param.Add("@ID", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
 
-      return Execute(param, Constants.StoredProcedures.AddressType.Insert, connection, transaction).Get<int>("ID");
+      return Execute(session,param, Constants.StoredProcedures.AddressType.Insert).Get<int>("ID");
     }
 
 

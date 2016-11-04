@@ -40,7 +40,7 @@ namespace CeyenneNxt.Orders.Module.Modules
               });
 
             cfg.CreateMap<OrderLineDto, OrderLine>()
-              .ForMember(c => c.QuantityUnit, opt => opt.MapFrom(c => c.OrderLineQuantityUnit));
+              .ForMember(c => c.QuantityUnit, opt => opt.MapFrom(c => c.QuantityUnit));
 
 
             cfg.CreateMap<AddressTypeDto, CustomerAddressType>();
@@ -59,7 +59,7 @@ namespace CeyenneNxt.Orders.Module.Modules
             cfg.CreateMap<OrderSearchResultDto, OrderSearchResult>();
             cfg.CreateMap<OrderSearchResult, OrderSearchResultDto>();
             cfg.CreateMap<OrderLineDto, OrderLine>()
-              .ForMember(c => c.QuantityUnit, opt => opt.MapFrom(c => c.OrderLineQuantityUnit));
+              .ForMember(c => c.QuantityUnit, opt => opt.MapFrom(c => c.QuantityUnit));
 
             cfg.CreateMap<OrderLine, OrderLineDto>()
               .ForMember(c => c.AttributeValues, opt => opt.MapFrom(c => c.Attributes));

@@ -37,29 +37,9 @@ namespace CeyenneNxt.Core.Configuration
       private set;
     }
 
-    public string Connection
-    {
-      get;
-      private set;
-    }
+    public string Connection { get; private set; }
 
-    public string LoggingDatabaseConnection
-    {
-      get;
-      private set;
-    }
-
-    public string ImportDatabaseConnection
-    {
-      get;
-      private set;
-    }
-
-    public string ProcessDatabaseConnection
-    {
-      get;
-      private set;
-    }
+    public string ServiceBusConnectionString { get; set; }  
 
     public string MachineName
     {
@@ -74,13 +54,6 @@ namespace CeyenneNxt.Core.Configuration
     }
 
     public EnvironmentType EnvironmentType { get; set; }
-
-    public string ServiceBusConnectionString
-    {
-
-      get;
-      private set;
-    }
 
     public static CNXTEnvironments Current
     {
@@ -124,12 +97,9 @@ namespace CeyenneNxt.Core.Configuration
                 Name = el.Name,
                 WebApiBaseUrl = el.WebApiBaseUrl,
                 Connection = el.Connection,
-                LoggingDatabaseConnection = el.LoggingDatabaseConnection,
-                ProcessDatabaseConnection = el.ProcessDatabaseConnection,
-                ImportDatabaseConnection = el.ImportDatabaseConnection,
+                ServiceBusConnectionString = el.ServiceBusConnectionString,
                 MachineName = el.MachineName,
                 EnvironmentType = (EnvironmentType)Enum.Parse(typeof(EnvironmentType), el.EnvironmentType, true),
-                ServiceBusConnectionString = el.ServiceBusConnectionString,
                 CustomerName = el.CustomerName,
                 MaximumWorkerCount = el.MaximumWorkerCount,
                 AssemblyRootFolder = el.AssemblyRootFolder

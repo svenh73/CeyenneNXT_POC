@@ -2,6 +2,7 @@
 using CeyenneNxt.Core.Interfaces;
 using CeyenneNxt.Core.Interfaces.CoreModules;
 using CeyenneNxt.Core.ServiceBus;
+using CeyenneNxt.Orders.Module.Repositories;
 using CeyenneNxt.Settings.CoreModule;
 using SimpleInjector;
 
@@ -25,7 +26,10 @@ namespace CeyenneNXT.ServiceBus
           }
       }
 
-      container.Register<ISettingModule, SettingModule>(lifeStyle);
+      container.Register<ISettingModule, SettingModule>(Lifestyle.Singleton);
+
+      container.Register<ISettingRepository, SettingRepository>(Lifestyle.Singleton);
+      container.Register<ISettingValueRepository, SettingValueRepository>(Lifestyle.Singleton);
     }
   }
 }

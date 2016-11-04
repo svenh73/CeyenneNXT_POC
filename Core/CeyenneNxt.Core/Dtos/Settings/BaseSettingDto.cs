@@ -13,7 +13,7 @@ namespace CeyenneNxt.Core.Dtos.Settings
 
     public bool Required { get; set; }
 
-    public SettingDataType DateType { get; set; }
+    public SettingDataType DataType { get; set; }
 
     public bool Active { get; set; } = true;
 
@@ -40,22 +40,67 @@ namespace CeyenneNxt.Core.Dtos.Settings
       }
     }
 
-    public abstract string this [int? id] { get; }
+    public abstract SettingValueDto this[int? id] { get; }
 
-    public abstract string Value { get; }
+    public abstract SettingValueDto Value { get; }
 
-    public void LoadSetting(Setting setting)
+    public string DefaultValue { get; set; }
+
+    public static BaseSettingDto LoadSetting(Setting setting)
     {
+      BaseSettingDto newsetting = null;
+
+      if (setting.SettingType == SettingType.General)
+      {
+        newsetting = new GeneralSettingDto()
+        {
+          Name = setting.Name,
+          DataType = setting.DataType,
+          Active = setting.Active,
+          Domain = setting.Domain
+        };
+      }
+      else if (setting.SettingType == SettingType.Vendor)
+      {
+        newsetting = new VendorSettingDto()
+        {
+          Name = setting.Name,
+          DataType = setting.DataType,
+          Active = setting.Active,
+          Domain = setting.Domain
+        };
+      }
+      else if (setting.SettingType == SettingType.Channel)
+      {
+        newsetting = new ChannelSettingDto()
+        {
+          Name = setting.Name,
+          DataType = setting.DataType,
+          Active = setting.Active,
+          Domain = setting.Domain
+        };
+      }
+      else //setting.SettingType == SettingType.Global
+      {
+        newsetting = new GlobalSettingDto()
+        {
+          Name = setting.Name,
+          DataType = setting.DataType,
+          Active = setting.Active
+        };
+      }
+
       foreach (var value in setting.SettingValues)
       {
-        Add(new SettingValueDto()
+        newsetting.Add(new SettingValueDto()
         {
           Value = value.Value,
           VendorID = value.VendorID,
           ChannelID = value.ChannelID,
-          EnvironmentType = value.EnviromentType
+          EnvironmentType = value.EnvironmentType
         });
       }
+      return newsetting;
     }
 
     public ChannelSettingDto AsChannelSetting()

@@ -6,6 +6,6 @@ namespace CeyenneNxt.Orders.Shared.Interfaces
 {
   public interface IOrderLineStatusesRepository
   {
-    IEnumerable<OrderLineStatus> GetAllStatuses(SqlConnection connection);
+    IEnumerable<OrderLineStatus> GetAllStatuses(IOrderModuleSession session);
   }
 }

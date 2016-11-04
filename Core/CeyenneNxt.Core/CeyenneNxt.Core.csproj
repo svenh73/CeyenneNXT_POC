@@ -38,6 +38,10 @@
       <HintPath>..\..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Dapper.SimpleCRUD, Version=1.13.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Dapper.SimpleCRUD.1.13.0\lib\net45\Dapper.SimpleCRUD.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="IdentityModel, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\IdentityModel.2.0.0\lib\net45\IdentityModel.dll</HintPath>
       <Private>True</Private>
@@ -117,26 +121,40 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\TableAttribute.cs" />
     <Compile Include="Configuration\Enviroment.cs" />
     <Compile Include="Configuration\EnviromentConfigSection.cs" />
+    <Compile Include="Constants\Constants.cs" />
     <Compile Include="Constants\QueueNames.cs" />
     <Compile Include="Constants\SchemaConstants.cs" />
     <Compile Include="Constants\TopicNames.cs" />
     <Compile Include="Diagnostics\ConsoleTraceListener.cs" />
     <Compile Include="Diagnostics\RollingFileTraceListener.cs" />
     <Compile Include="Diagnostics\TraceListenerBase.cs" />
+    <Compile Include="Dtos\BaseNamedCodeDto.cs" />
+    <Compile Include="Dtos\BaseNamedDto.cs" />
+    <Compile Include="Dtos\BaseDto.cs" />
+    <Compile Include="Dtos\RequestReponse\RequestDto.cs" />
+    <Compile Include="Dtos\RequestReponse\ResponseDto.cs" />
+    <Compile Include="Dtos\RequestReponse\ValidationErrorDto.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Setting.cs" />
     <Compile Include="Entities\SettingValue.cs" />
     <Compile Include="Enums\ApplicationType.cs" />
+    <Compile Include="Enums\AttributeDataType.cs" />
+    <Compile Include="Enums\AttributeType.cs" />
     <Compile Include="Enums\EnviromentType.cs" />
     <Compile Include="Enums\MessageTypeAction.cs" />
     <Compile Include="Enums\SettingDataType.cs" />
     <Compile Include="Enums\SettingType.cs" />
+    <Compile Include="Enums\StockType.cs" />
     <Compile Include="Exceptions\EnvironmentException.cs" />
     <Compile Include="Helpers\APITokenManager.cs" />
     <Compile Include="Helpers\Hashing.cs" />
-    <Compile Include="Interfaces\CoreModules\ISettingsRepository.cs" />
+    <Compile Include="Interfaces\CoreModules\ISettingsModuleSession.cs" />
+    <Compile Include="Interfaces\CoreModules\ISettingValueRepository.cs" />
+    <Compile Include="Interfaces\CoreModules\ISettingRepository.cs" />
+    <Compile Include="Interfaces\IModuleSession.cs" />
     <Compile Include="Ioc\IocBootstrapper.cs" />
     <Compile Include="Interfaces\BindingContainer.cs" />
     <Compile Include="Interfaces\Controllers\IAccountController.cs" />
@@ -150,8 +168,11 @@
     <Compile Include="ServiceBus\IServiceBusModule.cs" />
     <Compile Include="Types\AuditEntity.cs" />
     <Compile Include="Types\BaseModule.cs" />
+    <Compile Include="Types\BaseProcessor.cs" />
     <Compile Include="Types\BaseRepository.cs" />
     <Compile Include="Types\EntityTraceModel.cs" />
+    <Compile Include="Interfaces\IBaseRepository.cs" />
+    <Compile Include="Types\ModuleSession.cs" />
     <Compile Include="Types\PagingFilter.cs" />
     <Compile Include="Dtos\Settings\BaseSettingDto.cs" />
     <Compile Include="Dtos\Settings\ChannelSettingDto.cs" />

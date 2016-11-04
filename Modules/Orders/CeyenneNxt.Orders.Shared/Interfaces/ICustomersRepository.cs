@@ -6,10 +6,10 @@ namespace CeyenneNxt.Orders.Shared.Interfaces
 {
   public interface ICustomersRepository
   {
-    Customer Create(Customer customer, SqlConnection connection, SqlTransaction transaction);
-    Customer GetByBackendID(string backendID, SqlConnection connection, SqlTransaction transaction);
-    Customer GetByID(int id, SqlConnection connection, SqlTransaction transaction);
-    CustomerSearchResult GetCustomerWithAddressesAndOrders(int customerID, SqlConnection connection);
-    SearchResult<CustomerSearchResult> Search(CustomerPagingFilter filter, SqlConnection connection);
+    Customer Create(IOrderModuleSession session,Customer customer);
+    Customer GetByBackendID(IOrderModuleSession session,string backendID);
+    Customer GetByID(IOrderModuleSession session,int id);
+    CustomerSearchResult GetCustomerWithAddressesAndOrders(IOrderModuleSession session,int customerID);
+    SearchResult<CustomerSearchResult> Search(IOrderModuleSession session,CustomerPagingFilter filter);
   }
 }

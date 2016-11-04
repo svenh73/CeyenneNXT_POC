@@ -13,7 +13,7 @@ namespace CeyenneNxt.Products.Module.Repositories
       
     }
 
-    public List<Product> GetProducts()
+    public List<Product> GetProducts(IProductModuleSession session)
     {
       var products = new List<Product>();
       products.Add(new Product () {ID = 1,Name = "Product A"});

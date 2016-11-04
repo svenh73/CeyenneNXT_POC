@@ -5,8 +5,8 @@ namespace CeyenneNxt.Orders.Shared.Interfaces
 {
   public interface IOrderAttributesRepository
   {
-    int Create(OrderAttribute attribute, SqlConnection connection, SqlTransaction transaction);
-    void CreateValue(int orderID, int attributeID, string value, SqlConnection connection, SqlTransaction transaction);
-    int GetIDByCode(string code, SqlConnection connection, SqlTransaction transaction);
+    int Create(IOrderModuleSession session,OrderAttribute attribute);
+    void CreateValue(IOrderModuleSession session,int orderID, int attributeID, string value);
+    int GetIDByCode(IOrderModuleSession session,string code);
   }
 }

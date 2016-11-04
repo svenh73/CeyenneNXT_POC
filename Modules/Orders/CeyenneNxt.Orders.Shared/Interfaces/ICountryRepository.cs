@@ -5,7 +5,7 @@ namespace CeyenneNxt.Orders.Shared.Interfaces
 {
   public interface ICountryRepository
   {
-    int Create(Country addressCountry, SqlConnection connection, SqlTransaction transaction);
-    int GetByCode(string code, SqlConnection connection, SqlTransaction transaction);
+    int Create(IOrderModuleSession session,Country addressCountry);
+    int GetByCode(IOrderModuleSession session,string code);
   }
 }

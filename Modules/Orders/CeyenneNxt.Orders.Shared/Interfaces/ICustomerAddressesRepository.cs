@@ -5,10 +5,9 @@ namespace CeyenneNxt.Orders.Shared.Interfaces
 {
   public interface ICustomerAddressesRepository
   {
-    int Create(CustomerAddress model, int customerID, SqlConnection connection, SqlTransaction transaction);
-    CustomerAddress Get(int id, SqlConnection connection, SqlTransaction transaction);
+    int Create(IOrderModuleSession session,CustomerAddress model, int customerID);
+    CustomerAddress Get(IOrderModuleSession session,int id);
 
-    int GetByCustomerAndBackendID(int customerID, string backendID, SqlConnection connection,
-      SqlTransaction transaction);
+    int GetByCustomerAndBackendID(IOrderModuleSession session,int customerID, string backendID);
   }
 }

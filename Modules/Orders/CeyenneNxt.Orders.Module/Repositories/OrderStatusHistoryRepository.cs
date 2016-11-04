@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using CeyenneNxt.Core.Constants;
 using CeyenneNxt.Core.Types;
 using CeyenneNxt.Orders.Shared.Constants;
 using CeyenneNxt.Orders.Shared.Entities;
@@ -14,14 +12,13 @@ using Dapper;
 
 namespace CeyenneNxt.Orders.Module.Repositories
 {
-  public class OrderStatusHistoryRepository : BaseRepository, IOrderStatusHistoryRepository
+  public class OrderStatusHistoryRepository : BaseRepository<OrderStatusHistory>, IOrderStatusHistoryRepository
   {
-    public OrderStatusHistoryRepository() : base(SchemaConstants.Orders)
+    public OrderStatusHistoryRepository() : base(Core.Constants.SchemaConstants.Orders)
     {
     }
 
-    public int Create(int orderID, int statusID, DateTime timestamp, SqlConnection connection,
-      SqlTransaction transaction)
+    public int Create(IOrderModuleSession session,int orderID, int statusID, DateTime timestamp)
     {
       var p = new DynamicParameters();
       p.Add("@OrderID", orderID, DbType.Int32);
@@ -29,11 +26,11 @@ namespace CeyenneNxt.Orders.Module.Repositories
       p.Add("@Timestamp", timestamp, DbType.DateTime);
       p.Add("@ID", direction: ParameterDirection.Output, dbType: DbType.Int32);
 
-      var isStatusUnique = !GetStatusHistory(orderID, statusID, connection, transaction).Any();
+      var isStatusUnique = !GetStatusHistory(session,orderID, statusID).Any();
 
       if (isStatusUnique)
       {
-        Execute(p, Constants.StoredProcedures.OrderStatus.Create, connection, transaction);
+        Execute(session,p, Constants.StoredProcedures.OrderStatus.Create);
       }
       else
       {
@@ -43,7 +40,7 @@ namespace CeyenneNxt.Orders.Module.Repositories
       return p.Get<int>("@ID");
     }
 
-    public IEnumerable<OrderStatusHistory> GetStatusHistoryByOrderID(int orderID, SqlConnection connection)
+    public IEnumerable<OrderStatusHistory> GetStatusHistoryByOrderID(IOrderModuleSession session,int orderID)
     {
       if (orderID <= 0)
         throw new ArgumentException("orderID should be greater than 0", nameof(orderID));
@@ -52,7 +49,7 @@ namespace CeyenneNxt.Orders.Module.Repositories
 
       using (
         var statusHistoryMultiple =
-          connection.QueryMultiple(GetStoredProcedureName(Constants.StoredProcedures.OrderStatus.GetStatusHistoryByOrderID),
+          session.Connection.QueryMultiple(GetStoredProcedureName(Constants.StoredProcedures.OrderStatus.GetStatusHistoryByOrderID),
             new { OrderID = orderID }, commandType: CommandType.StoredProcedure))
       {
         statusHistory = statusHistoryMultiple.Read<OrderStatusHistory, OrderStatus, OrderStatusHistory>(
@@ -66,7 +63,7 @@ namespace CeyenneNxt.Orders.Module.Repositories
       return statusHistory;
     }
 
-    private IEnumerable<OrderStatusHistory> GetStatusHistory(int? orderID, int? statusID, SqlConnection connection, SqlTransaction transaction)
+    private IEnumerable<OrderStatusHistory> GetStatusHistory(IOrderModuleSession session,int? orderID, int? statusID)
     {
       if (orderID <= 0 || statusID <= 0)
         throw new ArgumentException("If provided, orderID and statusID should be greater than 0");
@@ -86,8 +83,8 @@ namespace CeyenneNxt.Orders.Module.Repositories
 
       using (
         var statusHistoryMultiple =
-          connection.QueryMultiple(GetStoredProcedureName(Constants.StoredProcedures.OrderStatus.GetStatusHistory),
-            p, commandType: CommandType.StoredProcedure, transaction: transaction))
+          session.Connection.QueryMultiple(GetStoredProcedureName(Constants.StoredProcedures.OrderStatus.GetStatusHistory),
+            p, commandType: CommandType.StoredProcedure, transaction: session.Transaction))
       {
         statusHistory = statusHistoryMultiple.Read<OrderStatusHistory, OrderStatus, OrderStatusHistory>(
           (history, status) =>

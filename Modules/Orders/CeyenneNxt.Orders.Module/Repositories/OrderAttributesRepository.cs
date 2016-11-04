@@ -1,7 +1,5 @@
 ﻿using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using CeyenneNxt.Core.Constants;
 using CeyenneNxt.Core.Types;
 using CeyenneNxt.Orders.Shared.Constants;
 using CeyenneNxt.Orders.Shared.Entities;
@@ -11,45 +9,44 @@ using Dapper;
 
 namespace CeyenneNxt.Orders.Module.Repositories
 {
-  public class OrderAttributesRepository : BaseRepository, IOrderAttributesRepository
+  public class OrderAttributesRepository : BaseRepository<OrderAttribute>, IOrderAttributesRepository
   {
-    public OrderAttributesRepository() : base(SchemaConstants.Orders)
+    public OrderAttributesRepository() : base(CeyenneNxt.Core.Constants.SchemaConstants.Orders)
     {
     }
 
-    public int GetIDByCode(string code, SqlConnection connection, SqlTransaction transaction)
+    public int GetIDByCode(IOrderModuleSession session,string code)
     {
       var p = new DynamicParameters();
       p.Add("@Code", code, dbType: DbType.String);
 
-      return connection.Query<int>(
-        GetStoredProcedureName(Constants.StoredProcedures.OrderAttributes.GetIDByCode), p, transaction,
+      return session.Connection.Query<int>(
+        GetStoredProcedureName(Constants.StoredProcedures.OrderAttributes.GetIDByCode), p, session.Transaction,
         commandType: CommandType.StoredProcedure).FirstOrDefault();
     }
 
-    public int Create(OrderAttribute attribute, SqlConnection connection, SqlTransaction transaction)
+    public int Create(IOrderModuleSession session,OrderAttribute attribute)
     {
       var p = new DynamicParameters();
       p.Add("@Code", attribute.Code, dbType: DbType.String);
       p.Add("@Name", attribute.Name, dbType: DbType.String);
       p.Add("@ID", DbType.Int32, direction: ParameterDirection.Output);
 
-      connection.Execute(GetStoredProcedureName(Constants.StoredProcedures.OrderAttributes.Create), p, transaction,
+      session.Connection.Execute(GetStoredProcedureName(Constants.StoredProcedures.OrderAttributes.Create), p, session.Transaction,
         commandType: CommandType.StoredProcedure);
 
       return p.Get<int>("ID");
     }
 
-    public void CreateValue(int orderID, int attributeID, string value, SqlConnection connection,
-      SqlTransaction transaction)
+    public void CreateValue(IOrderModuleSession session,int orderID, int attributeID, string value)
     {
       var p = new DynamicParameters();
       p.Add("@OrderID", orderID, dbType: DbType.Int32);
       p.Add("@OrderAttributeID", attributeID, dbType: DbType.Int32);
       p.Add("@Value", value, dbType: DbType.String);
 
-      connection.Execute(GetStoredProcedureName(Constants.StoredProcedures.OrderAttributeValue.Create), p,
-        transaction, commandType: CommandType.StoredProcedure);
+      session.Connection.Execute(GetStoredProcedureName(Constants.StoredProcedures.OrderAttributeValue.Create), p,
+        session.Transaction, commandType: CommandType.StoredProcedure);
     }
   }
 }

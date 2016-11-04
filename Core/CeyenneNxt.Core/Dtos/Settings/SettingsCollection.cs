@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CeyenneNxt.Core.Enums;
 
@@ -19,19 +20,25 @@ namespace CeyenneNxt.Core.Dtos.Settings
       EnvironmentType = environmentType;
     }
 
-    public SettingCollection(string domain, EnvironmentType environmentType, List<BaseSettingDto> settings) : this(domain,environmentType)
+    public SettingCollection Add(BaseSettingDto setting)
     {
-      foreach (var setting in settings)
-      {
-        Collection.Add(setting);
-      }
+      this.Collection.Add(setting);
+      return this;
     }
 
-    public BaseSettingDto this[string name]
+    public SettingValueDto this[string name,int? id = null]
     {
       get
       {
-        return Collection.FirstOrDefault(p => p.Name == name);
+        var setting = Collection.FirstOrDefault(p => p.Name == name);
+        if (setting != null)
+        {
+          return setting[id];
+        }
+        else
+        {
+          return new SettingValueDto();
+        }
       }
     }
   }

@@ -139,52 +139,12 @@ namespace CeyenneNxt.Core.Configuration
       }
     }
 
-    [ConfigurationProperty("LoggingDatabaseConnection", IsRequired = false)]
-    public string LoggingDatabaseConnection
-    {
-      get
-      {
-        return (string)this["LoggingDatabaseConnection"];
-      }
-      set
-      {
-        this["LoggingDatabaseConnection"] = value;
-      }
-    }
-
-    [ConfigurationProperty("ProcessDatabaseConnection", IsRequired = false)]
-    public string ProcessDatabaseConnection
-    {
-      get
-      {
-        return (string)this["ProcessDatabaseConnection"];
-      }
-      set
-      {
-        this["ProcessDatabaseConnection"] = value;
-      }
-    }
-
-    [ConfigurationProperty("ImportDatabaseConnection", IsRequired = false)]
-    public string ImportDatabaseConnection
-    {
-      get
-      {
-        return (string)this["ImportDatabaseConnection"];
-      }
-      set
-      {
-        this["ImportDatabaseConnection"] = value;
-      }
-    }
-
-
     [ConfigurationProperty("ServiceBusConnectionString", IsRequired = true)]
     public string ServiceBusConnectionString
     {
       get
       {
-        return (string) this["ServiceBusConnectionString"];
+        return (string)this["ServiceBusConnectionString"];
       }
       set
       {

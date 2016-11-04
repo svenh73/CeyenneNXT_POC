@@ -2,7 +2,6 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using CeyenneNxt.Core.Constants;
 using CeyenneNxt.Core.Types;
 using CeyenneNxt.Orders.Shared.Constants;
 using CeyenneNxt.Orders.Shared.Entities;
@@ -12,14 +11,14 @@ using Dapper;
 
 namespace CeyenneNxt.Orders.Module.Repositories
 {
-  public class OrderLinesRepository : BaseRepository, IOrderLinesRepository
+  public class OrderLinesRepository : BaseRepository<OrderLine>, IOrderLinesRepository
   {
 
-    public OrderLinesRepository() : base(SchemaConstants.Orders)
+    public OrderLinesRepository() : base(CeyenneNxt.Core.Constants.SchemaConstants.Orders)
     {
     }
 
-    public int Create(OrderLine orderLine, int orderID, SqlConnection connection, SqlTransaction transaction)
+    public int Create(IOrderModuleSession session,OrderLine orderLine, int orderID)
     {
       var p = new DynamicParameters();
       p.Add("@ExternalOrderLineID", orderLine.ExternalOrderLineID, dbType: DbType.String);
@@ -32,27 +31,27 @@ namespace CeyenneNxt.Orders.Module.Repositories
       p.Add("@UnitPrice", orderLine.UnitPrice, DbType.Decimal);
       p.Add("@PriceTaxAmount", orderLine.PriceTaxAmount, DbType.Decimal);
 
-      connection.Execute(GetStoredProcedureName(Constants.StoredProcedures.OrderLines.Create), p, transaction,
+      session.Connection.Execute(GetStoredProcedureName(Constants.StoredProcedures.OrderLines.Create), p, session.Transaction,
         commandType: CommandType.StoredProcedure);
 
       return p.Get<int>("ID");
     }
 
-    public OrderLine GetByID(int id, SqlConnection connection, SqlTransaction transaction)
+    public OrderLine GetByID(IOrderModuleSession session,int id)
     {
       var p = new DynamicParameters();
       p.Add("@ID", id, DbType.Int32);
 
-      return connection.Query<OrderLine>(GetStoredProcedureName(Constants.StoredProcedures.OrderLines.GetByID), p,
-        transaction: transaction, commandType: CommandType.StoredProcedure).FirstOrDefault();
+      return session.Connection.Query<OrderLine>(GetStoredProcedureName(Constants.StoredProcedures.OrderLines.GetByID), p,
+        transaction: session.Transaction, commandType: CommandType.StoredProcedure).FirstOrDefault();
     }
 
-    public OrderLine GetFullByID(int id, SqlConnection connection)
+    public OrderLine GetFullByID(IOrderModuleSession session,int id)
     {
       if (id <= 0)
         throw new ArgumentException("id must be greater than 0", nameof(id));
 
-      using (var orderMultiple = connection.QueryMultiple(GetStoredProcedureName(Constants.StoredProcedures.OrderLines.GetByIdDetails), new { ID = id }, commandType: CommandType.StoredProcedure))
+      using (var orderMultiple = session.Connection.QueryMultiple(GetStoredProcedureName(Constants.StoredProcedures.OrderLines.GetByIdDetails), new { ID = id }, commandType: CommandType.StoredProcedure))
       {
         var orderLine = orderMultiple.Read<OrderLine>().FirstOrDefault();
 

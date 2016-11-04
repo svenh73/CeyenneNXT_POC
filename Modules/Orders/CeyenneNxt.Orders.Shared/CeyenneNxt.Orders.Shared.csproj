@@ -139,6 +139,7 @@
     <Compile Include="Interfaces\IOrderLineStatusesRepository.cs" />
     <Compile Include="Interfaces\IOrderLineStatusHistoryRepository.cs" />
     <Compile Include="Interfaces\IOrderModule.cs" />
+    <Compile Include="Interfaces\IOrderModuleSession.cs" />
     <Compile Include="Interfaces\IOrderPublishProcessor.cs" />
     <Compile Include="Interfaces\IOrderQuantityUnitsRepository.cs" />
     <Compile Include="Interfaces\IOrderRepository.cs" />

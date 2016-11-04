@@ -12,23 +12,36 @@ namespace CeyenneNxt.Core.Dtos.Settings
   public class ChannelSettingDto : BaseSettingDto
   {
 
-    public override string this[int? channelID]
+    public override SettingValueDto this[int? id]
     {
       get
       {
-        var value = this.FirstOrDefault(p => p.EnvironmentType != null && p.ChannelID == channelID);
-        if (value == null)
+        SettingValueDto settingValue = null;
+
+        if (id.HasValue)
         {
-          value = this.FirstOrDefault(p => p.EnvironmentType == null && p.ChannelID == channelID);
+          settingValue = this.FirstOrDefault(p => p.EnvironmentType != null && p.ChannelID == id);
+          if (settingValue == null)
+          {
+            settingValue = this.FirstOrDefault(p => p.EnvironmentType == null && p.ChannelID == id);
+          }
+          if (settingValue == null)
+          {
+            settingValue = this.FirstOrDefault(p => p.EnvironmentType == null && p.ChannelID == null);
+          }
         }
-        if (value == null)
+        else
         {
-          value = this.FirstOrDefault(p => p.EnvironmentType == null && p.ChannelID == null);
+          settingValue = this.FirstOrDefault(p => p.EnvironmentType != null && p.ChannelID == null);
+          if (settingValue == null)
+          {
+            settingValue = this.FirstOrDefault(p => p.EnvironmentType == null && p.ChannelID == null);
+          }
         }
-        return value?.Value;
+        return settingValue;
       }
     }
 
-    public override string Value => this[null];
+    public override SettingValueDto Value => this[null];
   }
 }

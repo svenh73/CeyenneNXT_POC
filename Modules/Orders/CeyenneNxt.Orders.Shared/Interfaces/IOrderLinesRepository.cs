@@ -5,8 +5,8 @@ namespace CeyenneNxt.Orders.Shared.Interfaces
 {
   public interface IOrderLinesRepository
   {
-    int Create(OrderLine orderLine, int orderID, SqlConnection connection, SqlTransaction transaction);
-    OrderLine GetByID(int id, SqlConnection connection, SqlTransaction transaction);
-    OrderLine GetFullByID(int id, SqlConnection connection);
+    int Create(IOrderModuleSession session,OrderLine orderLine, int orderID);
+    OrderLine GetByID(IOrderModuleSession session,int id);
+    OrderLine GetFullByID(IOrderModuleSession session,int id);
   }
 }

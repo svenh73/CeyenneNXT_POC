@@ -1,7 +1,5 @@
 ﻿using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using CeyenneNxt.Core.Constants;
 using CeyenneNxt.Core.Types;
 using CeyenneNxt.Orders.Shared.Constants;
 using CeyenneNxt.Orders.Shared.Entities;
@@ -11,14 +9,13 @@ using Dapper;
 
 namespace CeyenneNxt.Orders.Module.Repositories
 {
-  public class CustomerAddressesRepository : BaseRepository, ICustomerAddressesRepository
+  public class CustomerAddressesRepository : BaseRepository<CustomerAddress>, ICustomerAddressesRepository
   {
-    public CustomerAddressesRepository() : base(SchemaConstants.Orders)
+    public CustomerAddressesRepository() : base(CeyenneNxt.Core.Constants.SchemaConstants.Orders)
     {
     }
 
-    public int Create(CustomerAddress model, int customerID, SqlConnection connection,
-      SqlTransaction transaction)
+    public int Create(IOrderModuleSession session,CustomerAddress model, int customerID)
     {
       var p = new DynamicParameters();
       p.Add("@BackendID", dbType: DbType.String, value: model.BackendID);
@@ -34,31 +31,30 @@ namespace CeyenneNxt.Orders.Module.Repositories
       p.Add("@Remark", dbType: DbType.String, value: model.Remark);
       p.Add("@ID", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-      connection.Execute(GetStoredProcedureName(Constants.StoredProcedures.Address.Create), p,
-        commandType: CommandType.StoredProcedure, transaction: transaction);
+      session.Connection.Execute(GetStoredProcedureName(Constants.StoredProcedures.Address.Create), p,
+        commandType: CommandType.StoredProcedure, transaction: session.Transaction);
       var id = p.Get<int>("ID");
 
       return id;
     }
 
-    public CustomerAddress Get(int id, SqlConnection connection, SqlTransaction transaction)
+    public CustomerAddress Get(IOrderModuleSession session,int id)
     {
       return
-        connection.Query<CustomerAddress>(
-          GetStoredProcedureName(Constants.StoredProcedures.Address.GetByID), new {ID = id}, transaction,
+        session.Connection.Query<CustomerAddress>(
+          GetStoredProcedureName(Constants.StoredProcedures.Address.GetByID), new {ID = id}, session.Transaction,
           commandType: CommandType.StoredProcedure).FirstOrDefault();
     }
 
-    public int GetByCustomerAndBackendID(int customerID, string backendID, SqlConnection connection,
-      SqlTransaction transaction)
+    public int GetByCustomerAndBackendID(IOrderModuleSession session,int customerID, string backendID)
     {
       var p = new DynamicParameters();
       p.Add("@CustomerID", customerID, DbType.Int32);
       p.Add("@BackendID", backendID, DbType.String);
 
       return
-        connection.Query<int>(GetStoredProcedureName(Constants.StoredProcedures.Address.GetByBackendID), p,
-          transaction: transaction, commandType: CommandType.StoredProcedure).FirstOrDefault();
+        session.Connection.Query<int>(GetStoredProcedureName(Constants.StoredProcedures.Address.GetByBackendID), p,
+          transaction: session.Transaction, commandType: CommandType.StoredProcedure).FirstOrDefault();
     }
   }
 }

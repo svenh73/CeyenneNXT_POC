@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using CeyenneNxt.Core.Constants;
 using CeyenneNxt.Core.Types;
 using CeyenneNxt.Orders.Shared.Constants;
 using CeyenneNxt.Orders.Shared.Entities;
@@ -15,32 +13,30 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace CeyenneNxt.Orders.Module.Repositories
 {
-  public class OrderRepository : BaseRepository, IOrderRepository
+  public class OrderRepository : BaseRepository<Order>, IOrderRepository
   {
-    public OrderRepository() : base(SchemaConstants.Orders) { }
+    public OrderRepository() : base(Core.Constants.SchemaConstants.Orders) { }
 
-    public int GetIDByBackendID(string backendID, SqlConnection connection)
+    public int GetIDByBackendID(IOrderModuleSession session,string backendID)
     {
       var p = new DynamicParameters();
 
       p.Add("@BackendID", backendID);
-
-      return connection.Query<int>(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetIDByBackendID), p, commandType: CommandType.StoredProcedure).FirstOrDefault();
+      if (session.Transaction != null)
+      {
+        return
+        session.Connection.Query<int>(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetIDByBackendID), p,
+          transaction: session.Transaction, commandType: CommandType.StoredProcedure).FirstOrDefault();
+      }
+      else
+      {
+        return
+        session.Connection.Query<int>(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetIDByBackendID), p, commandType: CommandType.StoredProcedure).FirstOrDefault();
+      }
     }
 
-    public int GetIDByBackendID(string backendID, SqlConnection connection, SqlTransaction transaction)
-    {
-      var p = new DynamicParameters();
 
-      p.Add("@BackendID", backendID);
-
-      return
-        connection.Query<int>(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetIDByBackendID), p,
-          transaction: transaction, commandType: CommandType.StoredProcedure).FirstOrDefault();
-    }
-
-
-    public int Create(Order model, SqlConnection connection, SqlTransaction transaction)
+    public int Create(IOrderModuleSession session,Order model)
     {
       var p = new DynamicParameters();
 
@@ -52,12 +48,12 @@ namespace CeyenneNxt.Orders.Module.Repositories
       p.Add("@CreatedAt", DateTime.Now.ToUniversalTime());
       p.Add("@ID", DbType.Int32, direction: ParameterDirection.Output);
 
-      connection.Execute(GetStoredProcedureName(Constants.StoredProcedures.Orders.Create), p, transaction,
+      session.Connection.Execute(GetStoredProcedureName(Constants.StoredProcedures.Orders.Create), p, session.Transaction,
         commandType: CommandType.StoredProcedure);
       return p.Get<int>("ID");
     }
 
-    public Order GetFullByID(int id, SqlConnection connection)
+    public Order GetFullByID(IOrderModuleSession session,int id)
     {
       if (id <= 0)
         throw new NotSupportedException("Seriously? OrderID > 0");
@@ -65,7 +61,7 @@ namespace CeyenneNxt.Orders.Module.Repositories
       Order order;
 
 
-      using (var orderMultiple = connection.QueryMultiple(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetByIdDetails), new { ID = id }, commandType: CommandType.StoredProcedure))
+      using (var orderMultiple = session.Connection.QueryMultiple(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetByIdDetails), new { ID = id }, commandType: CommandType.StoredProcedure))
       {
         order = orderMultiple.Read<Order>().FirstOrDefault();
 
@@ -94,9 +90,6 @@ namespace CeyenneNxt.Orders.Module.Repositories
         }, "ID"
         ).ToList();
 
-
-
-
         order.History = orderMultiple.Read<OrderStatusHistory, OrderStatus, OrderStatusHistory>(
           (statusHistory, status) =>
           {
@@ -111,7 +104,7 @@ namespace CeyenneNxt.Orders.Module.Repositories
       {
         var p = new DynamicParameters();
         p.Add("OrderLineID", orderLine.ID, dbType: DbType.Int32);
-        orderLine.Attributes = connection.Query<OrderLineAttributeValue, OrderLineAttribute, OrderLineAttributeValue>(GetStoredProcedureName(Constants.StoredProcedures.OrderLineAttributes.GetAttributes), (val, attr) =>
+        orderLine.Attributes = session.Connection.Query<OrderLineAttributeValue, OrderLineAttribute, OrderLineAttributeValue>(GetStoredProcedureName(Constants.StoredProcedures.OrderLineAttributes.GetAttributes), (val, attr) =>
         {
           val.Attribute = attr;
           return val;
@@ -128,35 +121,35 @@ namespace CeyenneNxt.Orders.Module.Repositories
       //TODO: See if it is possible to get it the same way as other information is get (within the procedure)
       foreach (var item in order.OrderLines)
       {
-        item.StatusHistories = orderLineStatusHistoryRepository.GetStatusHistoryByOrderLineID(item.ID, connection);
+        item.StatusHistories = orderLineStatusHistoryRepository.GetStatusHistoryByOrderLineID(session,item.ID);
       }
 
       return order;
     }
 
-    public Order GetByID(int orderID, SqlConnection connection)
+    public Order GetByID(IOrderModuleSession session,int orderID)
     {
       var p = new DynamicParameters();
       p.Add("@ID", orderID, DbType.Int32);
 
-      return connection.Query<Order>(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetByID), p,
+      return session.Connection.Query<Order>(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetByID), p,
         commandType: CommandType.StoredProcedure).FirstOrDefault();
     }
 
-    public DashboardData GetDashboardData(SqlConnection connection)
+    public DashboardData GetDashboardData(IOrderModuleSession session)
     {
       var dashboardData = new DashboardData();
       var parameters = new DynamicParameters();
       parameters.Add("@NewOrdersCount", dbType: DbType.Int32, direction: ParameterDirection.Output);
       parameters.Add("@InProcessOrdersCount", dbType: DbType.Int32, direction: ParameterDirection.Output);
-      dashboardData.DayCounts = connection.Query<DayCount>(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetDashboardData), parameters, commandType: CommandType.StoredProcedure).ToList();
+      dashboardData.DayCounts = session.Connection.Query<DayCount>(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetDashboardData), parameters, commandType: CommandType.StoredProcedure).ToList();
       dashboardData.NewOrdersCount = parameters.Get<int>("@NewOrdersCount");
       dashboardData.InProcessOrdersCount = parameters.Get<int>("@InProcessOrdersCount");
 
       return dashboardData;
     }
 
-    public SearchResult<OrderSearchResult> Search(OrderPagingFilter filter, SqlConnection connection)
+    public SearchResult<OrderSearchResult> Search(IOrderModuleSession session,OrderPagingFilter filter)
     {
       if (!filter.PageSize.HasValue)
       {
@@ -197,7 +190,7 @@ namespace CeyenneNxt.Orders.Module.Repositories
         parameters.Add("@TypeID", filter.TypeID);
       }
 
-      var orders = connection.Query<OrderSearchResult>(GetStoredProcedureName(Constants.StoredProcedures.Orders.OrderSearch), parameters, commandType: CommandType.StoredProcedure).ToList();
+      var orders = session.Connection.Query<OrderSearchResult>(GetStoredProcedureName(Constants.StoredProcedures.Orders.OrderSearch), parameters, commandType: CommandType.StoredProcedure).ToList();
 
 
       var totalRows = parameters.Get<int>("TotalRows");
@@ -212,47 +205,47 @@ namespace CeyenneNxt.Orders.Module.Repositories
       return result;
     }
 
-    public IEnumerable<Order> GetNotDispatched(SqlConnection connection)
+    public IEnumerable<Order> GetNotDispatched(IOrderModuleSession session)
     {
-      return connection.Query<Order>(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetByNotDispatched), commandType: CommandType.StoredProcedure);
+      return session.Connection.Query<Order>(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetByNotDispatched), commandType: CommandType.StoredProcedure);
     }
 
-    public void UpdateHold(int orderID, bool holdStatus, SqlConnection connection)
+    public void UpdateHold(IOrderModuleSession session,int orderID, bool holdStatus)
     {
       var p = new DynamicParameters();
       p.Add("@OrderID", orderID, DbType.Int32);
       p.Add("@HoldOrder", holdStatus, DbType.Boolean);
 
-      connection.Execute(GetStoredProcedureName(Constants.StoredProcedures.Orders.UpdateHoldStatus), p, commandType: CommandType.StoredProcedure);
+      session.Connection.Execute(GetStoredProcedureName(Constants.StoredProcedures.Orders.UpdateHoldStatus), p, commandType: CommandType.StoredProcedure);
     }
 
-    public void SetOrderDispatched(int orderID, DateTime dispatchedAt, SqlConnection connection)
+    public void SetOrderDispatched(IOrderModuleSession session,int orderID, DateTime dispatchedAt)
     {
       var p = new DynamicParameters();
       p.Add("@OrderID", orderID, DbType.Int32);
       p.Add("@DispatchedAt", dispatchedAt, DbType.DateTime);
 
-      connection.Execute(GetStoredProcedureName(Constants.StoredProcedures.Orders.SetOrderDispatched), p, commandType: CommandType.StoredProcedure);
+      session.Connection.Execute(GetStoredProcedureName(Constants.StoredProcedures.Orders.SetOrderDispatched), p, commandType: CommandType.StoredProcedure);
     }
 
-    public Order GetFullByExternalID(string identifier, SqlConnection sqlConnection)
+    public Order GetFullByExternalID(IOrderModuleSession session,string identifier)
     {
-      var id = GetIDByBackendID(identifier, sqlConnection);
+      var id = GetIDByBackendID(session,identifier);
 
-      return GetFullByID(id, sqlConnection);
+      return GetFullByID(session,id);
     }
 
-    public IEnumerable<int> GetBetweenStatuses(SqlConnection connection, int? statusIDWith, int? statusIDWithout)
+    public IEnumerable<int> GetBetweenStatuses(IOrderModuleSession session, int? statusIDWith, int? statusIDWithout)
     {
       var p = new DynamicParameters();
 
       p.Add("@StatusIDWith", statusIDWith, DbType.Int32);
       p.Add("@StatusIDWithout", statusIDWithout, DbType.Int32);
 
-      return connection.Query<int>(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetBetweenStatuses), p, commandType: CommandType.StoredProcedure);
+      return session.Connection.Query<int>(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetBetweenStatuses), p, commandType: CommandType.StoredProcedure);
     }
 
-    public IEnumerable<int> GetByLatestStatus(SqlConnection connection, int statusID, int orderTypeID)
+    public IEnumerable<int> GetByLatestStatus(IOrderModuleSession session, int statusID, int orderTypeID)
     {
       var p = new DynamicParameters();
 
@@ -262,7 +255,7 @@ namespace CeyenneNxt.Orders.Module.Repositories
         p.Add("@OrderTypeID", orderTypeID, DbType.Int32);
       }
 
-      return connection.Query<int>(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetByLatestStatus), p, commandType: CommandType.StoredProcedure);
+      return session.Connection.Query<int>(GetStoredProcedureName(Constants.StoredProcedures.Orders.GetByLatestStatus), p, commandType: CommandType.StoredProcedure);
     }
   }
 }

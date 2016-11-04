@@ -11,22 +11,24 @@ namespace CeyenneNxt.Core.Dtos.Settings
   /// </summary>
   public class GeneralSettingDto : BaseSettingDto
   {
-    public override string this[int? id]
+    public override SettingValueDto this[int? id]
     {
-      get { return Value; }
+      get {
+
+          SettingValueDto settingValue = null;
+
+          settingValue = this.FirstOrDefault(p => p.EnvironmentType != null);
+          if (settingValue == null)
+          {
+            settingValue = this.FirstOrDefault(p => p.EnvironmentType == null);
+          }
+          return settingValue;
+      }
     }
 
-    public override string Value
+    public override SettingValueDto Value
     {
-      get
-      {
-        var value = this.FirstOrDefault(p => p.EnvironmentType != null && p.ChannelID == null && p.VendorID == null);
-        if (value == null)
-        {
-          value = this.FirstOrDefault(p => p.EnvironmentType == null && p.ChannelID == null && p.VendorID == null);
-        }
-        return value?.Value;
-      }
+      get { return this[null]; }
     }
   }
 }

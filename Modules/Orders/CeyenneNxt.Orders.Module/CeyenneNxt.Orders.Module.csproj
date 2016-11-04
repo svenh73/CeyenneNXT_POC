@@ -68,6 +68,7 @@
       <HintPath>..\..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Workflow.Runtime" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -80,9 +81,11 @@
     <Compile Include="CommunicationModule\OrderCommunicationModule.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\OrderStatusController.cs" />
+    <Compile Include="OrderMapper.cs" />
     <Compile Include="Modules\BaseOrderModule.cs" />
     <Compile Include="Modules\OrderLineModule.cs" />
     <Compile Include="Modules\OrderModule.cs" />
+    <Compile Include="OrderModuleSession.cs" />
     <Compile Include="Processors\OrderPublishProcessor.cs" />
     <Compile Include="Processors\OrderSubscribeProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -109,6 +112,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\CoreModules\CeyenneNxt.Settings.CoreModule\CeyenneNxt.Settings.CoreModule.csproj">
+      <Project>{B87CA911-13E6-4FD3-B300-E7FAA04E7D85}</Project>
+      <Name>CeyenneNxt.Settings.CoreModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Core\CeyenneNxt.Core\CeyenneNxt.Core.csproj">
       <Project>{FA4FE0CC-457C-4632-9315-6205E13B534A}</Project>
       <Name>CeyenneNxt.Core</Name>
