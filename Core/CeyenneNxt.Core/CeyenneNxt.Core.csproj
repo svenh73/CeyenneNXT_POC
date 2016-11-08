@@ -131,7 +131,7 @@
     <Compile Include="Diagnostics\ConsoleTraceListener.cs" />
     <Compile Include="Diagnostics\RollingFileTraceListener.cs" />
     <Compile Include="Diagnostics\TraceListenerBase.cs" />
-    <Compile Include="Dtos\BaseNamedCodeDto.cs" />
+    <Compile Include="Dtos\BaseReferenceDto.cs" />
     <Compile Include="Dtos\BaseNamedDto.cs" />
     <Compile Include="Dtos\BaseDto.cs" />
     <Compile Include="Dtos\RequestReponse\RequestDto.cs" />
@@ -147,7 +147,6 @@
     <Compile Include="Enums\MessageTypeAction.cs" />
     <Compile Include="Enums\SettingDataType.cs" />
     <Compile Include="Enums\SettingType.cs" />
-    <Compile Include="Enums\StockType.cs" />
     <Compile Include="Exceptions\EnvironmentException.cs" />
     <Compile Include="Helpers\APITokenManager.cs" />
     <Compile Include="Helpers\Hashing.cs" />

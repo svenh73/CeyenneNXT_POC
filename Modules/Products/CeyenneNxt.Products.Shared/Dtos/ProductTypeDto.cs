@@ -7,7 +7,8 @@ using CeyenneNxt.Core.Dtos;
 
 namespace CeyenneNxt.Products.Shared.Dtos
 {
-  public class ProductTypeDto : BaseNamedCodeDto
+  public class ProductTypeDto : BaseReferenceDto
   {
+    public OrganizationDto Organization { get; set; }
   }
 }

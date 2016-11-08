@@ -10,7 +10,7 @@ using CeyenneNxt.Core.Enums;
 
 namespace CeyenneNxt.Products.Shared.Dtos
 {
-  public class AttributeDto : BaseNamedCodeDto
+  public class AttributeDto : BaseReferenceDto
   {
     public int Index { get; set; }
 

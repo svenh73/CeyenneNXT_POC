@@ -8,7 +8,7 @@ using CeyenneNxt.Core.Dtos;
 
 namespace CeyenneNxt.Products.Shared.Dtos
 {
-  public class AttributeGroupDto : BaseNamedCodeDto
+  public class AttributeGroupDto : BaseReferenceDto
   {
     [XmlElement]
     public OrganizationDto Organization { get; set; }

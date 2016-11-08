@@ -7,7 +7,7 @@ using CeyenneNxt.Core.Dtos;
 
 namespace CeyenneNxt.Products.Shared.Dtos
 {
-  public class VATTypeDto : BaseNamedCodeDto
+  public class VATTypeDto : BaseReferenceDto
   {
   }
 }

@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace CeyenneNxt.Products.Shared.Dtos
 {
-  public class MediaTypeDto : BaseNamedCodeDto
+  public class MediaTypeDto : BaseReferenceDto
   {
     [XmlElement("Translations")]
     public List<TranslationDto> Translations { get; set; }

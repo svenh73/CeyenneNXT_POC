@@ -7,7 +7,11 @@ using CeyenneNxt.Core.Dtos;
 
 namespace CeyenneNxt.Products.Shared.Dtos
 {
-  public class CultureDto : BaseNamedCodeDto
+  public class CultureDto : BaseReferenceDto
   {
+    public bool Default { get; set; } = true;
+
+    public OrganizationDto Organization { get; set; }
+
   }
 }

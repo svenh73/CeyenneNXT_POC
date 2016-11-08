@@ -7,7 +7,7 @@ using CeyenneNxt.Core.Dtos;
 
 namespace CeyenneNxt.Products.Shared.Dtos
 {
-  public class BrandDto : BaseNamedCodeDto
+  public class BrandDto : BaseReferenceDto
   {
   }
 }

@@ -105,7 +105,9 @@
     <Compile Include="Repositories\OrderStatusHistoryRepository.cs" />
     <Compile Include="Repositories\OrderTypesRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <Content Include="CeyenneNxt.Orders.Module.nuspec" />

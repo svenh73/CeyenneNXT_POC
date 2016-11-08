@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace CeyenneNxt.Core.Dtos
 {
-  public class BaseNamedCodeDto : BaseNamedDto
+  public class BaseReferenceDto : BaseNamedDto
   {
     [XmlAttribute]
     public string Code { get; set; }

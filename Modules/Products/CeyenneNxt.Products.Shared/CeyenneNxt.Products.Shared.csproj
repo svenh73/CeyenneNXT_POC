@@ -58,6 +58,7 @@
     <Compile Include="Dtos\ProductBarcodeDto.cs" />
     <Compile Include="Dtos\ProductDto.cs" />
     <Compile Include="Dtos\RelatedProductTypeDto.cs" />
+    <Compile Include="Dtos\StockTypeDto.cs" />
     <Compile Include="Dtos\VATTypeDto.cs" />
     <Compile Include="Dtos\VendorProductDto.cs" />
     <Compile Include="Dtos\ProductPriceDto.cs" />

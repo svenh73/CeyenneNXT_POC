@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CeyenneNxt.Core.Dtos;
 
-namespace CeyenneNxt.Core.Enums
+namespace CeyenneNxt.Products.Shared.Dtos
 {
-  public enum StockType
+  public class StockTypeDto : BaseReferenceDto
   {
-    // Todo: extend this enum
-
-    Internal,
-    External
   }
 }
