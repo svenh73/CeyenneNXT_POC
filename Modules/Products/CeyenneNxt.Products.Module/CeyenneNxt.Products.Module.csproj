@@ -140,6 +140,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Processors\" />
     <Folder Include="UI\base\app\" />
     <Folder Include="UI\base\scripts\" />
     <Folder Include="UI\base\theme\" />

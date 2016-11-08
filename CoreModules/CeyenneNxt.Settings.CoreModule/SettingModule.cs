@@ -61,7 +61,7 @@ namespace CeyenneNxt.Settings.CoreModule
             }
             else
             {
-              if (settingDto.Required && newsettingDto[null] == null)
+              if (settingDto.Required && String.IsNullOrEmpty(newsettingDto[null].Value))
               {
                 missingSettings.Add(settingDto);
                 InsertOrUpdateSetting(session, settingDto);

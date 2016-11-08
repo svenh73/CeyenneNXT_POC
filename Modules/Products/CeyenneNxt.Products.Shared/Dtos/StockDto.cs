@@ -14,7 +14,7 @@ namespace CeyenneNxt.Products.Shared.Dtos
     [XmlAttribute]
     public int Quantity { get; set; }
 
-    [XmlAttribute]
+    [XmlElement]
     public StockTypeDto StockType { get; set; }
   }
 }

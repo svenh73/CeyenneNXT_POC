@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Odbc;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,10 +17,13 @@ namespace CeyenneNxt.Settings.CoreModule
 
     public List<BaseSettingDto> Settings { get; private set; }
 
-    public override string ToString()
+    public override string Message
     {
-      return String.Format("The following required settings are missing {0}",
-        String.Join(",", Settings.Where(o => o.Required).Select(p => p.Name)));
+      get
+      {
+        return String.Format("The following required settings are missing: {0}",
+          String.Join(",", Settings.Where(o => o.Required).Select(p => p.Name)));
+      }
     }
   }
 }

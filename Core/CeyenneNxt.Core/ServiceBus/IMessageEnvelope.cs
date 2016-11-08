@@ -15,6 +15,7 @@ namespace CeyenneNxt.Core.ServiceBus
     [DataMember]
     DateTime DateCreated { get; set; }
     void Abandon();
+    void Deadletter(string reason = null, string error = null);
     void Complete();
     IMessageEnvelope<T> CreateMessage(T item, MessageTypeAction action, string dataSource);
   }

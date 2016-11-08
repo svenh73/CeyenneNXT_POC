@@ -36,13 +36,14 @@ namespace CeyenneNxt.Settings.CoreModule.Test
       }
     }
 
-    public SettingCollection GetSettingCollection (EnvironmentType environmentType) {
+    public SettingCollection GetSettingCollection(EnvironmentType environmentType)
+    {
 
       using (var session = new SettingModuleSession())
       {
         var collection = new SettingCollection(Domain, environmentType)
           .Add(new GlobalSettingDto() { Name = Constants.SettingNames.CNXTRootPath, DataType = SettingDataType.String, Required = true })
-          .Add(new GeneralSettingDto() { Domain = Domain, Name = Constants.SettingNames.TargetDirectory, DataType = SettingDataType.Int, Required = true, DefaultValue = @"c:\test"})
+          .Add(new GeneralSettingDto() { Domain = Domain, Name = Constants.SettingNames.TargetDirectory, DataType = SettingDataType.Int, Required = true, DefaultValue = @"c:\test" })
           .Add(new VendorSettingDto() { Domain = Domain, Name = Constants.SettingNames.SourceDirectory, DataType = SettingDataType.String, Required = true });
 
         return SettingModule.LoadSettings(session, collection);
@@ -54,7 +55,7 @@ namespace CeyenneNxt.Settings.CoreModule.Test
       var container = IocBootstrapper.Start(ApplicationType.Process);
     }
 
-    
+
     [TestMethod]
     public void InsertGlobalSetting()
     {
@@ -144,13 +145,13 @@ namespace CeyenneNxt.Settings.CoreModule.Test
     {
       var collection = GetSettingCollection(EnvironmentType.Development);
 
-      Assert.AreEqual(@"\vendor1target", collection[Constants.SettingNames.TargetDirectory,1]);
+      Assert.AreEqual(@"\vendor1target", collection[Constants.SettingNames.TargetDirectory, 1]);
       Assert.AreEqual(@"\vendor2target", collection[Constants.SettingNames.TargetDirectory, 2]);
 
       collection = GetSettingCollection(EnvironmentType.Production);
 
-      Assert.AreEqual(@"\vendor1targetproduction", collection[Constants.SettingNames.TargetDirectory,1]);
-      Assert.AreEqual(@"\vendor2target", collection[Constants.SettingNames.TargetDirectory,2]);
+      Assert.AreEqual(@"\vendor1targetproduction", collection[Constants.SettingNames.TargetDirectory, 1]);
+      Assert.AreEqual(@"\vendor2target", collection[Constants.SettingNames.TargetDirectory, 2]);
     }
   }
 }

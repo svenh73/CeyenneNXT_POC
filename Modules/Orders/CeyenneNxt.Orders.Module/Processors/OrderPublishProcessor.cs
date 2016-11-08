@@ -89,9 +89,9 @@ namespace CeyenneNxt.Orders.Module.Processors
 
         LoggingModule.LogInfo(GetType().ToString(), "End publishing orders");
       }
-      catch (Exception)
+      catch (Exception ex)
       {
-        
+        LoggingModule.LogError(GetType().ToString(),ex.Message,ex.StackTrace);
         throw;
       }
     }
@@ -108,20 +108,38 @@ namespace CeyenneNxt.Orders.Module.Processors
 
     public virtual bool ValidateOrder(OrderDto order)
     {
-      if (String.IsNullOrEmpty((order.BackendID)))
+      try
       {
-        throw new NotSupportedException("Required 'BackendID' not available for this order");
+        if (String.IsNullOrEmpty((order.BackendID)))
+        {
+          throw new NotSupportedException("Required 'BackendID' not available for this order");
+        }
+        return true;
       }
-      return true;
+      catch (Exception ex)
+      {
+        LoggingModule.LogError(Domain, $"Error at deserialize order: {ex.Message}", ex.StackTrace);
+        throw;
+      }
     }
 
     public virtual OrderDto LoadAndMapToOrderDto(string filepath)
     {
-      XmlSerializer serializer = new XmlSerializer(typeof(OrderDto));
-      using (FileStream fs = new FileStream(filepath, FileMode.Open))
+      try
       {
-        return (OrderDto) serializer.Deserialize(fs);
+        XmlSerializer serializer = new XmlSerializer(typeof(OrderDto));
+        using (FileStream fs = new FileStream(filepath, FileMode.Open))
+        {
+          return (OrderDto)serializer.Deserialize(fs);
+        }
       }
+      catch (Exception ex)
+      {
+        LoggingModule.LogError(Domain,$"Error at deserialize order: {ex.Message}",ex.StackTrace);
+        throw;
+      }
+
+      
     }
 
   }
